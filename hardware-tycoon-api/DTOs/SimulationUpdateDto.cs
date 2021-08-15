@@ -11,6 +11,6 @@ namespace hardware_tycoon_api.DTOs
         long Money,
         int ResearchProgress,
         int DevelopmentProgress,
-        Dictionary<string,Product> marketProducts
+        Dictionary<string,Product> MarketProducts
     );
 }
