@@ -19,6 +19,7 @@ namespace hardware_tycoon_api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //services.AddCors();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -36,11 +37,17 @@ namespace hardware_tycoon_api
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "hardware_tycoon_api v1"));
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
             app.UseRouting();
-
-            app.UseAuthorization();
+            //app.UseCors(options => options.WithOrigins(
+            //    "http://127.0.0.1",
+            //    "http://127.0.0.1:5000",
+            //    "http://127.0.0.1:5500",
+            //    "http://localhost",
+            //    "http://localhost:5000",
+            //    "http://localhost:5500").AllowAnyMethod());
+            //app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
