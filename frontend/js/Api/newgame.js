@@ -15,7 +15,10 @@ function SubmitNewGame()
     company.append("companyname", company_name)
     company.append("foundername", founder_name)
     company.append("difficulty", difficulty)
-    fetch("http://localhost:5000/", {
+    JSON.stringify(Object.fromEntries(company))
+    console.log()
+    fetch("http://127.0.0.1:5000/api/login", {
+        mode: "no-cors",
         method: 'POST',
         body: company
     })
