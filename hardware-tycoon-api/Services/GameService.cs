@@ -12,7 +12,7 @@ namespace hardware_tycoon_api.Services
             {
                 foreach(var kvp2 in kvp.Value.World.Companies)
                 {
-                    if(kvp2.Value.Name == requestDto.CompanyName)
+                    if(kvp2.Value.CEO == requestDto.CeoName)
                         return kvp2.Key;
                 }
             }
@@ -21,10 +21,10 @@ namespace hardware_tycoon_api.Services
             while(Core.Games.ContainsKey(id))
                 id++;
 
-            var game = new Game(id, requestDto.CompanyName,requestDto.Difficulty);
+            var game = new Game(id, requestDto.CeoName, requestDto.CompanyName,requestDto.Difficulty);
             Core.Games.Add(id,game);
 
-            return game.OwnerId;
+            return game.PlayerId;
         }
 
         public static Game GetGameById(int gameId)

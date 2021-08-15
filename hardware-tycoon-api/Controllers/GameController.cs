@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using hardware_tycoon_api.DTOs;
+﻿using hardware_tycoon_api.DTOs;
 using hardware_tycoon_api.Services;
-using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
 namespace hardware_tycoon_api.Controllers
 {
-    [EnableCors("any")]
     [ApiController]
     public class GameController : ControllerBase
     {
@@ -27,7 +21,7 @@ namespace hardware_tycoon_api.Controllers
         {
             _logger.LogInformation($"Request Login for User: {request.CompanyName} Password: {request.CompanyName} Difficulty {request.Difficulty}");
             var playerId = GameService.GetPlayerId(request);
-            _logger.LogInformation($"Username: {request.CompanyName} got PlayerId {playerId}");
+            _logger.LogInformation($"CEO: {request.CeoName}, Company Name: {request.CompanyName} -> PlayerId {playerId}");
             return new LoginResponseDto(playerId);
         }
 
@@ -39,7 +33,7 @@ namespace hardware_tycoon_api.Controllers
             var game = GameService.GetGameById(gameId);
             var world = game.World;
             var market = world.Market;
-            var company = world.Companies[game.OwnerId];
+            var company = world.Companies[game.PlayerId];
             _logger.LogInformation($"GameId {gameId} found, sending update for CompanyName {company.Name}");
             return new SimulationUpdateDto(game.World.Date,company.Money, company.CurrentResearch.Progress,company.CurrentDevelopment.Progress,market.Products);
         }
