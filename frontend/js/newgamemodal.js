@@ -4,5 +4,5 @@ function CloseCreateCompanyMenu()
 }
 function CreateCompanyMenu()
 {
-    document.getElementById("create-company").style.display = "inline"
+    document.getElementById("create-company").style.display = "block"
 }
