@@ -1,6 +1,5 @@
 .modal {
     display: none;
-    width: 10vw;
     background-color: aliceblue;
 }
 
@@ -29,4 +28,7 @@
 #text-input-container{
     display: inline-block;
     width: 60%;
+}
+#create-company{
+    width: 15rem;
 }
