@@ -1,33 +1,37 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" href="/home/neko/projects/programming/web/Hardware-tycoon-UI/css/nameInput.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-
+    <link rel="stylesheet" type="text/css" href="css/Menu.css">
+    <script type="text/javascript" src="/home/neko/projects/programming/web/hwt/frontend/js/Api/Menu.js"></script>
 </head>
+
 <body>
-    <form style=" border-style: solid; display: block; width: 100rem;">
-        <div  style="background-color:  #2196F3;  ">
-            <p style=" font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color:whitesmoke; display: inline ; width: 100%;">
-                Create your company</p>
+    <button onclick="NewGame()">Make new company</button>
+    <div id="create-company" class="modai">
+        <div style="background-color:  #2196F3;" >
+
+            <p class="modai-title">Create your company</p>
+            <form class="modai-content">
+                
+                <div style="display: inline-block; width: 60%;">
+                    <input class="text-input" size="28px" placeholder="Your Company Name">
+                    <input class="text-input" size="60" placeholder="Founder's Name">
+                </div>
+                <input id="file" type="file" title="Company Logo Customization">
+                <div>
+                    <input class="difficulty" type="radio" name="difficulty">
+                    <input class="difficulty" type="radio" name="difficulty">
+                    <input class="difficulty" type="radio" name="difficulty">
+                    <input class="difficulty" type="radio" name="difficulty">
+                </div>
+                <div style="align-self:initial;">
+                    <button onclick="CloseCreateCompanyMenu()">Back</button>
+                    <input onclick="" type="submit" value="Done">
+                </div>
+            </form>
+
         </div>
-            
-        </h1>
-        <div style="display: inline-block; width: 60%;">
-            <input class="text-input" size="28" placeholder="Your Company Name">
-            <input class="text-input" size="60" placeholder="Founder's Name">
-        </div>
-        <input id = "file" type="file" title="Company Logo Customization">
-        <div>
-            <input class="difficulty" type="radio" name="difficulty">
-            <input class="difficulty" type="radio" name="difficulty">
-            <input class="difficulty" type="radio" name="difficulty">
-            <input class="difficulty" type="radio" name="difficulty">
-        </div>
-        <div style="align-self:initial;">
-            <button>Back</button>
-            <input type="submit" value="Done">   
-        </div>
-    </form>
+    </div>
 </body>
+
 </html>

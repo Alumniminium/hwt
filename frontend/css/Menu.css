@@ -1,0 +1,26 @@
+.modai
+{
+    display: inline;
+    width: 0rem;
+    background-color: aliceblue;
+}
+.modai-title
+{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color:whitesmoke;
+    display: inline ;
+    width: 100%;
+}
+.modai-content
+{
+    background-color: aliceblue;
+}
+.text-input
+{
+    padding:8px;
+    display:block;
+    border:none;
+    border-bottom:1px solid #ccc;
+    width:50%;
+    display: inline;
+}
