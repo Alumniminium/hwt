@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using hardware_tycoon_api.DTOs;
 
@@ -25,5 +26,12 @@ namespace hardware_tycoon_api.Services
             return id;
         }
 
+        public static Game GetGameById(int gameId)
+        {
+            if(Core.Games.TryGetValue(gameId,out var game))
+                return game;
+            else
+                throw new InvalidOperationException($"No game for Id {gameId} running.");
+        }
     }
 }

@@ -5,8 +5,9 @@ namespace hardware_tycoon_api.DTOs
 {
     public record SimulationUpdateDto
     (
-        string CompanyName,
-        string Difficulty,
-        DateTime Date
+        DateTime Date,
+        long Money,
+        int ResearchProgress,
+        int DevelopmentProgress
     );
 }
