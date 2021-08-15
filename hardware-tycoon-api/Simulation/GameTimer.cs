@@ -1,11 +1,11 @@
 using System.Diagnostics;
 using System.Threading;
 
-namespace hardware_tycoon_api
+namespace hardware_tycoon_api.Simulation
 {
     public class GameTimer
     {
-        private Thread gameThread;
+        private readonly Thread gameThread;
 
         public GameTimer()
         {
