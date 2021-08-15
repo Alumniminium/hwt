@@ -7,11 +7,15 @@ function SubmitNewGame() {
   difficulty_radios = document.getElementById("difficulties")
   for (let index = 0; index < difficulty_radios.childElementCount; index++) {
     if (difficulty_radios.children[index].checked)
+    {
       difficulty = index
+      break;
+    }
   }
   console.log(company_name, founder_name, difficulty)
   let company = new FormData()
-  company.append("companyname", company_name)
+  company.append("ceoName", founder_name)
+  company.append("companyName", company_name)
   company.append("difficulty", difficulty)
   fetch("http://localhost/api/login", {
     headers: {
