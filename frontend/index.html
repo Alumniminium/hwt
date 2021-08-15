@@ -2,18 +2,20 @@
 <html>
 <head>
     <link rel="stylesheet" type="text/css" href="css/Menu.css">
-    <script type="text/javascript" src="/home/neko/projects/programming/web/hwt/frontend/js/Api/Menu.js"></script>
+    <script type="text/javascript" src="js/newgamemodal.js"></script>
+    <script type="text/javascript" src="js/Api/newgame.js"></script>
+    
 </head>
 
 <body>
-    <button onclick="NewGame()">Make new company</button>
-    <div id="create-company" class="modai">
-        <div style="background-color:  #2196F3;" >
+    <button onclick="CreateCompanyMenu()">Make new company</button>
+    <div id="create-company" class="modal">
+        <div class="container" >
 
-            <p class="modai-title">Create your company</p>
-            <form class="modai-content">
+            <p class="modal-title">Create your company</p>
+            <div class="modal-content">
                 
-                <div style="display: inline-block; width: 60%;">
+                <div id="text-input">
                     <input class="text-input" size="28" placeholder="Your Company Name">
                     <input class="text-input" size="60" placeholder="Founder's Name">
                 </div>
@@ -24,11 +26,11 @@
                     <input class="difficulty" type="radio" name="difficulty">
                     <input class="difficulty" type="radio" name="difficulty">
                 </div>
-                <div style="align-self:initial;">
+                <div>
                     <button onclick="CloseCreateCompanyMenu()">Back</button>
-                    <input onclick="" type="submit" value="Done">
+                    <button onclick="SubmitNewGame()">Done</button>
                 </div>
-            </form>
+            </div>
 
         </div>
     </div>

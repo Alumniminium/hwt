@@ -1,26 +1,32 @@
-.modai
-{
+.modal {
     display: none;
-    width: 0rem;
+    width: 10vw;
     background-color: aliceblue;
 }
-.modai-title
-{
+
+.modal-title {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color:whitesmoke;
-    display: inline ;
+    color: whitesmoke;
+    display: inline;
     width: 100%;
 }
-.modai-content
-{
+
+.modal-content {
     background-color: aliceblue;
 }
-.text-input
-{
-    padding:8px;
-    display:block;
-    border:none;
-    border-bottom:1px solid #ccc;
-    width:50%;
+
+.text-input {
+    padding: 8px;
+    display: block;
+    border: none;
+    border-bottom: 1px solid #ccc;
+    width: 50%;
     display: inline;
+}
+.container{
+    background-color:  #2196F3;
+}
+#text-input-container{
+    display: inline-block;
+    width: 60%;
 }

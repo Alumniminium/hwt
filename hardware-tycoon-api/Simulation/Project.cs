@@ -1,0 +1,20 @@
+namespace hardware_tycoon_api.Simulation
+{
+    public class Project
+    {
+        private int _currentPoints;
+        public string Name;
+        public int Progress => CurrentPoints / RequiredPoints * 100;
+
+        public int RequiredPoints;
+        public int CurrentPoints
+        {
+            get => _currentPoints;
+            set
+            {
+                if (value <= RequiredPoints)
+                    _currentPoints = value;
+            }
+        }
+    }
+}
