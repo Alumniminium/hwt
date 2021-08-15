@@ -1,5 +1,7 @@
 
 using System;
+using System.Collections.Generic;
+using hardware_tycoon_api.Simulation;
 
 namespace hardware_tycoon_api.DTOs
 {
@@ -8,6 +10,7 @@ namespace hardware_tycoon_api.DTOs
         DateTime Date,
         long Money,
         int ResearchProgress,
-        int DevelopmentProgress
+        int DevelopmentProgress,
+        Dictionary<string,Product> marketProducts
     );
 }

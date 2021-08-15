@@ -34,9 +34,11 @@ namespace hardware_tycoon_api.Controllers
         {
             _logger.LogInformation($"Update Request for GameId {gameId}");
             var game = GameService.GetGameById(gameId);
-            var company = game.World.Companies[game.OwnerId];
+            var world = game.World;
+            var market = world.Market;
+            var company = world.Companies[game.OwnerId];
             _logger.LogInformation($"GameId {gameId} found, sending update for CompanyName {company.Name}");
-            return new SimulationUpdateDto(game.World.Date,company.Money, company.CurrentResearch.Progress,company.CurrentDevelopment.Progress);
+            return new SimulationUpdateDto(game.World.Date,company.Money, company.CurrentResearch.Progress,company.CurrentDevelopment.Progress,market.Products);
         }
     }
 }
