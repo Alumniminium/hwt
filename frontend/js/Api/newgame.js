@@ -13,7 +13,7 @@ function SubmitNewGame() {
   let company = new FormData()
   company.append("companyname", company_name)
   company.append("difficulty", difficulty)
-  fetch("http://localhost:5000/api/login", {
+  fetch("http://localhost/api/login", {
     headers: {
       'Content-Type': 'application/json'
     },
