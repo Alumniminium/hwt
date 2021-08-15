@@ -5,9 +5,9 @@ namespace hardware_tycoon_api.Simulation
         public int OwnerId { get; set; }
 
         public World World { get; set; }
-        public string Difficulty { get; set; }
+        public int Difficulty { get; set; }
 
-        public Game(int ownerId, string companyName, string difficulty)
+        public Game(int ownerId, string companyName, int difficulty)
         {
             OwnerId = ownerId;
             Difficulty = difficulty;
