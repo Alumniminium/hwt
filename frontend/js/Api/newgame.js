@@ -27,5 +27,6 @@ function SubmitNewGame() {
     .then(res => res.json())
     .then(data => {
       id = data
+      document.getElementById("create-company").style.display = "none"
     })
 }

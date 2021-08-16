@@ -14,10 +14,10 @@ namespace hardware_tycoon_api.Simulation
         {
             Game = game;
         }
-        internal void AddCompany(int ownerId, string playerName, string companyName)
+        internal void AddCompany(int playerId, string playerName, string companyName)
         {
-            var company = new Company(this, ownerId, playerName, companyName);
-            Companies.Add(company.OwnerId, company);
+            var company = new Company(this,playerId, playerName, companyName);
+            Companies.Add(company.OwnerId,company);
         }
     }
 }
