@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace hardware_tycoon_api.Simulation
 {
@@ -9,6 +10,8 @@ namespace hardware_tycoon_api.Simulation
         public string CEO { get; set; }
         public string Name { get; set; }
         public long Money { get; set; }
+
+        public Dictionary<string, Project> UnlockedResearch { get; set; } = new();
         public Project CurrentResearch { get; set; }
         public Project CurrentDevelopment { get; set; }
 
@@ -24,8 +27,11 @@ namespace hardware_tycoon_api.Simulation
         {
             if (CurrentResearch != null)
                 CurrentResearch.CurrentPoints++;
+            if(CurrentResearch.Progress == 100)
+                UnlockedResearch.Add(CurrentResearch.Name,CurrentResearch);
             if (CurrentDevelopment != null)
                 CurrentDevelopment.CurrentPoints++;
+            
         }
     }
 }

@@ -8,6 +8,11 @@ namespace hardware_tycoon_api.Services
     {
         public static int GetPlayerId(LoginRequestDto requestDto)
         {
+            if(string.IsNullOrEmpty(requestDto.CeoName))
+                return -1;
+            if(string.IsNullOrEmpty(requestDto.CompanyName))
+                return -1;
+                
             foreach(var kvp in Core.Games)
             {
                 foreach(var kvp2 in kvp.Value.World.Companies)
@@ -33,6 +38,13 @@ namespace hardware_tycoon_api.Services
                 return game;
             else
                 throw new InvalidOperationException($"No game for Id {ownerId} running.");
+        }
+
+        internal static Project GetResearchProjectByName(string researchProject)
+        {
+            if(Core.ResearchProjects.TryGetValue(researchProject,out var project))
+                return project;
+            return null;
         }
     }
 }
