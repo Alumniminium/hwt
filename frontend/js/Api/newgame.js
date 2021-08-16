@@ -1,5 +1,5 @@
+let id = 0 //id given from server
 function SubmitNewGame() {
-  id = 0 //id given from server
 
   company_name = document.getElementById("text-input").children[0].value
   founder_name = document.getElementById("text-input").children[1].value
@@ -26,7 +26,11 @@ function SubmitNewGame() {
   })
     .then(res => res.json())
     .then(data => {
-      id = data
-      document.getElementById("create-company").style.display = "none"
+      id = data.id
+      if(id != -1)
+      {
+        document.getElementById("create-company").style.display = "none"
+        OpenGameScreen()
+      }
     })
 }
