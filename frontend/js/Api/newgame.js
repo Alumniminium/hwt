@@ -29,6 +29,7 @@ function SubmitNewGame() {
       id = data.id
       if(id != -1)
       {
+        localStorage.setItem("id",id)
         document.getElementById("create-company").style.display = "none"
         OpenGameScreen()
       }

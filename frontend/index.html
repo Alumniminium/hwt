@@ -4,14 +4,24 @@
 <head>
     <link rel="stylesheet" type="text/css" href="css/Menu.css">
     <link rel="stylesheet" type="text/css" href="css/GameScreen.css">
+    <link rel="stylesheet" type="text/css" href="css/context-menu.css">
 
     <script type="text/javascript" src="js/newgamemodal.js"></script>
     <script type="text/javascript" src="js/Api/newgame.js"></script>
+    <script type="text/javascript" src="js/context-menu.js"></script>
+    <script type="text/javascript" src="js/game-screen.js"></script>
+
 </head>
 
 <body>
     <div id="game-container">
-        <div id ="game-ribbon">
+        <div id="context-menu">
+            <div class="item" onclick="DevelopProductModal()">Develop Product</div>
+            <div class="item" onclick="ResearchScreenModal()">Do Research</div>
+            <div class="item" onclick="MarketAnalysisModal()">Check Market</div>
+            <div class="item" onclick="AdvertisingModal()">Advertising</div>
+        </div>
+        <div id="game-ribbon">
             <p>dick menu</p>
         </div>
         <div id="main-menu">
@@ -37,6 +47,18 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div id="develop-product" class="modal">
+            
+        </div>
+        <div id="research" class="modal">
+        
+        </div>
+        <div id="market-analysis" class="modal">
+        
+        </div>
+        <div id="advertising-campaign" class="modal">
+        
         </div>
     </div>
 </body>

@@ -4,3 +4,16 @@
     align-self: self-start;
     display: none;
 }
+
+#develop-product {
+    display: none;
+}
+#research {
+    display: none;
+}
+#market-analysis {
+    display: none;    
+}
+#advertising-campaign {
+    display: none;    
+}
