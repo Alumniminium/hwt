@@ -12,11 +12,13 @@ namespace hardware_tycoon_api.Simulation
 
         public World(Game game)
         {
+            Date = new DateTime(1970,4,20);
             Game = game;
         }
         internal void AddCompany(int playerId, string playerName, string companyName)
         {
             var company = new Company(this,playerId, playerName, companyName);
+            company.Money = 100_000;
             Companies.Add(company.OwnerId,company);
         }
     }

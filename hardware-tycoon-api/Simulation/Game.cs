@@ -13,6 +13,7 @@ namespace hardware_tycoon_api.Simulation
 
             World = new World(this);
             World.AddCompany(playerId, playerName, companyName);
+    
         }
 
 
