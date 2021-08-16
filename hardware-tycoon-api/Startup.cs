@@ -19,11 +19,11 @@ namespace hardware_tycoon_api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
-            services.AddSwaggerGen(c =>
+            services.AddCors(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "hardware_tycoon_api", Version = "v1" });
+                c.AddPolicy("any", o => o.SetIsOriginAllowedToAllowWildcardSubdomains().AllowCredentials().AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
             });
+            services.AddControllers();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -32,14 +32,9 @@ namespace hardware_tycoon_api
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "hardware_tycoon_api v1"));
             }
-
-            app.UseHttpsRedirection();
-
             app.UseRouting();
-
+            app.UseCors("any");
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

@@ -1,6 +1,5 @@
-function SubmitNewGame()
-{
-    id = 0 //id given from server
+function SubmitNewGame() {
+  id = 0 //id given from server
 
     company_name = document.getElementById("text-input").children[0].value
     founder_name = document.getElementById("text-input").children[1].value
@@ -17,7 +16,10 @@ function SubmitNewGame()
     company.append("difficulty", difficulty)
     JSON.stringify(Object.fromEntries(company))
     console.log()
-    fetch("http://127.0.0.1:5000/api/login", {
+    fetch("http://localhost/api/login", {
+      headers: {
+        'Content-Type': 'application/json'
+      },
         mode: "no-cors",
         method: 'POST',
         body: company
@@ -26,4 +28,8 @@ function SubmitNewGame()
   .then(data => {
     id = data
   })
+    .then(res => res.json())
+    .then(data => {
+      id = data
+    })
 }

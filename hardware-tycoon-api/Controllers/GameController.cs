@@ -4,13 +4,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using hardware_tycoon_api.DTOs;
 using hardware_tycoon_api.Services;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
 namespace hardware_tycoon_api.Controllers
 {
+    [EnableCors("any")]
     [ApiController]
-    [Route("[controller]")]
     public class GameController : ControllerBase
     {
         private readonly ILogger<GameController> _logger;
@@ -21,6 +22,7 @@ namespace hardware_tycoon_api.Controllers
         }
 
         [HttpPost]
+        [Route("/api/login")]
         public LoginResponseDto Login(LoginRequestDto request)
         {
             _logger.LogInformation($"Request Login for User: {request.CompanyName} Password: {request.CompanyName} Difficulty {request.Difficulty}");
@@ -30,6 +32,7 @@ namespace hardware_tycoon_api.Controllers
         }
 
         [HttpGet]
+        [Route("/api/update")]
         public SimulationUpdateDto Update(int gameId)
         {
             _logger.LogInformation($"Update Request for GameId {gameId}");
