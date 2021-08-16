@@ -10,7 +10,7 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/hardware-tycoon-api//bin/Debug/net5.0/hardware-tycoon-api.dll",
+            "program": "${workspaceFolder}/hardware-tycoon-api/bin/Debug/net5.0/hardware-tycoon-api.dll",
             "args": [],
             "cwd": "${workspaceFolder}/hardware-tycoon-api",
             "stopAtEntry": false,
