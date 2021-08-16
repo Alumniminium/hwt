@@ -1,3 +1,38 @@
+<<<<<<< HEAD
+=======
+#main-menu button{
+    float:none;
+    margin-bottom: 1vh;
+    width: 100%;
+}
+
+#game-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 97vh;
+  border: 1px solid skyblue;
+}
+#game-container button {
+    color: cornflowerblue;
+    border: 0.1rem solid #6494ed;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    transition-duration: 0.4s;
+}
+#game-container button:hover {
+    background-color: cornflowerblue; /* Green */
+    color: white;
+}
+
+#create-company{
+    width: 50vw;
+    min-width: 250px;
+    max-width: 500px;
+}
+>>>>>>> 51555a212700ad7e40236b6dc5114472492205c6
 
 .modal {
     display: none;
@@ -11,29 +46,40 @@
   animation-name: fadeIn;
   animation-duration: 0.4s
 }
+.container{
+    background-color:  #2196F3;
+    border: 1px solid #2196F3;
+}
+.modal button {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
 
 .modal-title {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: whitesmoke;
-    display: inline;
-    width: 100%;
+    display: flex;
+    padding-left: 1em;
+    
 }
 
 .modal-content {
     background-color: aliceblue;
+    padding: 1rem;
 }
 
 .text-input {
-    padding: 8px;
-    display: block;
-    border: none;
-    border-bottom: 1px solid #ccc;
-    width: 50%;
-    display: inline;
+    padding: 1rem;
+    width: -webkit-fill-available;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
 }
-.container{
-    background-color:  #2196F3;
+.difficulties {
+    padding-bottom: 1rem;
 }
+<<<<<<< HEAD
 .button{
     position: relative;
     display: inline-block;
@@ -70,3 +116,8 @@
   align-items: center;
   
 }
+=======
+.done-button {
+    float: right;
+}
+>>>>>>> 51555a212700ad7e40236b6dc5114472492205c6

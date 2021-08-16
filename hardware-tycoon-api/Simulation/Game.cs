@@ -2,18 +2,18 @@ namespace hardware_tycoon_api.Simulation
 {
     public class Game
     {
-        public int OwnerId { get; set; }
+        public int PlayerId { get; set; }
 
         public World World { get; set; }
         public int Difficulty { get; set; }
 
-        public Game(int ownerId, string companyName, int difficulty)
+        public Game(int playerId, string playerName, string companyName, int difficulty)
         {
-            OwnerId = ownerId;
+            PlayerId = playerId;
             Difficulty = difficulty;
 
             World = new World(this);
-            World.AddCompany(ownerId, companyName);
+            World.AddCompany(playerId, playerName, companyName);
         }
 
 

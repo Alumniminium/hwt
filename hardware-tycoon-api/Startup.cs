@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.OpenApi.Models;
 
 namespace hardware_tycoon_api
 {
@@ -19,10 +18,6 @@ namespace hardware_tycoon_api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCors(c =>
-            {
-                c.AddPolicy("any", o => o.SetIsOriginAllowedToAllowWildcardSubdomains().AllowCredentials().AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
-            });
             services.AddControllers();
         }
 
@@ -34,8 +29,6 @@ namespace hardware_tycoon_api
                 app.UseDeveloperExceptionPage();
             }
             app.UseRouting();
-            app.UseCors("any");
-            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

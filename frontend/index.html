@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <link rel="stylesheet" type="text/css" href="css/Menu.css">
     <script type="text/javascript" src="js/newgamemodal.js"></script>
     <script type="text/javascript" src="js/Api/newgame.js"></script>
-    
 </head>
 
 <body>
+<<<<<<< HEAD
     <div id="main-menu">
         <div id="main-menu-buttons">
             <button class="button" onclick="CreateCompanyMenu()">New Game</button> 
@@ -17,25 +18,34 @@
     </div>
     <div id="create-company" class="modal">
         <div class="container" >
+=======
+    <div id="game-container">
+        <div id="main-menu">
+            <button id="new-game-button" onclick="CreateCompanyMenu()">Make new company</button>
+            <button id="settings-button" onclick="CreateCompanyMenu()">Settings</button>
+        </div>
+        <div id="create-company" class="modal">
+            <div class="container">
+>>>>>>> 51555a212700ad7e40236b6dc5114472492205c6
 
-            <p class="modal-title">Create your company</p>
-            <div class="modal-content">
-                
-                <div id="text-input">
-                    <input class="text-input" size="28" placeholder="Your Company Name">
-                    <input class="text-input" size="60" placeholder="Founder's Name">
-                </div>
-                <div id="difficulties">
-                    <input class="difficulty" type="radio" name="difficulty">
-                    <input class="difficulty" type="radio" name="difficulty">
-                    <input class="difficulty" type="radio" name="difficulty">
-                </div>
-                <div>
-                    <button onclick="CloseCreateCompanyMenu()">Back</button>
-                    <button onclick="SubmitNewGame()">Done</button>
+                <p class="modal-title">Create your company</p>
+                <div class="modal-content">
+
+                    <div>
+                        <input class="text-input" size="28" placeholder="Your Company Name">
+                        <input class="text-input" size="60" placeholder="Founder's Name">
+                    </div>
+                    <div class="difficulties">
+                        <input class="difficulty" type="radio" name="difficulty">easy</input>
+                        <input class="difficulty" type="radio" name="difficulty">normal</input>
+                        <input class="difficulty" type="radio" name="difficulty">hard</input>
+                    </div>
+                    <div>
+                        <button class="back-button" onclick="CloseCreateCompanyMenu()">Back</button>
+                        <button class="done-button" onclick="SubmitNewGame()">Done</button>
+                    </div>
                 </div>
             </div>
-
         </div>
     </div>
 </body>
