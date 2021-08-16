@@ -1,6 +1,22 @@
 #game-ribbon{
-    background-color: aqua;
+    background-color: rgb(45, 155, 245);
     width: 100%;
     align-self: self-start;
     display: none;
+    box-shadow: 2px 2px 4px #9ec8e0;;
+    position: relative; /* needs to be on the parent */
+  
+    justify-content: left; /* centers them horizontally */
+    align-items: left; /* and vertically */
+}
+#ribbon-date{
+    font-family: Arial, Helvetica, sans-serif;
+    color: white;
+    text-align: left;
+}
+#ribbon-money{
+    font-family: Arial, Helvetica, sans-serif;
+    color: white;
+    text-align: right;
+    width: 100%;
 }
