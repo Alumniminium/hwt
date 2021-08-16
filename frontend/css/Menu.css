@@ -1,3 +1,7 @@
+body {
+    margin: 0px;
+}
+
 #main-menu button{
     float:none;
     margin-bottom: 1vh;
@@ -31,8 +35,9 @@
   width: 100vw;
 }
 #game-container button {
-    color: cornflowerblue;
-    border: 0.1rem solid #6494ed;
+    color: white; 
+    background-color: cornflowerblue; 
+    border: none;
     padding-left: 2rem;
     padding-right: 2rem;
     padding-top: 1rem;
@@ -40,8 +45,12 @@
     transition-duration: 0.4s;
 }
 #game-container button:hover {
-    background-color: cornflowerblue; /* Green */
-    color: white;
+   background-color: rgb(121, 100, 237); 
+   color: white;
+}
+#game-container button:active {
+   background-color: rgb(194, 100, 237); 
+   color: white;
 }
 
 #create-company{
