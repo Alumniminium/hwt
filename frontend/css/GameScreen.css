@@ -1,0 +1,6 @@
+#game-ribbon{
+    background-color: aqua;
+    width: 100%;
+    align-self: self-start;
+    display: none;
+}
