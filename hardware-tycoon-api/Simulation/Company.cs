@@ -6,7 +6,7 @@ namespace hardware_tycoon_api.Simulation
     public class Company
     {
         public int OwnerId;
-        public World World {get;set;}
+        public World World { get; set; }
         public string CEO { get; set; }
         public string Name { get; set; }
         public long Money { get; set; }
@@ -26,12 +26,14 @@ namespace hardware_tycoon_api.Simulation
         internal void Tick()
         {
             if (CurrentResearch != null)
+            {
                 CurrentResearch.CurrentPoints++;
-            if(CurrentResearch.Progress == 100)
-                UnlockedResearch.Add(CurrentResearch.Name,CurrentResearch);
+                if (CurrentResearch.Progress == 100)
+                    UnlockedResearch.Add(CurrentResearch.Name, CurrentResearch);
+            }
             if (CurrentDevelopment != null)
                 CurrentDevelopment.CurrentPoints++;
-            
+
         }
     }
 }
