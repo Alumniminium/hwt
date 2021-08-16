@@ -5,6 +5,13 @@
     display: none;
 }
 
+#game-ribbon p {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: large;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
 #develop-product {
     display: none;
 }

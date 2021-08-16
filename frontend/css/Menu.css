@@ -52,6 +52,12 @@ body {
    background-color: rgb(194, 100, 237); 
    color: white;
 }
+#main-menu button
+{
+    width: 50vw;
+    min-width: 250px;
+    max-width: 500px;
+}
 
 #create-company{
     width: 50vw;
@@ -94,6 +100,7 @@ body {
     border: 1px solid #ccc;
 }
 #difficulties {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     padding-bottom: 1rem;
 }
 .done-button {
