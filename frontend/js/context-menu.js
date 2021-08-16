@@ -1,5 +1,4 @@
-window.addEventListener("load", setup)
-function setup()
+window.addEventListener("load", function ()
 {
     console.log("Context Menu setup starting...")
     const contextMenu = document.getElementById("context-menu");
@@ -50,4 +49,4 @@ function setup()
             contextMenu.classList.remove("visible");
     });
     console.log("Context Menu setup finished!")
-}
+})
