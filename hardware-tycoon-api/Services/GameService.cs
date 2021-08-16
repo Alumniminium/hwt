@@ -27,12 +27,12 @@ namespace hardware_tycoon_api.Services
             return game.PlayerId;
         }
 
-        public static Game GetGameById(int gameId)
+        public static Game GetGameById(int ownerId)
         {
-            if(Core.Games.TryGetValue(gameId,out var game))
+            if(Core.Games.TryGetValue(ownerId,out var game))
                 return game;
             else
-                throw new InvalidOperationException($"No game for Id {gameId} running.");
+                throw new InvalidOperationException($"No game for Id {ownerId} running.");
         }
     }
 }

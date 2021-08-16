@@ -3,7 +3,6 @@ namespace hardware_tycoon_api.Simulation
     public class Game
     {
         public int PlayerId { get; set; }
-
         public World World { get; set; }
         public int Difficulty { get; set; }
 
@@ -24,12 +23,9 @@ namespace hardware_tycoon_api.Simulation
             foreach (var kvp in World.Companies)
             {
                 var company = kvp.Value;
-
-                if (company.CurrentResearch != null)
-                    company.CurrentResearch.CurrentPoints++;
-                if (company.CurrentDevelopment != null)
-                    company.CurrentDevelopment.CurrentPoints++;
+                company.Tick();
             }
+            World.Market.Tick();
         }
     }
 }
