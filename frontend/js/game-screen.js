@@ -28,6 +28,8 @@ function ClearLocalStorage()
     localStorage.removeItem("id")
     contextMenu.classList.remove("visible")
     window.location.reload()
+    console.log(timer)
+    clearInterval(timer)
 }
 function incrementSeconds() {
     update()
