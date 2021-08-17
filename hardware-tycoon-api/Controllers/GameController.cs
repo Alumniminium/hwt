@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using hardware_tycoon_api.DTOs;
 using hardware_tycoon_api.Services;
+using hardware_tycoon_api.Simulation;
 using hardware_tycoon_api.Simulation.Components;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -37,7 +38,11 @@ namespace hardware_tycoon_api.Controllers
             var market = world.Market;
             var company = world.Companies[game.PlayerId];
             _logger.LogInformation($"GameId {playerId} found, sending update for CompanyName {company.Name}");
-            return new SimulationUpdateDto(game.World.Date, company.Money, company.CurrentResearch.Progress, company.CurrentDevelopment.Progress, market.Products);
+
+            var researchProgress = company.CurrentResearch != null ? company.CurrentResearch.Progress : 0;
+            var developmentProgress = company.CurrentDevelopment != null ? company.CurrentDevelopment.Progress : 0;
+
+            return new SimulationUpdateDto(game.World.Date, company.Money, researchProgress, developmentProgress, market.Products);
         }
 
         [HttpPut]

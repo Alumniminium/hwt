@@ -29,3 +29,8 @@ function ClearLocalStorage()
     contextMenu.classList.remove("visible")
     window.location.reload()
 }
+function incrementSeconds() {
+    update()
+}
+
+var timer = setInterval(incrementSeconds, 1000);

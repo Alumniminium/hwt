@@ -10,14 +10,26 @@
     <script type="text/javascript" src="js/Api/newgame.js"></script>
     <script type="text/javascript" src="js/Api/update.js"></script>
 
+    <script type="text/javascript" src="js/context-menu.js"></script>
+    <script type="text/javascript" src="js/game-screen.js"></script>
+
 </head>
 
 <body>
     <div id="game-container">
-        <div id ="game-ribbon">
-        <h2 id="ribbon-date">Date</p>
-        <h3 id="ribbon-money">Money</h3>
-            
+        <div id="context-menu">
+            <!-- methods defined in game-screen.js -->
+            <div class="item" onclick="DevelopProductModal()">Develop Product</div>
+            <div class="item" onclick="ResearchScreenModal()">Do Research</div>
+            <div class="item" onclick="MarketAnalysisModal()">Check Market</div>
+            <div class="item" onclick="AdvertisingModal()">Advertising</div>
+            <div class="item" onclick="ClearLocalStorage()">DEBUG: Clear LocalStorage</div>
+        </div>
+        <div id="game-ribbon">
+            <p id="date"></p>
+            <p id="money"></p>
+            <p id="research-progress">Researching Dildos 69%</p>
+            <p id="product-progress">Developing SexRobot 69%</p>
         </div>
         <div id="main-menu">
             <button id="new-game-button" onclick="CreateCompanyMenu()">Make new company</button>
