@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using hardware_tycoon_api.Simulation;
+using hardware_tycoon_api.Simulation.Components;
 
 namespace hardware_tycoon_api.DTOs
 {
@@ -11,6 +12,6 @@ namespace hardware_tycoon_api.DTOs
         long Money,
         int ResearchProgress,
         int DevelopmentProgress,
-        Dictionary<string,Product> MarketProducts
+        Dictionary<string, Product> MarketProducts
     );
 }

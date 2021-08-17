@@ -1,6 +1,8 @@
 using System;
+using System.Collections.Generic;
 using hardware_tycoon_api.DTOs;
 using hardware_tycoon_api.Simulation;
+using hardware_tycoon_api.Simulation.Components;
 
 namespace hardware_tycoon_api.Services
 {
@@ -40,11 +42,22 @@ namespace hardware_tycoon_api.Services
                 throw new InvalidOperationException($"No game for Id {ownerId} running.");
         }
 
-        internal static Project GetResearchProjectByName(string researchProject)
+        internal static ResearchProject GetResearchProjectByName(string researchProject)
         {
             if(Core.ResearchProjects.TryGetValue(researchProject,out var project))
                 return project;
             return null;
+        }
+
+        internal static Component[] GetComponentsByNames(string[] components)
+        {
+            List<Component> realComponents = new ();
+            foreach (var name in components)
+            {
+                if(Core.Components.TryGetValue(name,out var component))
+                    realComponents.Add(component);
+            }
+            return realComponents.ToArray();
         }
     }
 }
