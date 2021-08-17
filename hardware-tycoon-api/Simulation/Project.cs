@@ -1,12 +1,11 @@
 namespace hardware_tycoon_api.Simulation
 {
-    public class Project
+    public class ResearchProject
     {
         private int _currentPoints;
         public string Name;
         public int Price;
         public int Progress => CurrentPoints / RequiredPoints * 100;
-
         public int RequiredPoints;
         public int CurrentPoints
         {
@@ -17,5 +16,6 @@ namespace hardware_tycoon_api.Simulation
                     _currentPoints = value;
             }
         }
+        public string PreRequititeResearch;
     }
 }
