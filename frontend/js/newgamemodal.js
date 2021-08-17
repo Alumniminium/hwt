@@ -10,7 +10,7 @@ function setupGame() {
 
 function CloseCreateCompanyMenu()
 {
-    document.getElementById("main-menu").style.display= "block"
+    document.getElementById("main-menu").style.display= "grid"
     document.getElementById("create-company").style.display = "none"
 
 }

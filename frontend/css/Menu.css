@@ -3,14 +3,10 @@ body {
 }
 
 #main-menu button{
-    float:none;
     margin-bottom: 1vh;
-    width: 100%;
 }
 #main-menu{
-    width: 40rem;
-    height: 20rem;
-    
+    display: grid;
 }
 @keyframes gradient {
     0% {
@@ -42,14 +38,14 @@ body {
     padding-right: 2rem;
     padding-top: 1rem;
     padding-bottom: 1rem;
-    transition-duration: 0.4s;
+    transition-duration: 0.2s;
 }
 #game-container button:hover {
    background-color: rgb(121, 100, 237); 
    color: white;
 }
 #game-container button:active {
-   background-color: rgb(194, 100, 237); 
+   background-color: #e73c7e; 
    color: white;
 }
 #main-menu button
