@@ -38,15 +38,28 @@ namespace hardware_tycoon_api.Controllers
             return new SimulationUpdateDto(game.World.Date, company.Money, company.CurrentResearch.Progress, company.CurrentDevelopment.Progress, market.Products);
         }
 
-        // [HttpPut]
-        // [Route("/api/research")]
-        // public SimulationUpdateDto Research(int playerId, string researchProject)
-        // {
-        //     _logger.LogInformation($"Research Start Request for PlayerId {playerId}: {researchProject}");
-        //     var game = GameService.GetGameById(playerId);
-        //     var company = game.World.Companies[game.PlayerId];
-        //     _logger.LogInformation($"GameId {playerId} found, sending update for CompanyName {company.Name}");
-        //     return new SimulationUpdateDto(game.World.Date, company.Money, company.CurrentResearch.Progress, company.CurrentDevelopment.Progress, market.Products);
-        // }
+        [HttpPut]
+        [Route("/api/research")]
+        public ResearchRequestResponseDto Research(int playerId, string researchProject)
+        {
+            _logger.LogInformation($"Research Start Request for PlayerId {playerId}: {researchProject}");
+            var game = GameService.GetGameById(playerId);
+            var company = game.World.Companies[game.PlayerId];
+
+            var project = GameService.GetResearchProjectByName(researchProject);
+            if(project == null)
+                return new ResearchRequestResponseDto(false);
+
+            if(project.Price <= company.Money && company.CurrentResearch == null)
+                {
+                    company.CurrentResearch = project;
+                    company.Money -= project.Price;
+                }
+            else
+                return new ResearchRequestResponseDto(false);
+
+            _logger.LogInformation($"PlayerId {game.PlayerId} started researching {project.Name}");
+            return new ResearchRequestResponseDto(true);
+        }
     }
 }
