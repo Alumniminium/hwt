@@ -44,6 +44,8 @@ namespace hardware_tycoon_api.Services
 
         internal static ResearchProject GetResearchProjectByName(string researchProject)
         {
+            if(string.IsNullOrEmpty(researchProject))
+                return null;
             if(Core.ResearchProjects.TryGetValue(researchProject,out var project))
                 return project;
             return null;
