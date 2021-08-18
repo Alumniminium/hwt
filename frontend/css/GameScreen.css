@@ -17,6 +17,9 @@
 }
 #research {
     display: none;
+    width: 44vw;
+    height: 50vh;
+    position: absolute;
 }
 #market-analysis {
     display: none;    

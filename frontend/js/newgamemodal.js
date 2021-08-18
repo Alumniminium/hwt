@@ -28,4 +28,5 @@ function OpenGameScreen()
     gamescreen.style.background = "#4a4745 url(/images/game-screen.png) no-repeat center center";
     gamescreen.style.animation = "none"
     document.getElementById("game-ribbon").style.display = "flex"
+    startUpdateTimer()
 }
