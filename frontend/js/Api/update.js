@@ -10,22 +10,33 @@ function update()
     
     });  
 }
-function AvailableResearch(){
-  fetch("http://localhost/api/availableResearch/?playerId=" + id)
+function Researches(){
+  researchableList =document.getElementById("researchable")
+  researchedList =document.getElementById("researchable")
+
+  fetch("http://localhost/api/research/?playerId=" + id)
   .then(res => res.json())
   .then(data => {
-    
     data.forEach(research => {
-      var div = document.createElement('div');  
-      div.textContent = research.name;    
-      div.style.backgroundColor = "#213";
-      document.getElementById("myBtn").addEventListener("click", function() {
-        research(research.name)
+      if(research.price == 0)
+      {
+        var researched = document.createElement('div');  
+        researched.textContent = research.name;    
+        researched.style.backgroundColor = "#252";
+        researchedList.appendChild(researched);   
+      }
+      else{
+        var researchable = document.createElement('div');  
+        researchable.textContent = research.name;    
+        researchable.style.backgroundColor = "#213";
+        researchable.addEventListener("click", function() {
+          StartResearch(research.name)
       });
-      document.getElementById("researchable").appendChild(div);   
+      researchableList.appendChild(researchable);   
+      }
     });
     });  
 }
-function research(){
-
+function StartResearch(){
+  alert("bullshit")
 }

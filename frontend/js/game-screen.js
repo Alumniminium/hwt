@@ -12,6 +12,7 @@ function DevelopProductModal()
 function ResearchScreenModal() 
 {
     document.getElementById("research").style.display = "block"
+    Researches()
     contextMenu.classList.remove("visible")
 }
 function MarketAnalysisModal() 
