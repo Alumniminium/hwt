@@ -10,3 +10,20 @@ function update()
     
     });  
 }
+function AvailableResearch(){
+  fetch("http://localhost/api/availableResearch/?playerId=" + id)
+  .then(res => res.json())
+  .then(data => {
+    
+    data.forEach(research => {
+      var div = document.createElement('div');  
+      div.textContent = research.name;    
+      div.style.backgroundColor = "#213";
+      document.getElementById("researchable").appendChild(div);   
+    });
+    
+    });  
+}
+function research(){
+  
+}
