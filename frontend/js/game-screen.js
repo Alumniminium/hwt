@@ -26,11 +26,12 @@ function AdvertisingModal()
 function ClearLocalStorage()
 {
     localStorage.removeItem("id")
+    clearTimeout(timer)
     contextMenu.classList.remove("visible")
     window.location.reload()
 }
 function incrementSeconds() {
-    update()
+     update()
 }
 
 var timer = setInterval(incrementSeconds, 1000);
