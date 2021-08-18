@@ -56,7 +56,7 @@ namespace hardware_tycoon_api.Controllers
             var world = game.World;
             var company = world.Companies[game.PlayerId];
 
-            var availableResearch = Core.ResearchProjects.Values.Where(p => p.PreRequititeResearch == null || company.UnlockedResearch.ContainsKey(p.PreRequititeResearch)).ToArray();
+            var availableResearch = Core.ResearchProjects.Values.Where(p => p.PreRequititeResearch == null || company.UnlockedResearch.ContainsKey(p.PreRequititeResearch) && !company.UnlockedResearch.ContainsKey(p.Name)).ToArray();
             _logger.LogInformation($"{company.Name} found, sending {availableResearch.Length} available research projects...");
 
             foreach (var project in availableResearch)
