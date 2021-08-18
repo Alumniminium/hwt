@@ -48,8 +48,8 @@ namespace hardware_tycoon_api.Controllers
         }
 
         [HttpGet]
-        [Route("/api/availableResearch")]
-        public IEnumerable<ResearchProjectDto> AvailableResearch(int playerId)
+        [Route("/api/research")]
+        public IEnumerable<ResearchProjectDto> CompletedResearch(int playerId)
         {
             _logger.LogInformation($"Available Research Projects Requested for GameId {playerId}");
             var game = GameService.GetGameById(playerId);
@@ -61,6 +61,8 @@ namespace hardware_tycoon_api.Controllers
 
             foreach (var project in availableResearch)
                 yield return new ResearchProjectDto(project.Name, project.Price, project.Description);
+            foreach (var project in company.UnlockedResearch)
+                yield return new ResearchProjectDto(project.Key, 0, project.Value.Description);
         }
 
         [HttpPut]
