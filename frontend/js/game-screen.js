@@ -1,4 +1,5 @@
 let contextMenu = null
+let timer = null
 
 window.addEventListener("load", function () {
     contextMenu = document.getElementById("context-menu");
@@ -31,8 +32,10 @@ function ClearLocalStorage()
     console.log(timer)
     clearInterval(timer)
 }
-function incrementSeconds() {
+function startUpdateTimer()
+{
+    timer = setInterval(callApiUpdate, 1000);
+}
+function callApiUpdate() {
     update()
 }
-
-var timer = setInterval(incrementSeconds, 1000);
