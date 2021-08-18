@@ -31,13 +31,19 @@ namespace hardware_tycoon_api.Simulation
             {
                 CurrentResearch.CurrentPoints++;
                 if (CurrentResearch.Progress == 100)
+                {
                     UnlockedResearch.Add(CurrentResearch.Name, CurrentResearch);
+                    CurrentResearch = null;
+                }
             }
             if (CurrentDevelopment != null)
             {
                 CurrentDevelopment.CurrentPoints++;
                 if (CurrentDevelopment.Progress == 100)
+                {
                     World.Market.AddProduct(DevelopingProducts[CurrentDevelopment.Name]);
+                    CurrentDevelopment = null;
+                }
             }
         }
     }

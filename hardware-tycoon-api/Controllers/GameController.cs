@@ -67,15 +67,15 @@ namespace hardware_tycoon_api.Controllers
 
         [HttpPut]
         [Route("/api/research")]
-        public ResearchOrDevelopRequestResponseDto Research(int playerId, string researchProject)
+        public ResearchOrDevelopRequestResponseDto Research([FromBody]ResearchRequestDto researchRequest)
         {
-            _logger.LogInformation($"Research Start Request for PlayerId {playerId}: {researchProject}");
-            var game = GameService.GetGameById(playerId);
+            _logger.LogInformation($"Research Start Request for PlayerId {researchRequest.PlayerId}: {researchRequest.ResearchProject}");
+            var game = GameService.GetGameById(researchRequest.PlayerId);
             var company = game.World.Companies[game.PlayerId];
 
-            var project = GameService.GetResearchProjectByName(researchProject);
+            var project = GameService.GetResearchProjectByName(researchRequest.ResearchProject);
             if (project == null)
-                return new ResearchOrDevelopRequestResponseDto(false, $"The Research Project '{researchProject}' doesn't exist.");
+                return new ResearchOrDevelopRequestResponseDto(false, $"The Research Project '{researchRequest.ResearchProject}' doesn't exist.");
 
             if (project.PreRequititeResearch != null && !company.UnlockedResearch.ContainsKey(project.PreRequititeResearch))
                 return new ResearchOrDevelopRequestResponseDto(false, $"The Research Project '{project.Name}' requires '{project.PreRequititeResearch}' to be researched first");
