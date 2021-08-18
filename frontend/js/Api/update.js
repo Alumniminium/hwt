@@ -19,11 +19,13 @@ function AvailableResearch(){
       var div = document.createElement('div');  
       div.textContent = research.name;    
       div.style.backgroundColor = "#213";
+      document.getElementById("myBtn").addEventListener("click", function() {
+        research(research.name)
+      });
       document.getElementById("researchable").appendChild(div);   
     });
-    
     });  
 }
 function research(){
-  
+
 }
