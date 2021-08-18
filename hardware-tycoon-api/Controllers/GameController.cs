@@ -56,11 +56,11 @@ namespace hardware_tycoon_api.Controllers
             var world = game.World;
             var company = world.Companies[game.PlayerId];
 
-            var availableResearch = Core.ResearchProjects.Values.Where(p=> company.UnlockedResearch.ContainsKey(p.PreRequititeResearch) || p.PreRequititeResearch == null).ToArray();
+            var availableResearch = Core.ResearchProjects.Values.Where(p => p.PreRequititeResearch == null || company.UnlockedResearch.ContainsKey(p.PreRequititeResearch)).ToArray();
             _logger.LogInformation($"{company.Name} found, sending {availableResearch.Length} available research projects...");
 
-            foreach(var project in availableResearch)
-                yield  return new ResearchProjectDto(project.Name,project.Price,project.Description);
+            foreach (var project in availableResearch)
+                yield return new ResearchProjectDto(project.Name, project.Price, project.Description);
         }
 
         [HttpPut]
@@ -106,15 +106,16 @@ namespace hardware_tycoon_api.Controllers
             var game = GameService.GetGameById(playerId);
             var company = game.World.Companies[game.PlayerId];
             var components = GameService.GetComponentsByNames(product.Components);
-            var developmentPrice = components.Sum(c=> c.Cost) * 100;
+            var developmentPrice = components.Sum(c => c.Cost) * 100;
 
             if (developmentPrice <= company.Money)
             {
                 if (company.CurrentResearch == null)
                 {
-                    var newProduct = new Product(company,product.Name,product.Price,components,product.Type);
-                    company.DevelopingProducts.Add(newProduct.Name,newProduct);
-                    company.CurrentDevelopment = new Simulation.ResearchProject {
+                    var newProduct = new Product(company, product.Name, product.Price, components, product.Type);
+                    company.DevelopingProducts.Add(newProduct.Name, newProduct);
+                    company.CurrentDevelopment = new Simulation.ResearchProject
+                    {
                         Name = newProduct.Name,
                         Price = developmentPrice,
                         RequiredPoints = developmentPrice / 10
