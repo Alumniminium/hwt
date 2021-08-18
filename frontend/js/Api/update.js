@@ -14,9 +14,15 @@ function Researches(){
   researchableList =document.getElementById("researchable")
   researchedList =document.getElementById("researchable")
 
+  
+  while (researchedList.firstChild) {
+    researchedList.removeChild(researchedList.lastChild);
+  }
   fetch("http://localhost/api/research/?playerId=" + id)
   .then(res => res.json())
   .then(data => {
+    removeElementsByClass("researched-modal-item")
+    removeElementsByClass("researchable-modal-item")
     data.forEach(research => {
       if(research.price == 0)
       {
