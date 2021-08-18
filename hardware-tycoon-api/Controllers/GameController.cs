@@ -1,10 +1,12 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using hardware_tycoon_api.DTOs;
 using hardware_tycoon_api.Services;
 using hardware_tycoon_api.Simulation;
 using hardware_tycoon_api.Simulation.Components;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.JSInterop.Implementation;
 
 namespace hardware_tycoon_api.Controllers
 {
@@ -43,6 +45,22 @@ namespace hardware_tycoon_api.Controllers
             var developmentProgress = company.CurrentDevelopment != null ? company.CurrentDevelopment.Progress : 0;
 
             return new SimulationUpdateDto(game.World.Date, company.Money, researchProgress, developmentProgress, market.Products);
+        }
+
+        [HttpGet]
+        [Route("/api/availableResearch")]
+        public IEnumerable<ResearchProjectDto> AvailableResearch(int playerId)
+        {
+            _logger.LogInformation($"Available Research Projects Requested for GameId {playerId}");
+            var game = GameService.GetGameById(playerId);
+            var world = game.World;
+            var company = world.Companies[game.PlayerId];
+
+            var availableResearch = Core.ResearchProjects.Values.Where(p=> company.UnlockedResearch.ContainsKey(p.PreRequititeResearch) || p.PreRequititeResearch == null).ToArray();
+            _logger.LogInformation($"{company.Name} found, sending {availableResearch.Length} available research projects...");
+
+            foreach(var project in availableResearch)
+                yield  return new ResearchProjectDto(project.Name,project.Price,project.Description);
         }
 
         [HttpPut]
