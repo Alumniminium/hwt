@@ -30,7 +30,7 @@ function SubmitNewGame() {
       if(id != -1)
       {
         localStorage.setItem("id",id)
-        OpenGameScreen()
+        window.location.replace("game.html");
       }
     })
 }

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="css/Menu.css">
+    <link rel="stylesheet" type="text/css" href="css/GameScreen.css">
+    <link rel="stylesheet" type="text/css" href="css/context-menu.css">
+    <link rel="stylesheet" type="text/css" href="css/Research.css">
+
+
+    <script type="text/javascript" src="js/newgamemodal.js"></script>
+    <script type="text/javascript" src="js/context-menu.js"></script>
+    <script type="text/javascript" src="js/game-screen.js"></script>
+    <script type="text/javascript" src="js/researchtree.js"></script>
+
+    <script type="text/javascript" src="js/Api/newgame.js"></script>
+    <script type="text/javascript" src="js/Api/update.js"></script>
+
+
+</head>
+    <body onload="OpenGameScreen()">
+        <div id="game-container">
+            <div id="context-menu">
+                <!-- methods defined in game-screen.js -->
+                <div class="item" onclick="DevelopProductModal()">Develop Product</div>
+                <div class="item" onclick="ResearchScreenModal()">Do Research</div>
+                <div class="item" onclick="MarketAnalysisModal()">Check Market</div>
+                <div class="item" onclick="AdvertisingModal()">Advertising</div>
+                <div class="item" onclick="ClearLocalStorage()">DEBUG: Clear LocalStorage</div>
+            </div>
+            <div id="game-ribbon">
+                <p id="date"></p>
+                <p id="money"></p>
+                <p id="research-progress"></p>
+                <p id="product-progress"></p>
+            </div>
+        </div>
+    </body>
+</html>
