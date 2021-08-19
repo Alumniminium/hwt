@@ -37,7 +37,7 @@
         </div>
         <div id="main-menu">
             <button id="new-game-button" onclick="CreateCompanyMenu()">Make new company</button>
-            <button id="settings-button" onclick="CreateCompanyMenu()">Settings</button>
+            <button id="settings-button" onclick="CreateSettingsMenu()">Settings</button>
         </div>
         <div id="create-company" class="modal">
             <div class="container">
@@ -59,8 +59,18 @@
                 </div>
             </div>
         </div>
+        <div id="settings" class="modal">
+            <div class="container">
+                <p class="modal-title">Settings</p>
+                <div class="modal-content">
+                    <div>
+                        <button class="done-button" onclick="CloseSettingsModal()">Done</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div id="develop-product" class="modal">
-            
+
         </div>
         <div id="research" class="modal">
             <div class="container">
@@ -75,14 +85,14 @@
                 <div class="container" id="researchable">
                     <div>Researchable</div>
                 </div>
-                
+
             </div>
         </div>
         <div id="market-analysis" class="modal">
-        
+
         </div>
         <div id="advertising-campaign" class="modal">
-        
+
         </div>
     </div>
 </body>

@@ -14,11 +14,18 @@ function CloseCreateCompanyMenu()
     document.getElementById("create-company").style.display = "none"
 
 }
-function CreateCompanyMenu()
-{
-    localStorage.setItem("id",-1)
+function CreateCompanyMenu() {
+    localStorage.setItem("id", -1)
     document.getElementById("main-menu").style.display = "none"
     document.getElementById("create-company").style.display = "block"
+}
+function CreateSettingsMenu() {
+    document.getElementById("main-menu").style.display = "none"
+    document.getElementById("settings").style.display = "block"
+} 
+function CloseSettingsMenu() {
+    document.getElementById("main-menu").style.display = "grid"
+    document.getElementById("settings").style.display = "none"
 }
 function OpenGameScreen()
 {
