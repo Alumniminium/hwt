@@ -41,6 +41,7 @@ function ClearLocalStorage()
     window.location.reload()
     console.log(timer)
     clearInterval(timer)
+    window.location.replace("index.html");
 }
 function startUpdateTimer()
 {

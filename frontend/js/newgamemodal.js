@@ -27,10 +27,7 @@ function CloseSettingsMenu() {
     document.getElementById("main-menu").style.display = "grid"
     document.getElementById("settings").style.display = "none"
 }
-function OpenGameScreen()
-{
-    document.getElementById("main-menu").style.display = "none"
-    document.getElementById("create-company").style.display = "none"
+function OpenGameScreen(){
     gamescreen = document.getElementById("game-container")
     gamescreen.style.background = "#4a4745 url(/images/game-screen.png) no-repeat center center";
     gamescreen.style.animation = "none"
