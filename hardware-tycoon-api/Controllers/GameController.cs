@@ -74,33 +74,27 @@ namespace hardware_tycoon_api.Controllers
         public ResearchOrDevelopRequestResponseDto Research([FromBody] ResearchRequestDto researchRequest)
         {
             _logger.LogInformation($"Research Start Request for PlayerId {researchRequest.PlayerId}: {researchRequest.ResearchProject}");
+
             var game = GameService.GetGameById(researchRequest.PlayerId);
             if (game == null)
                 return null;
-            var company = game.World.Companies[game.PlayerId];
 
+            var company = game.World.Companies[game.PlayerId];
             var project = GameService.GetResearchProjectByName(researchRequest.ResearchProject);
+
             if (project == null)
                 return new ResearchOrDevelopRequestResponseDto(false, $"The Research Project '{researchRequest.ResearchProject}' doesn't exist.");
-
             if (project.PreRequititeResearch != null && !company.UnlockedResearch.ContainsKey(project.PreRequititeResearch))
                 return new ResearchOrDevelopRequestResponseDto(false, $"The Research Project '{project.Name}' requires '{project.PreRequititeResearch}' to be researched first");
-
-            if(company.UnlockedResearch.ContainsKey(researchRequest.ResearchProject))
+            if (company.UnlockedResearch.ContainsKey(researchRequest.ResearchProject))
                 return new ResearchOrDevelopRequestResponseDto(false, $"The Research Project '{project.Name}' is already unlocked.");
-
-            if (project.Price <= company.Money)
-            {
-                if (company.CurrentResearch == null)
-                {
-                    company.CurrentResearch = project;
-                    company.Money -= project.Price;
-                }
-                else
-                    return new ResearchOrDevelopRequestResponseDto(false, $"You can't research {project.Name} until you finished researching {company.CurrentResearch.Name}$");
-            }
-            else
+            if (project.Price > company.Money)
                 return new ResearchOrDevelopRequestResponseDto(false, $"You can't afford to research {project.Name}. It costs {project.Price} but {company.Name} only has {company.Money}$");
+            if (company.CurrentResearch != null)
+                return new ResearchOrDevelopRequestResponseDto(false, $"You can't research {project.Name} until you finished researching {company.CurrentResearch.Name}$");
+
+            company.CurrentResearch = project;
+            company.Money -= project.Price;
 
             _logger.LogInformation($"Company {company.Name} started researching {project.Name}");
             return new ResearchOrDevelopRequestResponseDto(true);
@@ -111,36 +105,33 @@ namespace hardware_tycoon_api.Controllers
         public ResearchOrDevelopRequestResponseDto Develop(int playerId, ProductDto product)
         {
             _logger.LogInformation($"Product Development Start Request for PlayerId {playerId}");
+            
             if (product == null)
                 return new ResearchOrDevelopRequestResponseDto(false, $"The Product is null");
 
             var game = GameService.GetGameById(playerId);
             if (game == null)
                 return null;
+
             var company = game.World.Companies[game.PlayerId];
             var components = GameService.GetComponentsByNames(product.Components);
             var developmentPrice = components.Sum(c => c.Cost) * 100;
 
-            if (developmentPrice <= company.Money)
-            {
-                if (company.CurrentResearch == null)
-                {
-                    var newProduct = new Product(company, product.Name, product.Price, components, product.Type);
-                    company.DevelopingProducts.Add(newProduct.Name, newProduct);
-                    company.CurrentDevelopment = new Simulation.ResearchProject
-                    {
-                        Name = newProduct.Name,
-                        Price = developmentPrice,
-                        RequiredPoints = developmentPrice / 10
-                    };
-                    company.Money -= developmentPrice;
-                }
-                else
-                    return new ResearchOrDevelopRequestResponseDto(false, $"You can't develop a new product untilyou finished developing {company.CurrentDevelopment.Name}$");
-
-            }
-            else
+            if (developmentPrice > company.Money)
                 return new ResearchOrDevelopRequestResponseDto(false, $"You can't afford to research {product.Name}. It costs {developmentPrice} but {company.Name} only has {company.Money}$");
+
+            if (company.CurrentResearch != null)
+                return new ResearchOrDevelopRequestResponseDto(false, $"You can't develop a new product untilyou finished developing {company.CurrentDevelopment.Name}$");
+
+            var newProduct = new Product(company, product.Name, product.Price, components, product.Type);
+            company.DevelopingProducts.Add(newProduct.Name, newProduct);
+            company.CurrentDevelopment = new ResearchProject
+            {
+                Name = newProduct.Name,
+                Price = developmentPrice,
+                RequiredPoints = developmentPrice / 10
+            };
+            company.Money -= developmentPrice;
 
             _logger.LogInformation($"Company {company.Name} started researching {product.Name}");
             return new ResearchOrDevelopRequestResponseDto(true);
