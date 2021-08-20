@@ -1,3 +1,16 @@
+#research .container
+{
+    background: blueviolet;
+    color: white;
+}
+#research .close-span
+{
+    background: red;
+    color: black;
+    size: 2rem;
+    font-size: xx-large;
+    float: right;
+}
 #researched{
     height: fit-content;
     background-color: burlywood;
