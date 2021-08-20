@@ -60,7 +60,7 @@ namespace hardware_tycoon_api.Controllers
             var world = game.World;
             var company = world.Companies[game.PlayerId];
 
-            var availableResearch = Core.ResearchProjects.Values.Where(p => p.PreRequititeResearch == null || company.UnlockedResearch.ContainsKey(p.PreRequititeResearch) && !company.UnlockedResearch.ContainsKey(p.Name)).ToArray();
+            var availableResearch = Core.ResearchProjects.Values.Where(p => (p.PreRequititeResearch == null || company.UnlockedResearch.ContainsKey(p.PreRequititeResearch)) && !company.UnlockedResearch.ContainsKey(p.Name)).ToArray();
             _logger.LogInformation($"{company.Name} found, sending {availableResearch.Length} available research projects...");
 
             foreach (var project in availableResearch)
@@ -85,6 +85,9 @@ namespace hardware_tycoon_api.Controllers
 
             if (project.PreRequititeResearch != null && !company.UnlockedResearch.ContainsKey(project.PreRequititeResearch))
                 return new ResearchOrDevelopRequestResponseDto(false, $"The Research Project '{project.Name}' requires '{project.PreRequititeResearch}' to be researched first");
+
+            if(company.UnlockedResearch.ContainsKey(researchRequest.ResearchProject))
+                return new ResearchOrDevelopRequestResponseDto(false, $"The Research Project '{project.Name}' is already unlocked.");
 
             if (project.Price <= company.Money)
             {
