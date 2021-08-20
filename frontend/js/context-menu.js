@@ -29,7 +29,7 @@ function isAnyModalOpen()
     var modals = document.getElementsByClassName("modal");
 
     Array.prototype.forEach.call(modals, function(modal) {
-        if(modal.style.display != "none")
+        if(modal.style.display != "none" && modal.style.display != "")
             open = true
     });
 
