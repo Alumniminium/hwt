@@ -1,19 +1,16 @@
+body{
+    margin: 0px;
+}
 #game-container
 {
-    margin: 0px;
     background: #4a4745 url(/images/game-screen.png) no-repeat center center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     height: 100vh;
     width: 100vw;
 }
 
 #game-ribbon{
     background-color: aqua;
-    width: 100%;
-    align-self: self-start;
-    display: flex;
+    display: flex
 }
 
 #game-ribbon p {
@@ -28,9 +25,10 @@
 }
 #research {
     display: none;
-    width: 44vw;
-    height: 50vh;
-    position: absolute;
+    width: 50vw;
+    padding-left: 25vw;
+    height: 25vh;
+    padding-top: 25vw;
 }
 #market-analysis {
     display: none;    

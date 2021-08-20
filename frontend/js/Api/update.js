@@ -48,6 +48,7 @@ function Researches() {
           researchable.style.backgroundColor = "#213";
           researchable.addEventListener("click", function () {
             StartResearch(research.name)
+            CloseAllModals()
           });
           researchableList.appendChild(researchable);
         }
