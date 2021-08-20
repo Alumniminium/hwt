@@ -18,20 +18,19 @@ window.addEventListener("load", function () {
 
 function DevelopProductModal() {
     document.getElementById("develop-product").style.display = "block"
-    contextMenu.classList.remove("visible")
+    contextMenu.style.display = "none"
 }
 function ResearchScreenModal() {
     document.getElementById("research").style.display = "block"
     Researches()
-    contextMenu.classList.remove("visible")
-}
+    contextMenu.style.display = "none"}
 function MarketAnalysisModal() {
     document.getElementById("market-analysis").style.display = "block"
-    contextMenu.classList.remove("visible")
+    contextMenu.style.display = "none"
 }
 function AdvertisingModal() {
     document.getElementById("advertising-campaign").style.display = "block"
-    contextMenu.classList.remove("visible")
+    contextMenu.style.display = "none"
 }
 function CloseAllModals() {
     document.getElementById("advertising-campaign").style.display = "none"

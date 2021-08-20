@@ -30,6 +30,8 @@ function SubmitNewGame() {
       if(id != -1)
       {
         localStorage.setItem("id",id)
+        localStorage.setItem("ceoName",founder_name)
+        localStorage.setItem("companyName",company_name)
         window.location.replace("game.html");
       }
     })

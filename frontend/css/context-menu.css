@@ -4,13 +4,11 @@
   width: 150px;
   background: #1b1a1a;
   border-radius: 5px;
-  transform: scale(0);
-  transform-origin: top left;
+  display: none;
+  top: 1px;
+  left: 1px;
 }
-#context-menu.visible {
-  transform: scale(1);
-  transition: transform 200ms ease-in-out;
-}
+
 #context-menu .item {
   padding: 8px 10px;
   font-size: 18px;
