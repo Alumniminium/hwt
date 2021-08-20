@@ -16,4 +16,5 @@ function showContextMenu(event) {
     }
     else
         contextMenu.style.display = "none"
+    CloseAllModals()
 }

@@ -53,15 +53,10 @@ function OpenModal(modalname)
     contextMenu.style.display = "none"
 }
 function CloseAllModals() {
-    document.getElementById("advertising-campaign").style.display = "none"
-    document.getElementById("market-analysis").style.display = "none"
-    document.getElementById("research").style.display = "none"
-    document.getElementById("develop-product").style.display = "none"
+    [...document.getElementsByClassName("modal")].forEach(element => element.style.display = "none");
 }
 function ClearLocalStorage() {
-    localStorage.removeItem("id");
-    localStorage.removeItem("ceoName");
-    localStorage.removeItem("companyName");
+    localStorage.clear()
     clearTimeout(timer)
     window.location.replace("index.html");
 }
