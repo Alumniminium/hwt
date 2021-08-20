@@ -22,17 +22,19 @@ body{
 
 #develop-product {
     display: none;
+    position: absolute;
 }
 #research {
+    width: 25vw;
     display: none;
-    width: 50vw;
-    padding-left: 25vw;
-    height: 25vh;
-    padding-top: 25vw;
+    position: absolute;
+
 }
 #market-analysis {
-    display: none;    
+    display: none;   
+    position: absolute; 
 }
 #advertising-campaign {
     display: none;    
+    position: absolute;
 }
