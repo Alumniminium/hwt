@@ -47,7 +47,7 @@ namespace hardware_tycoon_api.Services
             if(string.IsNullOrEmpty(researchProject))
                 return null;
             if(Core.ResearchProjects.TryGetValue(researchProject,out var project))
-                return project;
+                return project.CreateCopy();;
             return null;
         }
 

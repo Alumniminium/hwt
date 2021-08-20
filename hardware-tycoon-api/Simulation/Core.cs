@@ -8,14 +8,14 @@ namespace hardware_tycoon_api.Simulation
         public static readonly Dictionary<int, Game> Games = new();
         public static readonly Dictionary<string, ResearchProject> ResearchProjects = new()
         {
-            ["A"] = new ResearchProject  { Name = "A",  RequiredPoints=10, Price = 10, Description = "A doesn't require anything and unlocks A2" },
-            ["B"] = new ResearchProject  { Name = "B",  RequiredPoints=10, Price = 20, Description = "B doesn't require anything and unlocks B2" },
-            ["C"] = new ResearchProject  { Name = "C",  RequiredPoints=10, Price = 40, Description = "C doesn't require anything and unlocks C2" },
-            ["A2"] = new ResearchProject { Name = "A2", RequiredPoints=10, Price = 10, Description = "A2 requires A and unlocks nothing", PreRequititeResearch = "A" },
-            ["B2"] = new ResearchProject { Name = "B2", RequiredPoints=10, Price = 20, Description = "B2 requires B and unlocks nothing", PreRequititeResearch = "B" },
-            ["C2"] = new ResearchProject { Name = "C2", RequiredPoints=10, Price = 40, Description = "C2 requires C and unlocks nothing", PreRequititeResearch = "C" },
-            ["D"] = new ResearchProject  { Name = "D",  RequiredPoints=10, Price = 50, Description = "D requires A and unlocks E", PreRequititeResearch = "A" },
-            ["E"] = new ResearchProject  { Name = "E",  RequiredPoints=10, Price = 100, Description = "E requires D and unlocks nothing", PreRequititeResearch = "D" },
+            ["10um"] = new ResearchProject  { Name = "10um",  RequiredPoints=25, Price = 1000, Description = "10um Fab allows you to create shitty chips" },
+            ["5um"] = new ResearchProject { Name = "5um", RequiredPoints = 50, Price = 1000, Description = "5um Fab allows you to create shitty chips", PreRequititeResearch = "10um" },
+            ["3um"] = new ResearchProject { Name = "3um", RequiredPoints = 100, Price = 10000, Description = "3um Fab allows you to create shitty chips", PreRequititeResearch = "5um" },
+            ["DIP-4"] = new ResearchProject  { Name = "DIP-4",  RequiredPoints=25, Price = 1000, Description = "DIP-4 Package to place your chips on" },
+            ["DIP-8"] = new ResearchProject { Name = "DIP-8", RequiredPoints=50, Price = 10000, Description = "DIP-8 Package to place your chips on", PreRequititeResearch = "DIP-4" },
+            ["DIP-16"] = new ResearchProject  { Name = "DIP-16",  RequiredPoints=100, Price = 100000, Description = "DIP-16 Package to place your chips on", PreRequititeResearch = "DIP-8" },
+            ["Instruction Cache"] = new ResearchProject { Name = "Instruction Cache", RequiredPoints = 50, Price = 10000, Description = "Allows your chip to utilize basic instruction cache" },
+            ["Data Cache"] = new ResearchProject { Name = "Data Cache", RequiredPoints = 100, Price = 100000, Description = "Allows your chip to utilize basic data cache", PreRequititeResearch = "Instruction Cache" },
         };
         public static readonly Dictionary<string, Component> Components = new();
         public static readonly GameTimer GameTimer = new();

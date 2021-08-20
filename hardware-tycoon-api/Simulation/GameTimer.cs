@@ -1,3 +1,4 @@
+using System;
 using System.Diagnostics;
 using System.Threading;
 
@@ -16,15 +17,15 @@ namespace hardware_tycoon_api.Simulation
         private void Tick()
         {
             var sw = Stopwatch.StartNew();
-            while(true)
+            while (true)
             {
                 sw.Restart();
 
-                foreach(var kvp in Core.Games)
+                foreach (var kvp in Core.Games)
                     kvp.Value.SimulationStep();
 
                 var iterationDuration = sw.Elapsed.TotalMilliseconds;
-                Thread.Sleep((int)(1000 - iterationDuration));
+                Thread.Sleep((int)(Math.Max(1, 1000 - iterationDuration)));
             }
         }
     }
