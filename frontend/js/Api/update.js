@@ -3,20 +3,20 @@ let id = localStorage.getItem("id")
 function ApiUpdate() {
   fetch("http://localhost/api/update/?playerId=" + id)
     .then(res => {
-      if (res.status == 200) {
-        var json = res.json()
-        document.getElementById("date").innerHTML = json.date
-        document.getElementById("money").innerHTML = "money " + json.money
-        document.getElementById("research-progress").innerHTML = "research progress " + json.researchProgress
-        document.getElementById("product-progress").innerHTML = "development progress " + json.developmentProgress
-      }
-      else
-      {
+      if (res.status == 200)
+        return res.json()
+      else {
         localStorage.removeItem("id");
         localStorage.removeItem("ceoName");
         localStorage.removeItem("companyName");
         window.location.replace("index.html");
       }
+    })
+    .then(json => {
+      document.getElementById("date").innerHTML = json.date
+      document.getElementById("money").innerHTML = "money " + json.money
+      document.getElementById("research-progress").innerHTML = "research progress " + json.researchProgress
+      document.getElementById("product-progress").innerHTML = "development progress " + json.developmentProgress
     });
 }
 function removeElementsByClass(className) {
