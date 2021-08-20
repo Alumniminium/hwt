@@ -4,7 +4,7 @@ function setupGame() {
     if(id != null && id != -1)
     {
         console.log("localStorage had Id "+id+" so the game screen was activated automatically")
-        OpenGameScreen()
+        window.location.replace("game.html");
     }
 }
 
