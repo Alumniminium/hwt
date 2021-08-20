@@ -26,11 +26,12 @@ window.addEventListener("load", function () {
         timer = setInterval(ApiUpdate, 1000);
     }
 })
-window.addEventListener("keypress")
-function OpenModal(modalname){
+
+function OpenModal(modalname) 
+{
+    gamecontainer = document.getElementById("game-container")
     modal = document.getElementById(modalname)
     modal.style.display = "block"
-    gamecontainer = document.getElementById("game-container")
     modal.style.top ="" + gamecontainer.style.left + gamecontainer.offsetHeight / 3 +"px"
     modal.style.left ="" + gamecontainer.style.top + gamecontainer.offsetWidth / 2 - modal.offsetWidth / 2 +"px"
     switch (modalname) {
@@ -51,28 +52,6 @@ function OpenModal(modalname){
     }
     contextMenu.style.display = "none"
 }
-// function DevelopProductModal() {
-//     document.getElementById("develop-product").style.display = "block"
-//     contextMenu.style.display = "none"
-// }
-// function ResearchScreenModal() {
-//     modal = document.getElementById("research")
-//     modal.style.display = "block"
-//     modal.style.top ="" + document.body.offsetWidth / 2 +"px"
-//     modal.style.left ="" + document.body.offsetHeight / 2 +"px"
-//     Researches()
-//     contextMenu.style.display = "none"}
-// function MarketAnalysisModal() {
-//     modal = document.getElementById("market-analysis")
-//     modal.style.display = "block"
-//     modal.style.top = document.getElementById("game-container").style.top / 2
-//     modal.style.top = document.getElementById("game-container").style.left / 2
-//     contextMenu.style.display = "none"
-// }
-// function AdvertisingModal() {
-//     document.getElementById("advertising-campaign").style.display = "block"
-//     contextMenu.style.display = "none"
-// }
 function CloseAllModals() {
     document.getElementById("advertising-campaign").style.display = "none"
     document.getElementById("market-analysis").style.display = "none"
@@ -80,11 +59,9 @@ function CloseAllModals() {
     document.getElementById("develop-product").style.display = "none"
 }
 function ClearLocalStorage() {
-    localStorage.removeItem("id")
+    localStorage.removeItem("id");
+    localStorage.removeItem("ceoName");
+    localStorage.removeItem("companyName");
     clearTimeout(timer)
-    contextMenu.classList.remove("visible")
-    window.location.reload()
-    console.log(timer)
-    clearInterval(timer)
     window.location.replace("index.html");
 }
