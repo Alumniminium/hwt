@@ -6,15 +6,8 @@ window.addEventListener("load", function () {
     contextMenu = document.getElementById("context-menu");
     document.onkeydown = function(evt) {
         evt = evt || window.event;
-        var isEscape = false;
-        if ("key" in evt) {
-            isEscape = (evt.key === "Escape" || evt.key === "Esc");
-        } else {
-            isEscape = (evt.keyCode === 27);
-        }
-        if (isEscape) {
-            CloseAllModals();
-        }
+            if (evt.key === "Escape" || evt.key === "Esc" || evt.keyCode === 27)
+                CloseAllModals();
     };
     if (id == null || id == -1) {
         console.log("no id in localstorage, going to index.html")
