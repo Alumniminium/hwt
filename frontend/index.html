@@ -3,59 +3,44 @@
 
 <head>
     <link rel="stylesheet" type="text/css" href="css/Menu.css">
-    <link rel="stylesheet" type="text/css" href="css/GameScreen.css">
-    <link rel="stylesheet" type="text/css" href="css/context-menu.css">
-    <link rel="stylesheet" type="text/css" href="css/Research.css">
-
-
     <script type="text/javascript" src="js/newgamemodal.js"></script>
-    <script type="text/javascript" src="js/context-menu.js"></script>
-    <script type="text/javascript" src="js/game-screen.js"></script>
-    <script type="text/javascript" src="js/researchtree.js"></script>
-
     <script type="text/javascript" src="js/Api/newgame.js"></script>
-    <script type="text/javascript" src="js/Api/update.js"></script>
-
-
 </head>
 
 <body onload="if(localStorage.hasOwnProperty('id')) {window.location.replace('game.html')}">
-    <div id="game-container">
-        <div id="main-menu">
-            <button id="new-game-button" onclick="CreateCompanyMenu()">Make new company</button>
-            <button id="settings-button" onclick="CreateSettingsMenu()">Settings</button>
-        </div>
-        <div id="create-company" class="modal">
-            <div class="container">
-                <p class="modal-title">Create your company</p>
-                <div class="modal-content">
-                    <div id="text-input">
-                        <input class="text-input" size="28" placeholder="Your Company Name">
-                        <input class="text-input" size="60" placeholder="Founder's Name">
-                    </div>
-                    <div id="difficulties">
-                        <input class="difficulty" type="radio" name="difficulty">easy</input>
-                        <input class="difficulty" type="radio" name="difficulty">normal</input>
-                        <input class="difficulty" type="radio" name="difficulty">hard</input>
-                    </div>
-                    <div>
-                        <button class="back-button" onclick="CloseCreateCompanyMenu()">Back</button>
-                        <button class="done-button" onclick="SubmitNewGame()">Done</button>
-                    </div>
+    <div id="main-menu">
+        <button id="new-game-button" onclick="CreateCompanyMenu()">Make new company</button>
+        <button id="settings-button" onclick="CreateSettingsMenu()">Settings</button>
+    </div>
+    <div id="create-company" class="modal">
+        <div class="container">
+            <p class="modal-title">Create your company</p>
+            <div class="modal-content">
+                <div id="text-input">
+                    <input class="text-input" size="28" placeholder="Your Company Name">
+                    <input class="text-input" size="60" placeholder="Founder's Name">
+                </div>
+                <div id="difficulties">
+                    <input class="difficulty" type="radio" name="difficulty">easy</input>
+                    <input class="difficulty" type="radio" name="difficulty">normal</input>
+                    <input class="difficulty" type="radio" name="difficulty">hard</input>
+                </div>
+                <div>
+                    <button class="back-button" onclick="CloseCreateCompanyMenu()">Back</button>
+                    <button class="done-button" onclick="SubmitNewGame()">Done</button>
                 </div>
             </div>
         </div>
-        <div id="settings" class="modal">
-            <div class="container">
-                <p class="modal-title">Settings</p>
-                <div class="modal-content">
-                    <div>
-                        <button class="done-button" onclick="CloseSettingsModal()">Done</button>
-                    </div>
+    </div>
+    <div id="settings" class="modal">
+        <div class="container">
+            <p class="modal-title">Settings</p>
+            <div class="modal-content">
+                <div>
+                    <button class="done-button" onclick="CloseSettingsModal()">Done</button>
                 </div>
             </div>
         </div>
-        
 </body>
 
 </html>

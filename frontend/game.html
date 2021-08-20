@@ -2,23 +2,15 @@
 <html>
 
 <head>
-    <link rel="stylesheet" type="text/css" href="css/Menu.css">
     <link rel="stylesheet" type="text/css" href="css/GameScreen.css">
     <link rel="stylesheet" type="text/css" href="css/context-menu.css">
     <link rel="stylesheet" type="text/css" href="css/Research.css">
 
-
-    <script type="text/javascript" src="js/newgamemodal.js"></script>
     <script type="text/javascript" src="js/context-menu.js"></script>
     <script type="text/javascript" src="js/game-screen.js"></script>
-    <script type="text/javascript" src="js/researchtree.js"></script>
-
-    <script type="text/javascript" src="js/Api/newgame.js"></script>
     <script type="text/javascript" src="js/Api/update.js"></script>
-
-
 </head>
-    <body onload="if(!localStorage.hasOwnProperty('id')) {window.location.replace('index.html')} else OpenGameScreen()">
+    <body>
         <div id="game-container">
             <div id="context-menu">
                 <!-- methods defined in game-screen.js -->
@@ -29,10 +21,10 @@
                 <div class="item" onclick="ClearLocalStorage()">DEBUG: Clear LocalStorage</div>
             </div>
             <div id="game-ribbon">
-                <p id="date"></p>
-                <p id="money"></p>
-                <p id="research-progress"></p>
-                <p id="product-progress"></p>
+                <p id="date">waiting</p>
+                <p id="money">waiting</p>
+                <p id="research-progress">waiting</p>
+                <p id="product-progress">waiting</p>
             </div>
             <div id="research" class="modal">
                 <div class="container">

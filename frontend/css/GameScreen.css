@@ -1,8 +1,22 @@
+#game-container
+{
+    margin: 0px;
+    background: #343333;
+    background-image: url("/images/game-screen.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+}
+
 #game-ribbon{
     background-color: aqua;
     width: 100%;
     align-self: self-start;
-    display: none;
+    display: flex;
 }
 
 #game-ribbon p {

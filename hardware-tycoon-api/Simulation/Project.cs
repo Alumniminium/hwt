@@ -6,7 +6,7 @@ namespace hardware_tycoon_api.Simulation
         public string Name;
         public string Description;
         public int Price;
-        public int Progress => CurrentPoints / RequiredPoints * 100;
+        public int Progress => (int)((float)CurrentPoints / (float)RequiredPoints * 100f);
         public int RequiredPoints;
         public int CurrentPoints
         {

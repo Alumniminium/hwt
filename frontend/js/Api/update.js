@@ -1,4 +1,6 @@
-function update()
+let id = localStorage.getItem("id")
+
+function ApiUpdate()
 {
     fetch("http://localhost/api/update/?playerId=" + id)
   .then(res => res.json())
@@ -7,7 +9,6 @@ function update()
     document.getElementById("money").innerHTML = "money "+data.money
     document.getElementById("research-progress").innerHTML = "research progress "+data.researchProgress
     document.getElementById("product-progress").innerHTML = "development progress "+data.developmentProgress
-    
     });  
 }
 function removeElementsByClass(className) {
