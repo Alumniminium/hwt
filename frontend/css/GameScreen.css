@@ -1,10 +1,7 @@
 #game-container
 {
     margin: 0px;
-    background: #343333;
-    background-image: url("/images/game-screen.png");
-    background-repeat: no-repeat;
-    background-position: center;
+    background: #4a4745 url(/images/game-screen.png) no-repeat center center;
     display: flex;
     justify-content: center;
     align-items: center;
