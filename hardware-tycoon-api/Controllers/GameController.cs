@@ -6,7 +6,6 @@ using hardware_tycoon_api.Simulation;
 using hardware_tycoon_api.Simulation.Components;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Microsoft.JSInterop.Implementation;
 
 namespace hardware_tycoon_api.Controllers
 {
@@ -36,6 +35,9 @@ namespace hardware_tycoon_api.Controllers
         {
             _logger.LogInformation($"Update Request for GameId {playerId}");
             var game = GameService.GetGameById(playerId);
+            if (game == null)
+                return null;
+
             var world = game.World;
             var market = world.Market;
             var company = world.Companies[game.PlayerId];
@@ -53,6 +55,8 @@ namespace hardware_tycoon_api.Controllers
         {
             _logger.LogInformation($"Available Research Projects Requested for GameId {playerId}");
             var game = GameService.GetGameById(playerId);
+            if (game == null)
+                yield break;
             var world = game.World;
             var company = world.Companies[game.PlayerId];
 
@@ -67,10 +71,12 @@ namespace hardware_tycoon_api.Controllers
 
         [HttpPut]
         [Route("/api/research")]
-        public ResearchOrDevelopRequestResponseDto Research([FromBody]ResearchRequestDto researchRequest)
+        public ResearchOrDevelopRequestResponseDto Research([FromBody] ResearchRequestDto researchRequest)
         {
             _logger.LogInformation($"Research Start Request for PlayerId {researchRequest.PlayerId}: {researchRequest.ResearchProject}");
             var game = GameService.GetGameById(researchRequest.PlayerId);
+            if (game == null)
+                return null;
             var company = game.World.Companies[game.PlayerId];
 
             var project = GameService.GetResearchProjectByName(researchRequest.ResearchProject);
@@ -106,6 +112,8 @@ namespace hardware_tycoon_api.Controllers
                 return new ResearchOrDevelopRequestResponseDto(false, $"The Product is null");
 
             var game = GameService.GetGameById(playerId);
+            if (game == null)
+                return null;
             var company = game.World.Companies[game.PlayerId];
             var components = GameService.GetComponentsByNames(product.Components);
             var developmentPrice = components.Sum(c => c.Cost) * 100;

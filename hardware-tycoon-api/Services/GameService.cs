@@ -39,7 +39,7 @@ namespace hardware_tycoon_api.Services
             if(Core.Games.TryGetValue(ownerId,out var game))
                 return game;
             else
-                throw new InvalidOperationException($"No game for Id {ownerId} running.");
+                return null;
         }
 
         internal static ResearchProject GetResearchProjectByName(string researchProject)
