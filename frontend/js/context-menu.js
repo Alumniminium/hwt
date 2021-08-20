@@ -1,54 +1,19 @@
-window.addEventListener("load", function ()
-{
+window.addEventListener("load", function () {
     console.log("Context Menu setup starting...")
-    const contextMenu = document.getElementById("context-menu");
-    document.getElementById("game-container").addEventListener("contextmenu",(event) =>{
-        if(event.target.id == "game-container")
-        {
-            if(contextMenu.style.display != "block")
-            {
-                if(isAnyModalOpen())
-                 CloseAllModals()
-                 else{
-                     contextMenu.style.display = "block"
-                     contextMenu.style.top = "" + event.clientY + "px"
-                     contextMenu.style.left = "" + event.clientX + "px"
-                     console.log(contextMenu.style.left,contextMenu.style.top)
-                 }
-            }
-            else
-                contextMenu.style.display = "none"
-        }
-    })
-    document.getElementById("game-container").addEventListener("click",(event) =>{
-        if(event.target.id == "game-container")
-        {
-            if(contextMenu.style.display != "block")
-            {
-                if(isAnyModalOpen())
-                 CloseAllModals()
-                 else{
-                     contextMenu.style.display = "block"
-                     contextMenu.style.top = "" + event.clientY + "px"
-                     contextMenu.style.left = "" + event.clientX + "px"
-                     console.log(contextMenu.style.left,contextMenu.style.top)
-                 }
-            }
-            else
-                contextMenu.style.display = "none"
-        }
-    })
+    var gamecontainer = document.getElementById("game-container")
+    gamecontainer.addEventListener("contextmenu", (event) => showContextMenu(event))
+    gamecontainer.addEventListener("click", (event) => showContextMenu(event))
     console.log("Context Menu setup finished!")
 })
-function isAnyModalOpen()
-{
-    open = false
-    var modals = document.getElementsByClassName("modal");
-
-    Array.prototype.forEach.call(modals, function(modal) {
-        if(modal.style.display != "none" && modal.style.display != "")
-            open = true
-    });
-
-    return open
+function showContextMenu(event) {
+    event.preventDefault()
+    if (event.target.id != "game-container")
+        return;
+    if (contextMenu.style.display != "block") {
+        contextMenu.style.display = "block"
+        contextMenu.style.top = "" + event.clientY + "px"
+        contextMenu.style.left = "" + event.clientX + "px"
+    }
+    else
+        contextMenu.style.display = "none"
 }
