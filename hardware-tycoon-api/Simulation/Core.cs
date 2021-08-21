@@ -8,6 +8,7 @@ namespace hardware_tycoon_api.Simulation
         public static readonly GameTimer GameTimer = new();
         public static readonly Dictionary<int, Game> Games = new();
         public static readonly Dictionary<int, Ceo> CEOs = new();
+        public static readonly Dictionary<string, int> CeoNameToId = new();
         public static readonly Dictionary<string, Component> Components = new();
         public static readonly Dictionary<string, RndProject> ResearchProjects = new()
         {

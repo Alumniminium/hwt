@@ -13,18 +13,14 @@ namespace hardware_tycoon_api.Controllers
     public class GameController : ControllerBase
     {
         private readonly ILogger<GameController> _logger;
-
-        public GameController(ILogger<GameController> logger)
-        {
-            _logger = logger;
-        }
+        public GameController(ILogger<GameController> logger) => _logger = logger;
 
         [HttpPost]
         [Route("/api/login")]
         public LoginResponseDto Login(LoginRequestDto request)
         {
             _logger.LogInformation($"Request Login for User: {request.CompanyName} Password: {request.CompanyName} Difficulty {request.Difficulty}");
-            var playerId = GameService.GetPlayerId(request);
+            var playerId = GameService.CreateNewGame(request);
             _logger.LogInformation($"CEO: {request.CeoName}, Company Name: {request.CompanyName} -> PlayerId {playerId}");
             return new LoginResponseDto(playerId);
         }
@@ -34,19 +30,13 @@ namespace hardware_tycoon_api.Controllers
         public SimulationUpdateDto Update(int playerId)
         {
             _logger.LogInformation($"Update Request for GameId {playerId}");
-            var game = GameService.GetGameById(playerId);
-            if (game == null)
+            var ceo = GameService.GetCeoById(playerId);
+            if (ceo == null)
                 return null;
 
-            var world = game.World;
-            var market = world.Market;
-            var company = world.Companies[playerId];
-            _logger.LogInformation($"GameId {playerId} found, sending update for CompanyName {company.Name}");
+            _logger.LogInformation($"GameId {playerId} found, sending update for CompanyName {ceo.Company.Name}");
 
-            var researchProgress = company.CurrentResearch != null ? company.CurrentResearch.Progress : -1;
-            var developmentProgress = company.CurrentDevelopment != null ? company.CurrentDevelopment.Progress : -1;
-
-            return new SimulationUpdateDto(game.World.Date, company.Money, researchProgress, developmentProgress, market.Products);
+            return new SimulationUpdateDto(ceo.Game.World.Date, ceo.Company.Money, ceo.Game.World.Market.Products);
         }
 
         [HttpGet]
@@ -54,18 +44,16 @@ namespace hardware_tycoon_api.Controllers
         public IEnumerable<ResearchProjectDto> CompletedResearch(int playerId)
         {
             _logger.LogInformation($"Available Research Projects Requested for GameId {playerId}");
-            var game = GameService.GetGameById(playerId);
-            if (game == null)
+            var ceo = GameService.GetCeoById(playerId);
+            if (ceo == null)
                 yield break;
-            var world = game.World;
-            var company = world.Companies[playerId];
-
-            var availableResearch = Core.ResearchProjects.Values.Where(p => (p.PreRequititeResearch == null || company.UnlockedResearch.ContainsKey(p.PreRequititeResearch)) && !company.UnlockedResearch.ContainsKey(p.Name)).ToArray();
-            _logger.LogInformation($"{company.Name} found, sending {availableResearch.Length} available research projects...");
+                
+            var availableResearch = Core.ResearchProjects.Values.Where(p => (p.PreRequititeResearch == null || ceo.Company.UnlockedResearch.ContainsKey(p.PreRequititeResearch)) && !ceo.Company.UnlockedResearch.ContainsKey(p.Name)).ToArray();
+            _logger.LogInformation($"{ceo.Company.Name} found, sending {availableResearch.Length} available research projects...");
 
             foreach (var project in availableResearch)
                 yield return new ResearchProjectDto(project.Name, project.Price, project.Description);
-            foreach (var project in company.UnlockedResearch)
+            foreach (var project in ceo.Company.UnlockedResearch)
                 yield return new ResearchProjectDto(project.Key, 0, project.Value.Description);
         }
 
@@ -75,66 +63,64 @@ namespace hardware_tycoon_api.Controllers
         {
             _logger.LogInformation($"Research Start Request for PlayerId {researchRequest.PlayerId}: {researchRequest.ResearchProject}");
 
-            var game = GameService.GetGameById(researchRequest.PlayerId);
-            if (game == null)
+            var ceo = GameService.GetCeoById(researchRequest.PlayerId);
+            if (ceo == null)
                 return null;
 
-            var company = game.World.Companies[researchRequest.PlayerId];
             var project = GameService.GetResearchProjectByName(researchRequest.ResearchProject);
 
             if (project == null)
                 return new ResearchOrDevelopRequestResponseDto(false,-1, $"The Research Project '{researchRequest.ResearchProject}' doesn't exist.");
-            if (project.PreRequititeResearch != null && !company.UnlockedResearch.ContainsKey(project.PreRequititeResearch))
+            if (project.PreRequititeResearch != null && !ceo.Company.UnlockedResearch.ContainsKey(project.PreRequititeResearch))
                 return new ResearchOrDevelopRequestResponseDto(false, -1, $"The Research Project '{project.Name}' requires '{project.PreRequititeResearch}' to be researched first");
-            if (company.UnlockedResearch.ContainsKey(researchRequest.ResearchProject))
+            if (ceo.Company.UnlockedResearch.ContainsKey(researchRequest.ResearchProject))
                 return new ResearchOrDevelopRequestResponseDto(false, -1, $"The Research Project '{project.Name}' is already unlocked.");
-            if (project.Price > company.Money)
-                return new ResearchOrDevelopRequestResponseDto(false, -1, $"You can't afford to research {project.Name}. It costs {project.Price} but {company.Name} only has {company.Money}$");
-            if (company.CurrentResearch != null)
-                return new ResearchOrDevelopRequestResponseDto(false, -1, $"You can't research {project.Name} until you finished researching {company.CurrentResearch.Name}$");
+            if (project.Price > ceo.Company.Money)
+                return new ResearchOrDevelopRequestResponseDto(false, -1, $"You can't afford to research {project.Name}. It costs {project.Price} but {ceo.Company.Name} only has {ceo.Company.Money}$");
+            if (ceo.Company.CurrentResearch != null)
+                return new ResearchOrDevelopRequestResponseDto(false, -1, $"You can't research {project.Name} until you finished researching {ceo.Company.CurrentResearch.Name}$");
 
-            company.CurrentResearch = project;
-            company.Money -= project.Price;
+            ceo.Company.CurrentResearch = project;
+            ceo.Company.Money -= project.Price;
 
-            _logger.LogInformation($"Company {company.Name} started researching {project.Name}");
-            return new ResearchOrDevelopRequestResponseDto(true, company.CurrentResearch.RequiredPoints);
+            _logger.LogInformation($"Company {ceo.Company.Name} started researching {project.Name}");
+            return new ResearchOrDevelopRequestResponseDto(true, ceo.Company.CurrentResearch.RequiredPoints);
         }
 
         [HttpPut]
         [Route("/api/develop")]
-        public ResearchOrDevelopRequestResponseDto Develop(int playerId, ProductDto product)
+        public ResearchOrDevelopRequestResponseDto Develop([FromBody] ProductDto product)
         {
-            _logger.LogInformation($"Product Development Start Request for PlayerId {playerId}");
-            
             if (product == null)
                 return new ResearchOrDevelopRequestResponseDto(false,-1, $"The Product is null");
 
-            var game = GameService.GetGameById(playerId);
-            if (game == null)
+            _logger.LogInformation($"Product Development Start Request for PlayerId {product.PlayerId}");
+
+            var ceo = GameService.GetCeoById(product.PlayerId);
+            if (ceo == null)
                 return null;
 
-            var company = game.World.Companies[playerId];
             var components = GameService.GetComponentsByNames(product.Components);
             var developmentPrice = components.Sum(c => c.Cost) * 100;
 
-            if (developmentPrice > company.Money)
-                return new ResearchOrDevelopRequestResponseDto(false,-1, $"You can't afford to research {product.Name}. It costs {developmentPrice} but {company.Name} only has {company.Money}$");
+            if (developmentPrice > ceo.Company.Money)
+                return new ResearchOrDevelopRequestResponseDto(false,-1, $"You can't afford to research {product.Name}. It costs {developmentPrice} but { ceo.Company.Name} only has { ceo.Company.Money}$");
 
-            if (company.CurrentResearch != null)
-                return new ResearchOrDevelopRequestResponseDto(false,-1, $"You can't develop a new product untilyou finished developing {company.CurrentDevelopment.Name}$");
+            if (ceo.Company.CurrentResearch != null)
+                return new ResearchOrDevelopRequestResponseDto(false,-1, $"You can't develop a new product untilyou finished developing { ceo.Company.CurrentDevelopment.Name}$");
 
-            var newProduct = new Product(company, product.Name, product.Price, components, product.Type);
-            company.DevelopingProducts.Add(newProduct.Name, newProduct);
-            company.CurrentDevelopment = new RndProject
+            var newProduct = new Product(ceo.Company, product.Name, product.Price, components, product.Type);
+             ceo.Company.DevelopingProducts.Add(newProduct.Name, newProduct);
+             ceo.Company.CurrentDevelopment = new RndProject
             {
                 Name = newProduct.Name,
                 Price = developmentPrice,
                 RequiredPoints = developmentPrice / 10
             };
-            company.Money -= developmentPrice;
+            ceo.Company.Money -= developmentPrice;
 
-            _logger.LogInformation($"Company {company.Name} started researching {product.Name}");
-            return new ResearchOrDevelopRequestResponseDto(true, company.CurrentDevelopment.RequiredPoints);
+            _logger.LogInformation($"Company { ceo.Company.Name} started researching {product.Name}");
+            return new ResearchOrDevelopRequestResponseDto(true, ceo.Company.CurrentDevelopment.RequiredPoints);
         }
     }
 }
