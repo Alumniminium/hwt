@@ -6,22 +6,21 @@ namespace hardware_tycoon_api.Simulation
 {
     public class Company
     {
-        public int OwnerId;
-        public World World { get; set; }
-        public string CEO { get; set; }
+        public Ceo CEO { get; set; }
         public string Name { get; set; }
         public long Money { get; set; }
 
-        public Dictionary<string, ResearchProject> UnlockedResearch { get; set; } = new();
+        public Dictionary<string, RndProject> UnlockedResearch { get; set; } = new();
         public Dictionary<string, Product> DevelopingProducts { get; set; } = new();
-        public ResearchProject CurrentResearch { get; set; }
-        public ResearchProject CurrentDevelopment { get; set; }
+        public RndProject CurrentResearch { get; set; }
+        public RndProject CurrentDevelopment { get; set; }
 
-        public Company(World world, int ownerId, string ceo, string name)
+        public World World => CEO.Game.World;
+        public Market Market => World.Market;
+
+        public Company(Ceo ceo, string name)
         {
-            OwnerId = ownerId;
             CEO = ceo;
-            World = world;
             Name = name;
         }
 

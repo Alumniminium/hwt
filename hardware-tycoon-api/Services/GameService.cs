@@ -19,19 +19,28 @@ namespace hardware_tycoon_api.Services
             {
                 foreach(var kvp2 in kvp.Value.World.Companies)
                 {
-                    if(kvp2.Value.CEO == requestDto.CeoName)
+                    if(kvp2.Value.CEO.Name == requestDto.CeoName)
                         return kvp2.Key;
                 }
             }
 
-            int id = 0;
-            while(Core.Games.ContainsKey(id))
-                id++;
+            int gameId = 0;
+            while(Core.Games.ContainsKey(gameId))
+                gameId++;
 
-            var game = new Game(id, requestDto.CeoName, requestDto.CompanyName,requestDto.Difficulty);
-            Core.Games.Add(id,game);
+            int playerId = 0;
+            while(Core.CEOs.ContainsKey(playerId))
+                playerId++;
 
-            return game.PlayerId;
+            var game = new Game(gameId, requestDto.Difficulty);
+            Core.Games.Add(gameId, game);
+
+            var ceo = new Ceo(playerId, requestDto.CeoName);
+            Core.CEOs.Add(ceo.PlayerId,ceo);
+            
+            game.World.AddCompany(ceo, requestDto.CompanyName);
+
+            return playerId;
         }
 
         public static Game GetGameById(int ownerId)
@@ -42,7 +51,7 @@ namespace hardware_tycoon_api.Services
                 return null;
         }
 
-        internal static ResearchProject GetResearchProjectByName(string researchProject)
+        internal static RndProject GetResearchProjectByName(string researchProject)
         {
             if(string.IsNullOrEmpty(researchProject))
                 return null;
