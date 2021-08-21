@@ -7,9 +7,13 @@
 }
 #develop-product .close-span
 {
+    cursor: pointer;
     background: red;
     color: black;
     size: 2rem;
     font-size: xx-large;
     float: right;
+}
+#develop-product .close-span:hover{
+    background-color: violet;
 }
