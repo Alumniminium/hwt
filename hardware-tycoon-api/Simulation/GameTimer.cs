@@ -25,7 +25,7 @@ namespace hardware_tycoon_api.Simulation
                     kvp.Value.SimulationStep();
 
                 var iterationDuration = sw.Elapsed.TotalMilliseconds;
-                Thread.Sleep((int)(Math.Max(1, 1000 - iterationDuration)));
+                Thread.Sleep((int)(Math.Max(1, 100 - iterationDuration)));
             }
         }
     }

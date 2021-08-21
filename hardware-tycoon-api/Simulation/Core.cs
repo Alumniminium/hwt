@@ -1,8 +1,10 @@
+using System;
 using System.Collections.Generic;
 using hardware_tycoon_api.Simulation.Components;
 
 namespace hardware_tycoon_api.Simulation
 {
+    public record CompetitorProduct(DateTime ReleaseDate, string Name, int Price, string Socket, int Fab, int Bits, float Frequency, string Description);
     public static class Core
     {
         public static readonly GameTimer GameTimer = new();
@@ -10,6 +12,7 @@ namespace hardware_tycoon_api.Simulation
         public static readonly Dictionary<int, Ceo> CEOs = new();
         public static readonly Dictionary<string, int> CeoNameToId = new();
         public static readonly Dictionary<string, Component> Components = new();
+        public static readonly Dictionary<string, CompetitorProduct> CompetitorProducts  = new();
         public static readonly Dictionary<string, RndProject> ResearchProjects = new()
         {
             ["10um"] = new RndProject  { Name = "10um",  RequiredPoints=25, Price = 1000, Description = "10um Fab allows you to create shitty chips" },
@@ -21,5 +24,6 @@ namespace hardware_tycoon_api.Simulation
             ["Instruction Cache"] = new RndProject { Name = "Instruction Cache", RequiredPoints = 50, Price = 10000, Description = "Allows your chip to utilize basic instruction cache" },
             ["Data Cache"] = new RndProject { Name = "Data Cache", RequiredPoints = 100, Price = 100000, Description = "Allows your chip to utilize basic data cache", PreRequititeResearch = "Instruction Cache" },
         };
+
     }
 }

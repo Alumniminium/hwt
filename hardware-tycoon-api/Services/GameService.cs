@@ -33,6 +33,7 @@ namespace hardware_tycoon_api.Services
             Core.CEOs.Add(ceo.PlayerId, ceo);
 
             game.World.AddCompany(ceo, companyName);
+            game.World.AddNpcCompany("Intel", "Database/Competitors/Intel.tsv");
 
             return playerId;
         }

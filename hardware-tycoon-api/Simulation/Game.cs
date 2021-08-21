@@ -14,11 +14,14 @@ namespace hardware_tycoon_api.Simulation
             World = new World(GameId);
         }
 
-
         internal void SimulationStep()
         {
             World.Date = World.Date.AddDays(1);
-
+            foreach(var kvp in World.NpcCompanies)
+            {
+                var company = kvp.Value;
+                company.Tick();
+            }
             foreach (var kvp in World.Companies)
             {
                 var company = kvp.Value;
