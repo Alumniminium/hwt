@@ -1,0 +1,38 @@
+# Type          Name             Cost$          ReqPoints       PreReqReserch      Icon                                Description
+FAB             10um             1000           30                                 /images/reseach/fab.png             Allows 10um chip manufacturing
+FAB             5um              20000          40              10um               /images/reseach/fab.png             Allows 5um chip manufacturing
+FAB             3um              50000          50              5um                /images/reseach/fab.png             Allows 3um chip manufacturing
+FAB             2um              100000         60              3um                /images/reseach/fab.png             Allows 2um chip manufacturing
+FAB             1um              200000         70              2um                /images/reseach/fab.png             Allows 1um chip manufacturing
+FAB             90nm             400000         80              1um                /images/reseach/fab.png             Allows 90nm chip manufacturing
+FAB             65nm             800000         90              90nm               /images/reseach/fab.png             Allows 65nm chip manufacturing
+FAB             45nm             1000000        100             65nm               /images/reseach/fab.png             Allows 45nm chip manufacturing
+FAB             35nm             1500000        130             45nm               /images/reseach/fab.png             Allows 35nm chip manufacturing     
+FAB             25nm             2000000        160             35nm               /images/reseach/fab.png             Allows 25nm chip manufacturing     
+FAB             15nm             2500000        230             25nm               /images/reseach/fab.png             Allows 15nm chip manufacturing     
+FAB             14nm             3000000        260             15nm               /images/reseach/fab.png             Allows 14nm chip manufacturing     
+FAB             12nm             5000000        330             14nm               /images/reseach/fab.png             Allows 12nm chip manufacturing     
+FAB             10nm             8000000        350             12nm               /images/reseach/fab.png             Allows 10nm chip manufacturing  
+FAB             7nm              10000000       430             10nm               /images/reseach/fab.png             Allows 7nm chip manufacturing           
+FAB             5nm              15000000       530             7nm                /images/reseach/fab.png             Allows 5nm chip manufacturing     
+FAB             3nm              20000000       600             5nm                /images/reseach/fab.png             Allows 3nm chip manufacturing     
+FAB             2nm              50000000       630             3nm                /images/reseach/fab.png             Allows 2nm chip manufacturing             
+FAB             1nm              100000000      650             2nm                /images/reseach/fab.png             Allows 1nm chip manufacturing      
+
+Socket          DIP-4            1000           30                                 /images/research/dip4.png           DIP-4 Package to place your chip on
+Socket          DIP-8            1000           30              DIP-4              /images/research/dip4.png           DIP-4 Package to place your chip on
+Socket          DIP-16           1000           30              DIP-8              /images/research/dip4.png           DIP-4 Package to place your chip on
+Socket          DIP-18           1000           30              DIP-16             /images/research/dip4.png           DIP-4 Package to place your chip on
+Socket          DIP-32           1000           30              DIP-18             /images/research/dip4.png           DIP-4 Package to place your chip on
+Socket          DIP-40           1000           30              DIP-32             /images/research/dip4.png           DIP-4 Package to place your chip on
+Socket          DIP-64           1000           30              DIP-40             /images/research/dip4.png           DIP-4 Package to place your chip on
+Socket          DIP-96           1000           30              DIP-64             /images/research/dip4.png           DIP-4 Package to place your chip on
+Socket          PGA-68           1000           30              DIP-64             /images/research/dip4.png           DIP-4 Package to place your chip on
+Socket          PGA-132          1000           30              PGA-68             /images/research/dip4.png           DIP-4 Package to place your chip on
+Socket          PGA-168          1000           30              PGA-132            /images/research/dip4.png           DIP-4 Package to place your chip on
+Socket          PGA-273          1000           30              PGA-168            /images/research/dip4.png           DIP-4 Package to place your chip on
+Socket          PGA-320          1000           30              PGA-273            /images/research/dip4.png           DIP-4 Package to place your chip on
+Socket          PGA-370          1000           30              PGA-320            /images/research/dip4.png           DIP-4 Package to place your chip on
+Socket          SEC-242          1000           30              PGA-273            /images/research/dip4.png           DIP-4 Package to place your chip on
+Socket          PGA-387          1000           30              PGA-370            /images/research/dip4.png           DIP-4 Package to place your chip on
+Socket          PGA-479          1000           30              PGA-387            /images/research/dip4.png           DIP-4 Package to place your chip on
