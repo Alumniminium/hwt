@@ -30,7 +30,6 @@ window.addEventListener("load", function () {
     else {
         console.log("gameId = " + id + ", starting update timer...")
         timer = setInterval(ApiUpdate, 1000);
-        progressicontimer = setInterval(updateProgress,33)
     }
 })
 
@@ -71,23 +70,22 @@ function setProgress(percent) {
     circle.style.strokeDashoffset = offset;
   }
 function updateProgress(){
-    if(localStorage.getItem('research_name') != null)
-        {
-            dayspassed = localStorage.getItem('research_days_passed')
-            research_days = parseInt(localStorage.getItem('research_days'))
-            dayspassed = parseFloat(dayspassed.replace(",", "."));
-            dayspassed = dayspassed + 0.033;
-            localStorage.setItem('research_days_passed', ""+dayspassed)
-            progress = (dayspassed/research_days) * 100
-            if(progress <=100)
-            {
-                document.getElementById("research-progress").innerHTML = localStorage.getItem("research_name")
-                setProgress(""+progress)
-            }
-            else{
-                setProgress("0")
-                document.getElementById("research-progress").innerHTML = ""
-                localStorage.setItem('research_name', null)
-            }
-        }
+
+    dayspassed = localStorage.getItem('research_days_passed')
+    research_days = parseInt(localStorage.getItem('research_days'))
+    dayspassed = parseFloat(dayspassed.replace(",", "."));
+    dayspassed = dayspassed + 0.033;
+    localStorage.setItem('research_days_passed', ""+dayspassed)
+    progress = (dayspassed/research_days) * 100
+    if(progress <=100)
+    {
+        document.getElementById("research-progress").innerHTML = localStorage.getItem("research_name")
+        setProgress(""+progress)
     }
+    else{
+        setProgress("0")
+        document.getElementById("research-progress").innerHTML = ""
+        localStorage.setItem('research_name', null)
+        clearTimeout(progressicontimer)
+    }
+}
