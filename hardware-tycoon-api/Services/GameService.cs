@@ -8,64 +8,65 @@ namespace hardware_tycoon_api.Services
 {
     public static class GameService
     {
-        public static int GetPlayerId(LoginRequestDto requestDto)
+        public static int CreateNewGame(LoginRequestDto requestDto)
         {
-            if(string.IsNullOrEmpty(requestDto.CeoName))
+            if (string.IsNullOrEmpty(requestDto.CeoName))
                 return -1;
-            if(string.IsNullOrEmpty(requestDto.CompanyName))
+            if (string.IsNullOrEmpty(requestDto.CompanyName))
                 return -1;
-                
-            foreach(var kvp in Core.Games)
-            {
-                foreach(var kvp2 in kvp.Value.World.Companies)
-                {
-                    if(kvp2.Value.CEO.Name == requestDto.CeoName)
-                        return kvp2.Key;
-                }
-            }
+
+            var ceoName = requestDto.CeoName.Trim();
+            var companyName = requestDto.CompanyName.Trim();
 
             int gameId = 0;
-            while(Core.Games.ContainsKey(gameId))
+            while (Core.Games.ContainsKey(gameId))
                 gameId++;
 
             int playerId = 0;
-            while(Core.CEOs.ContainsKey(playerId))
+            while (Core.CEOs.ContainsKey(playerId))
                 playerId++;
 
             var game = new Game(gameId, requestDto.Difficulty);
             Core.Games.Add(gameId, game);
 
-            var ceo = new Ceo(playerId, requestDto.CeoName);
-            Core.CEOs.Add(ceo.PlayerId,ceo);
-            
-            game.World.AddCompany(ceo, requestDto.CompanyName);
+            var ceo = new Ceo(playerId, ceoName);
+            Core.CEOs.Add(ceo.PlayerId, ceo);
+
+            game.World.AddCompany(ceo, companyName);
 
             return playerId;
         }
 
-        public static Game GetGameById(int ownerId)
+        public static Game GetGameByPlayerId(int playerId)
         {
-            if(Core.Games.TryGetValue(ownerId,out var game))
-                return game;
+            if(Core.CEOs.TryGetValue(playerId, out var ceo))
+                return ceo.Game;
+            else
+                return null;
+        }
+        public static Ceo GetCeoById(int ownerId)
+        {
+            if (Core.CEOs.TryGetValue(ownerId, out var ceo))
+                return ceo;
             else
                 return null;
         }
 
         internal static RndProject GetResearchProjectByName(string researchProject)
         {
-            if(string.IsNullOrEmpty(researchProject))
+            if (string.IsNullOrEmpty(researchProject))
                 return null;
-            if(Core.ResearchProjects.TryGetValue(researchProject,out var project))
-                return project.CreateCopy();;
+            if (Core.ResearchProjects.TryGetValue(researchProject, out var project))
+                return project.CreateCopy(); ;
             return null;
         }
 
         internal static Component[] GetComponentsByNames(string[] components)
         {
-            List<Component> realComponents = new ();
+            List<Component> realComponents = new();
             foreach (var name in components)
             {
-                if(Core.Components.TryGetValue(name,out var component))
+                if (Core.Components.TryGetValue(name, out var component))
                     realComponents.Add(component);
             }
             return realComponents.ToArray();

@@ -10,8 +10,6 @@ namespace hardware_tycoon_api.DTOs
     (
         DateTime Date,
         long Money,
-        int ResearchProgress,
-        int DevelopmentProgress,
         Dictionary<string, Product> MarketProducts
     );
 }
