@@ -12,12 +12,20 @@ body{
     background-color: aqua;
     display: flex
 }
-
 #game-ribbon p {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: large;
     padding-left: 1rem;
     padding-right: 1rem;
+}
+.progress-ring{
+    width: 5vw;
+    height: 5vh;
+}
+.progress-ring__circle{
+    stroke : white;
+    stroke-width: 2.5;
+    fill: transparent;
 }
 
 #develop-product {

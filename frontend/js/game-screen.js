@@ -1,8 +1,22 @@
 let contextMenu = null
 let timer = null
 
+//progress bar stuff
+var circle = null
+var radius = null
+var circumference = null;
+
+// circle.style.strokeDasharray = `${circumference} ${circumference}`;
+// circle.style.strokeDashoffset = `${circumference}`;
+
+
 window.addEventListener("load", function () {
     console.log("game-screen.js loading...")
+    circle = document.querySelector('circle');
+    radius = circle.r.baseVal.value;
+    circumference = radius * 2 * Math.PI;
+    circle.style.strokeDasharray = `${circumference} ${circumference}`;
+    circle.style.strokeDashoffset = `${circumference}`;
     contextMenu = document.getElementById("context-menu");
     document.onkeydown = function (evt) {
         if (evt.key === "Escape" || evt.key === "Esc")
@@ -50,3 +64,7 @@ function ClearLocalStorage() {
     clearTimeout(timer)
     window.location.replace("index.html");
 }
+function setProgress(percent) {
+    const offset = circumference - percent / 100 * circumference;
+    circle.style.strokeDashoffset = offset;
+  }

@@ -62,6 +62,8 @@ function StartResearch(researchName) {
       else{
         alert("starting research")
         console.log(data)
+        localStorage.setItem("research_days",data.secondsUntilDone)
+        localStorage.setItem("research_days_remaining", data.secondsUntilDone)
       }
 
     });
