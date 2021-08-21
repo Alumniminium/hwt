@@ -46,3 +46,20 @@ body{
     display: none;    
     position: absolute;
 }
+.pop-message{
+    position: absolute;
+    animation: popmessage 5s ;
+    overflow:hidden;
+    font-size: xx-large;
+    color: #2f0000;
+    border-bottom-style: double;
+    animation-fill-mode: forwards;
+}
+@keyframes popmessage{
+    from {
+        opacity: 1;
+      }
+      to {
+        opacity: 0; top: -10px; display: none;
+      }
+}

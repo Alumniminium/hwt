@@ -10,7 +10,7 @@ function ApiUpdate() {
       }
     })
     .then(json => {
-      document.getElementById("date").innerHTML = json.date
+      document.getElementById("date").innerHTML = new Date(json.date).toLocaleDateString("en-US")
       document.getElementById("money").innerHTML = "$ " + new Intl.NumberFormat('en-US').format(json.money)
     });
 }
@@ -58,11 +58,11 @@ function StartResearch(researchName) {
         alert(data.debugInfo)
       }
       else{
-        alert("starting research")
         localStorage.setItem("research_days",data.secondsUntilDone)
         localStorage.setItem("research_days_passed", 0)
         localStorage.setItem("research_name",researchName)
-        progressicontimer = setInterval(updateProgress,33) 
+        PopMessage("Starting" + researchName, 270, 300)
+        progressicontimer = setInterval(UpdateProgress,33) 
       }
 
     });
