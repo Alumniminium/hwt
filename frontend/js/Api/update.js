@@ -62,6 +62,7 @@ function StartResearch(researchName) {
         localStorage.setItem("research_days",data.secondsUntilDone)
         localStorage.setItem("research_days_passed", 0)
         localStorage.setItem("research_name",researchName)
+        progressicontimer = setInterval(updateProgress,33) 
       }
 
     });
