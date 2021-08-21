@@ -54,7 +54,17 @@ function StartResearch(researchName) {
     method: 'PUT',
     body: JSON.stringify(Object.fromEntries(researchRequest))
   }).then(res => res.json())
-    .then(json => alert(json.debugInfo))
+  .then(data => {
+      if(!data.success)
+      {
+        alert(data.debugInfo)
+      }
+      else{
+        alert("starting research")
+        console.log(data)
+      }
+
+    });
   CloseAllModals()
 }
 
