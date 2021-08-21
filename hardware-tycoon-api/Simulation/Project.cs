@@ -2,28 +2,20 @@ using System;
 
 namespace hardware_tycoon_api.Simulation
 {
-    public class ResearchProject
+    public class RndProject
     {
-        private int _currentPoints;
         public string Name;
         public string Description;
         public int Price;
-        public int Progress => (int)((float)CurrentPoints / RequiredPoints * 100f);
-        public int RequiredPoints;
-        public int CurrentPoints
-        {
-            get => _currentPoints;
-            set
-            {
-                if (value <= RequiredPoints)
-                    _currentPoints = value;
-            }
-        }
         public string PreRequititeResearch;
+        public int CurrentPoints;
+        public int RequiredPoints;
 
-        internal ResearchProject CreateCopy()
+        public int Progress => (int)((float)CurrentPoints / RequiredPoints * 100f);
+
+        internal RndProject CreateCopy()
         {
-            return new ResearchProject
+            return new RndProject
             {
                 Name = Name,
                 Description = Description,
