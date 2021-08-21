@@ -7,9 +7,13 @@
 }
 #market-analysis .close-span
 {
+    cursor: pointer;
     background: red;
     color: black;
     size: 2rem;
     font-size: xx-large;
     float: right;
+}
+#market-analysis .close-span:hover{
+    background-color: violet;
 }

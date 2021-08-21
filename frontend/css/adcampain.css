@@ -7,9 +7,13 @@
 }
 #advertising-campaign .close-span
 {
+    cursor: pointer;
     background: red;
     color: black;
     size: 2rem;
     font-size: xx-large;
     float: right;
+}
+#advertising-campaign .close-span:hover{
+    background-color: violet;
 }

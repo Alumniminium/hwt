@@ -3,11 +3,15 @@
 }
 #research .close-span
 {
+    cursor: pointer;
     background: red;
     color: black;
     size: 2rem;
     font-size: xx-large;
     float: right;
+}
+#research .close-span:hover{
+    background-color: violet;
 }
 .researched-modal-item
 {
@@ -16,9 +20,13 @@
     border: none;
 }
 .researchable-modal-item{
+    cursor: pointer;
     height: fit-content;
-    background-color: rgb(250, 156, 145);
+    background-color: rgb(230, 24, 1);
     border: none;
+}
+.researchable-modal-item:hover{
+    background-color: rgb(116, 74, 69);
 }
 
 #researched

@@ -12,8 +12,6 @@ function ApiUpdate() {
     .then(json => {
       document.getElementById("date").innerHTML = json.date
       document.getElementById("money").innerHTML = "$ " + new Intl.NumberFormat('en-US').format(json.money)
-      document.getElementById("research-progress").innerHTML = "researching " + "{research name}" + ": " + json.researchProgress + "%"
-      document.getElementById("product-progress").innerHTML = "developing " + "{product name}" + ": " + json.developmentProgress + "%"
     });
 }
 
@@ -54,7 +52,19 @@ function StartResearch(researchName) {
     method: 'PUT',
     body: JSON.stringify(Object.fromEntries(researchRequest))
   }).then(res => res.json())
-    .then(json => alert(json.debugInfo))
+  .then(data => {
+      if(!data.success)
+      {
+        alert(data.debugInfo)
+      }
+      else{
+        alert("starting research")
+        localStorage.setItem("research_days",data.secondsUntilDone)
+        localStorage.setItem("research_days_passed", 0)
+        localStorage.setItem("research_name",researchName)
+      }
+
+    });
   CloseAllModals()
 }
 
