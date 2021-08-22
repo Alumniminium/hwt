@@ -1,0 +1,53 @@
+.modal
+{
+    position: absolute;
+    width: 60vw;
+    max-width: 500px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    display: flow-root;
+    background-color: white;
+}
+.modal .close-span
+{
+    cursor: pointer;
+    background: red;
+    color: red;
+    float: right;
+
+    margin-right: -16px;
+    margin-top: -16px;
+    padding-right: 32px;
+    padding-top: 32px;
+}
+.modal .close-span:hover{
+    background-color: #17ffc4 ;
+}
+
+.container {
+    display: flow-root !important;
+}
+.container h3  {
+    color: #17ffc4 ;    
+    margin: unset;
+    padding: 1rem;
+}
+.container div {
+    display: flow-root !important;
+}
+#research
+{
+    display: none;
+}
+
+#develop-product {
+    display: none;
+}
+#market-analysis {
+    display: none;   
+}
+#advertising-campaign {
+    display: none;    
+}
+

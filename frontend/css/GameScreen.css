@@ -3,13 +3,12 @@ body{
 }
 #game-container
 {
-    background: #4a4745 url(/images/game-screen.png) no-repeat center center;
+    background: url(/images/game-screen.png) no-repeat center center;
     height: 100vh;
     width: 100vw;
 }
 
 #game-ribbon{
-    background-color: aqua;
     display: flex
 }
 #game-ribbon p {
@@ -23,35 +22,17 @@ body{
     height: 5vh;
 }
 .progress-ring__circle{
-    stroke : white;
+    stroke : #ff1791;
     stroke-width: 2.5;
     fill: transparent;
 }
 
-#develop-product {
-    display: none;
-    position: absolute;
-}
-#research {
-    width: 25vw;
-    display: none;
-    position: absolute;
-
-}
-#market-analysis {
-    display: none;   
-    position: absolute; 
-}
-#advertising-campaign {
-    display: none;    
-    position: absolute;
-}
 .pop-message{
     position: absolute;
     animation: popmessage 5s ;
     overflow:hidden;
     font-size: xx-large;
-    color: #2f0000;
+    color: #ff1791;
     border-bottom-style: double;
     animation-fill-mode: forwards;
 }
