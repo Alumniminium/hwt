@@ -3,7 +3,7 @@ body {
     background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
     background-size: 400% 400%;
     animation: gradient 15s ease infinite;
-    display: flex;
+    display: grid;
     justify-content: center;
     align-items: center;
     height: 100vh;
@@ -18,6 +18,12 @@ body button {
     padding-top: 1rem;
     padding-bottom: 1rem;
     transition-duration: 0.2s;
+}
+#main-menu-title{
+    color: white;
+    font-family: sans-serif;
+    text-align: center;
+    font-size: 4rem;
 }
 body button:hover {
    background-color: rgb(121, 100, 237); 
@@ -53,16 +59,18 @@ body button:active {
     max-width: 500px;
 }
 
-#create-company{
-    width: 50vw;
-    min-width: 250px;
-    max-width: 500px;
-}
+ #create-company{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+} 
 
 .modal {
     display: none;
-    background-color: aliceblue;
-    color: white;
+    background-color: rgba(17, 17, 17, 0.534);
+    color: rgba(0, 0, 0, 0.37);
+    width: 100%;
+    height: 100%;
 }
 .container{
     background-color:  #2196F3;
@@ -89,7 +97,11 @@ body button:active {
 
 .modal-content {
     background-color: aliceblue;
-    padding: 1rem;
+    position: relative;
+    width: min-content;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
 }
 
 .text-input {
@@ -97,6 +109,7 @@ body button:active {
     width: -webkit-fill-available;
     margin-bottom: 1rem;
     border: 1px solid #ccc;
+    margin: 0.5rem;
 }
 #difficulties {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;

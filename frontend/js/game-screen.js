@@ -90,6 +90,10 @@ function UpdateProgress(){
         PopMessage(localStorage.getItem("research_name") + " finished!")
     }
 }
+function CheckMarket(market)
+{
+  document.getElementById()
+}
 function PopMessage(message,x,y){
     if(document.getElementsByClassName("pop-message").length > 5){
         document.getElementsByClassName("pop-message")[0].remove()

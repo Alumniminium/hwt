@@ -12,6 +12,7 @@ function ApiUpdate() {
     .then(json => {
       document.getElementById("date").innerHTML = new Date(json.date).toLocaleDateString("en-US")
       document.getElementById("money").innerHTML = "$ " + new Intl.NumberFormat('en-US').format(json.money)
+      CheckMarket(json.market)
     });
 }
 
@@ -68,7 +69,6 @@ function StartResearch(researchName) {
     });
   CloseAllModals()
 }
-
 function removeElementsByClass(className) {
   const elements = document.getElementsByClassName(className);
   while (elements.length > 0) {
