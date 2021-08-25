@@ -6,7 +6,7 @@ namespace hardware_tycoon_api.Simulation.Components
 {
     public class Product
     {
-        public Company Owner;
+        public int Owner;
         public string Name;
         public List<Component> Components = new ();
         public int Price;
@@ -16,15 +16,20 @@ namespace hardware_tycoon_api.Simulation.Components
         public int ProductionCost => Components.Sum(c=>c.Cost);
         public int Performance => Components.Sum(c => c.PerformanceAdd);
         public int PowerUsage => Components.Sum(c => c.PowerUsage);
+
+        public string Description { get; internal set; }
+
         public int Score;
 
-        public Product(Company owner, string name, int price, IEnumerable<Component> components, ProductType productType)
+        public Product(int ownerCompanyId, string name, int price, IEnumerable<Component> components, ProductType productType, string description)
         {
-            Owner=owner;
+            Owner=ownerCompanyId;
             Name=name;
             Price=price;
-            Components.AddRange(components);
+            if(components != null)
+                Components.AddRange(components);
             ProductType=productType;
+            Description=description;
         }
     }
 }

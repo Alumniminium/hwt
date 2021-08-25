@@ -10,6 +10,6 @@ namespace hardware_tycoon_api.DTOs
     (
         DateTime Date,
         long Money,
-        Dictionary<string, Product> MarketProducts
+        List<NpcProductDto> MarketProducts
     );
 }

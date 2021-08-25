@@ -36,7 +36,13 @@ namespace hardware_tycoon_api.Controllers
 
             _logger.LogInformation($"GameId {playerId} found, sending update for CompanyName {ceo.Company.Name}");
 
-            return new SimulationUpdateDto(ceo.Game.World.Date, ceo.Company.Money, ceo.Game.World.Market.Products);
+            var npcProducts = new List<NpcProductDto>();
+            foreach (var kvp in ceo.Game.World.Market.Products)
+            {
+                npcProducts.Add(new NpcProductDto(kvp.Key, kvp.Value.Price, kvp.Value.Description));
+            }
+
+            return new SimulationUpdateDto(ceo.Game.World.Date, ceo.Company.Money, npcProducts);
         }
 
         [HttpGet]
@@ -109,15 +115,15 @@ namespace hardware_tycoon_api.Controllers
             if (ceo.Company.CurrentResearch != null)
                 return new ResearchOrDevelopRequestResponseDto(false,-1, $"You can't develop a new product untilyou finished developing { ceo.Company.CurrentDevelopment.Name}$");
 
-            var newProduct = new Product(ceo.Company, product.Name, product.Price, components, product.Type);
-             ceo.Company.DevelopingProducts.Add(newProduct.Name, newProduct);
-             ceo.Company.CurrentDevelopment = new RndProject
-            {
-                Name = newProduct.Name,
-                Price = developmentPrice,
-                RequiredPoints = developmentPrice / 10
-            };
-            ceo.Company.Money -= developmentPrice;
+            //var newProduct = new Product(ceo.Company, product.Name, product.Price, components, product.Type);
+            // ceo.Company.DevelopingProducts.Add(newProduct.Name, newProduct);
+            // ceo.Company.CurrentDevelopment = new RndProject
+            //{
+            //    Name = newProduct.Name,
+            //    Price = developmentPrice,
+            //    RequiredPoints = developmentPrice / 10
+            //};
+            //ceo.Company.Money -= developmentPrice;
 
             _logger.LogInformation($"Company { ceo.Company.Name} started researching {product.Name}");
             return new ResearchOrDevelopRequestResponseDto(true, ceo.Company.CurrentDevelopment.RequiredPoints);

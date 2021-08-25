@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using hardware_tycoon_api.Services;
 using hardware_tycoon_api.Simulation.Components;
 
 namespace hardware_tycoon_api.Simulation
@@ -19,9 +20,10 @@ namespace hardware_tycoon_api.Simulation
             {
                 var product = orderedByBest[i];
                 //TODO reduce sales each iteration as the products get worse with i
-                var sales = Random.Next(1, 1000);
-                product.Owner.Money += (sales * product.Price) - (sales * product.ProductionCost);
-                product.Sales += sales;
+                //var sales = Random.Next(1, 1000);
+//
+                //product.Owner.Money += (sales * product.Price) - (sales * product.ProductionCost);
+                //product.Sales += sales;
             }
         }
 

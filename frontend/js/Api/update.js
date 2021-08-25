@@ -17,7 +17,7 @@ function ApiUpdate() {
 }
 
 function Researches() {
-  researchableList = document.getElementById("researchable")
+  researchableList = document.getElementById("researchable-table")
   researchedList = document.getElementById("researched")
   removeElementsByClass("researched-modal-item")
   removeElementsByClass("researchable-modal-item")
@@ -33,9 +33,26 @@ function Researches() {
         if (research.price == 0)
           researchedList.appendChild(div);
         else {
-          div.className = "researchable-modal-item"
-          div.addEventListener("click", function () { StartResearch(research.name) })
-          researchableList.appendChild(div);
+          /*
+          <tr class="researchable-modal-item">
+                                <td>4nm</td>
+                                <td>10.000.000</td>
+                                <td>360</td>
+                            </tr>
+          */
+          var tr = document.createElement('tr');
+          var tdName = document.createElement('td');
+          tdName.appendChild(document.createTextNode(research.name));
+          var tdPrice = document.createElement('td');
+          tdPrice.appendChild(document.createTextNode(research.price));
+          var tdDescription = document.createElement('td');
+          tdDescription.appendChild(document.createTextNode(research.description));
+          tr.className = "researchable-modal-item"
+          tr.appendChild(tdName);
+          tr.appendChild(tdPrice);
+          tr.appendChild(tdDescription);
+          tr.addEventListener("click", function () { StartResearch(research.name) })
+          researchableList.appendChild(tr);
         }
 
       });
