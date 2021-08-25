@@ -1,26 +1,23 @@
-function OpenNewspaper()
-{
-    document.getElementById("newspapermodal").style.display = "block"
-}
-function CloseNewspaper()
-{
-    document.getElementById("newspaper").style.display = "none"
-
-}
-function ProductColumn(researchname, founder, company, price, description)
-{
+function OpenNewspaper(productName, company, price, description) {
     var productColumn = document.getElementById("product-column")
+    
     var headline = productColumn.getElementsByClassName("headline hl3")[0];
     var article = document.getElementById("article")
-
-    headline.innerHTML = company.toUpperCase() + " RELEASED THE " + researchname.toUpperCase()
-    article.innerHTML = description
-}
-function NewsColumn()
-{
-
-}
-function AdvertColumn()
-{
+    var priceElement = productColumn.getElementsByClassName("headline hl4")[0]
     
+    headline.innerHTML = company.toUpperCase() + " RELEASED THE " + productName.toUpperCase()
+    article.innerHTML = description
+    priceElement.innerHTML = "available now for $" + price + ""
+    
+    document.getElementById("newspapermodal").style.display = "block"
+}
+function CloseNewspaper() {
+    document.getElementById("newspaper").style.display = "none"
+}
+
+function NewsColumn() {
+
+}
+function AdvertColumn() {
+
 }
