@@ -1,4 +1,5 @@
 let id = localStorage.getItem("id")
+let marketNames = [];
 
 function ApiUpdate() {
   fetch("http://localhost/api/update/?playerId=" + id)
@@ -12,7 +13,7 @@ function ApiUpdate() {
     .then(json => {
       document.getElementById("date").innerHTML = new Date(json.date).toLocaleDateString("en-US")
       document.getElementById("money").innerHTML = "$ " + new Intl.NumberFormat('en-US').format(json.money)
-      CheckMarket(json.market)
+      CheckMarket(json.marketProducts)
     });
 }
 
@@ -33,13 +34,6 @@ function Researches() {
         if (research.price == 0)
           researchedList.appendChild(div);
         else {
-          /*
-          <tr class="researchable-modal-item">
-                                <td>4nm</td>
-                                <td>10.000.000</td>
-                                <td>360</td>
-                            </tr>
-          */
           var tr = document.createElement('tr');
           var tdName = document.createElement('td');
           tdName.appendChild(document.createTextNode(research.name));
@@ -91,4 +85,18 @@ function removeElementsByClass(className) {
   while (elements.length > 0) {
     elements[0].parentNode.removeChild(elements[0]);
   }
+}
+
+function CheckMarket(market)
+{
+  market.forEach(p => {
+    if(marketNames.includes(p.name))
+      return
+
+    marketNames.push(p.name)
+    //Show Newspaper Modal
+    console.log(p.name)
+    console.log(p.price)
+    console.log(p.description)
+  });
 }
