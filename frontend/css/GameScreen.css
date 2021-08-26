@@ -3,7 +3,7 @@ body{
 }
 #game-container
 {
-    background: url(/images/game-screen.png) no-repeat center center;
+    background: url(/images/game-screen.png) no-repeat center center #123;
     height: 100vh;
     width: 100vw;
 }
@@ -29,7 +29,7 @@ body{
 
 .pop-message{
     position: absolute;
-    animation: popmessage 5s ;
+    animation: popmessage 5s;
     overflow:hidden;
     font-size: xx-large;
     color: #ff1791;
@@ -43,4 +43,22 @@ body{
       to {
         opacity: 0; top: -10px; display: none;
       }
+}
+.still-message{
+    position: absolute;
+    animation: stillmessage 5s;
+    overflow:hidden;
+    font-size: x-large;
+    color: #15fec3;
+    background-color: rgb(24, 24, 24);
+    animation-fill-mode: forwards;
+    padding: 0.5rem;
+}
+@keyframes stillmessage{
+    from  {
+        opacity: 1;
+    }
+    to{
+        opacity: 0; display: none;
+    }
 }

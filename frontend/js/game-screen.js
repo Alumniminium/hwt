@@ -17,6 +17,10 @@ window.addEventListener("load", function () {
             if (evt.key === "Escape" || evt.key === "Esc")
                 CloseAllModals();
         };
+        if(localStorage.getItem("research_name") != null)
+        {
+            progressicontimer = setInterval(UpdateProgress, 33)
+        }
     }
 })
 
@@ -82,20 +86,20 @@ function UpdateProgress() {
     else {
         SetProgress("0")
         document.getElementById("research-progress").innerHTML = ""
+        ShowMessage(localStorage.getItem("research_name") + " finished!", 10, 52, "still-message")
         localStorage.setItem('research_name', null)
         clearTimeout(progressicontimer)
-        PopMessage(localStorage.getItem("research_name") + " finished!")
     }
 }
-function PopMessage(message, x, y) {
-    if (document.getElementsByClassName("pop-message").length > 5) {
-        document.getElementsByClassName("pop-message")[0].remove()
+function ShowMessage(message, x, y, style = "still-message") {
+    if (document.getElementsByClassName(style).length > 5) {
+        document.getElementsByClassName(style)[0].remove()
     }
     messageElement = document.createElement("div");
-    messageElement.classList.add("pop-message");
+    messageElement.classList.add(style);
     messageElement.innerHTML = message
-    messageElement.style.top = "" + x + "px";
-    messageElement.style.left = "" + y + "px";
+    messageElement.style.top = "" + y + "px";
+    messageElement.style.left = "" + x + "px";
     document.body.appendChild(messageElement)
 }
 
