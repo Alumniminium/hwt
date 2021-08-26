@@ -9,8 +9,6 @@ namespace hardware_tycoon_api.Simulation
     {
         public static readonly GameTimer GameTimer = new();
         public static readonly Dictionary<int, Game> Games = new();
-        public static readonly Dictionary<int, Ceo> CEOs = new();
-        public static readonly Dictionary<string, int> CeoNameToId = new();
         public static readonly Dictionary<string, Component> Components = new();
         public static readonly Dictionary<string, CompetitorProduct> CompetitorProducts  = new();
         public static readonly Dictionary<string, RndProject> ResearchProjects = new()
@@ -25,5 +23,15 @@ namespace hardware_tycoon_api.Simulation
             ["Data Cache"] = new RndProject { Name = "Data Cache", RequiredPoints = 100, Price = 100000, Description = "Allows your chip to utilize basic data cache", PreRequititeResearch = "Instruction Cache" },
         };
 
+
+        public static int GenerateGameId()
+        {
+            var id = 0;
+
+            while(Games.ContainsKey(id))
+                id++;
+
+            return id;
+        }
     }
 }

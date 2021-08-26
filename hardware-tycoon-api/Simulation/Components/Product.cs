@@ -6,7 +6,7 @@ namespace hardware_tycoon_api.Simulation.Components
 {
     public class Product
     {
-        public int Owner;
+        public string Company;
         public string Name;
         public List<Component> Components = new ();
         public int Price;
@@ -21,9 +21,9 @@ namespace hardware_tycoon_api.Simulation.Components
 
         public int Score;
 
-        public Product(int ownerCompanyId, string name, int price, IEnumerable<Component> components, ProductType productType, string description)
+        public Product(string ownerCompany, string name, int price, IEnumerable<Component> components, ProductType productType, string description)
         {
-            Owner=ownerCompanyId;
+            Company =ownerCompany;
             Name=name;
             Price=price;
             if(components != null)

@@ -21,13 +21,13 @@ window.addEventListener("load", function () {
 })
 
 function checkId() {
-    if (id == null || id == -1) {
+    if ((gameId == null || gameId == -1) && (ceoId == null || ceoId == -1)) {
         console.log("no id in localstorage, going to index.html")
         window.location.replace('index.html')
         return false;
     }
     else {
-        console.log("gameId = " + id + ", starting update timer...")
+        console.log("gameId = " + gameId + ", starting update timer...")
         timer = setInterval(ApiUpdate, 1000)
         return true;
     }

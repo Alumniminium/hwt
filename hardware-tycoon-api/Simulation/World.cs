@@ -6,8 +6,8 @@ namespace hardware_tycoon_api.Simulation
     public class World
     {
         public int GameId;
+        public Dictionary<int, Ceo> CEOs = new();
         public Dictionary<int, Company> Companies = new();
-        public Dictionary<string, NpcCompany> NpcCompanies = new();
         public Market Market = new();
         public DateTime Date { get; set; }
 
@@ -16,20 +16,34 @@ namespace hardware_tycoon_api.Simulation
             GameId = gameId;
             Date = new DateTime(1970, 4, 20);
         }
-        internal void AddCompany(Ceo ceo, string name)
+        internal void AddCompany(int ceoId, string name, string path = "")
         {
-            var company = new Company(ceo, name)
+            var company = new Company(GameId, ceoId, name)
             {
                 Money = 100_000
             };
-            Companies.Add(ceo.PlayerId, company);
+            if (path != "")
+                company.LoadProducts(path);
+            Companies.Add(company.Id, company);
         }
 
-        internal void AddNpcCompany(string name, string path)
+        public int GenerateCeoId()
         {
-            var company = new NpcCompany(Core.Games[GameId],name);
-            company.LoadProducts(path);
-            NpcCompanies.Add(name,company);
+            var id = 0;
+
+            while (CEOs.ContainsKey(id))
+                id++;
+
+            return id;
+        }
+        public int GenerateCompanyId()
+        {
+            var id = 0;
+
+            while (Companies.ContainsKey(id))
+                id++;
+
+            return id;
         }
     }
 }

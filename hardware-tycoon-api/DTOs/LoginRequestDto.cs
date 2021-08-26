@@ -2,5 +2,5 @@
 namespace hardware_tycoon_api.DTOs
 {
     public record LoginRequestDto(string CeoName, string CompanyName, int Difficulty);
-    public record LoginResponseDto(int Id);
+    public record LoginResponseDto(int GameId, int CeoId);
 }

@@ -1,10 +1,12 @@
-function OpenNewspaper(productName, company, price, description) {
+function OpenNewspaper(productName, company, price, description, date) {
     var productColumn = document.getElementById("product-column")
     
     var headline = productColumn.getElementsByClassName("headline hl3")[0];
     var article = document.getElementById("article")
     var priceElement = productColumn.getElementsByClassName("headline hl4")[0]
-    
+    var datetime = document.getElementById("datetime")
+    date = new Date(date)
+    datetime.innerHTML = date.getDay() + ". " +date.getMonth() + ", " +date.getFullYear()
     headline.innerHTML = company.toUpperCase() + " RELEASED THE " + productName.toUpperCase()
     article.innerHTML = description
     priceElement.innerHTML = "available now for $" + price + ""

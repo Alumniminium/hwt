@@ -1,12 +1,13 @@
-.body{
-    background: #4a4745 url(/images/game-screen.png) no-repeat center center;
-}
 .modal {
-    display: none;
-    background-color: rgba(17, 17, 17, 0.534);
-    color: rgba(0, 0, 0, 0.37);
-    width: 100%;
-    height: 100%;
+    position: absolute;
+    width: 60vw;
+    max-width: 500px;
+    left: 30%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    display: flow-root;
+    background-color: white;
+    height: auto !important;
 }
 .container{
     background-color:  #2196F3;
@@ -15,20 +16,6 @@
 .close-span{
     font-size: large;
     margin-right: 2vw;
-}
-.modal button {
-    padding-left: 1rem;
-    padding-right: 1rem;
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
-}
-
-.modal-title {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color: whitesmoke;
-    display: flex;
-    padding-left: 1em;
-    
 }
 
 .modal-content {
@@ -46,6 +33,13 @@
     padding: 3rem;
     margin: 0 auto;
 }
+#newspaper div {
+    background-color: #f9f7f1;
+    color: #2f2f2f;
+}#newspaper p {
+    background-color: #f9f7f1;
+    color: #2f2f2f;
+}
 #product-image{
     width: 100%;
     height: 100%;
@@ -56,10 +50,6 @@ header{
     font-size: 80px;
     text-transform: uppercase;
     display: inline-block;
-}
-p{
-    margin-top: 0;
-    margin-bottom: 20px;
 }
 .head{
     text-align: center;
@@ -76,12 +66,13 @@ p{
 .weatherforcastbox{
     position: relative;
     width: 12%;
-    left: 10px;
+    /* left: 10px; */
     border: 3px double #2f2f2f;
     padding: 10px 15px 10px 15px;
     line-height: 20px;
     display: inline-block;
-    margin: 0 50px 20px -360px;
+    float: right;
+    /* margin: 0 50px 20px -360px;*/
 }
 .content{
     font-size: 0;

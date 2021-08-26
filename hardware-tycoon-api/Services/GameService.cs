@@ -8,46 +8,31 @@ namespace hardware_tycoon_api.Services
 {
     public static class GameService
     {
-        public static int CreateNewGame(LoginRequestDto requestDto)
+        public static (int gameId, int ceoId) CreateNewGame(LoginRequestDto requestDto)
         {
             if (string.IsNullOrEmpty(requestDto.CeoName))
-                return -1;
+                return (-1,-1);
             if (string.IsNullOrEmpty(requestDto.CompanyName))
-                return -1;
+                return (-1,-1);
 
             var ceoName = requestDto.CeoName.Trim();
             var companyName = requestDto.CompanyName.Trim();
 
-            int gameId = 0;
-            while (Core.Games.ContainsKey(gameId))
-                gameId++;
+            var game = new Game(requestDto.Difficulty);
 
-            int playerId = 0;
-            while (Core.CEOs.ContainsKey(playerId))
-                playerId++;
+            var ceo = new Ceo(game.Id, ceoName);
 
-            var game = new Game(gameId, requestDto.Difficulty);
-            Core.Games.Add(gameId, game);
+            game.World.AddCompany(ceo.Id, companyName);
 
-            var ceo = new Ceo(playerId, ceoName);
-            Core.CEOs.Add(ceo.PlayerId, ceo);
+            var intelCeo = new Ceo(game.Id,"Idk");
+            game.World.AddCompany(intelCeo.Id,"Intel", "Database/Competitors/Intel.tsv");
 
-            game.World.AddCompany(ceo, companyName);
-            game.World.AddNpcCompany("Intel", "Database/Competitors/Intel.tsv");
-
-            return playerId;
+            return (game.Id,ceo.Id);
         }
 
-        public static Game GetGameByPlayerId(int playerId)
+        public static Ceo GetCeoById(int gameId, int ceoId)
         {
-            if(Core.CEOs.TryGetValue(playerId, out var ceo))
-                return ceo.Game;
-            else
-                return null;
-        }
-        public static Ceo GetCeoById(int ownerId)
-        {
-            if (Core.CEOs.TryGetValue(ownerId, out var ceo))
+            if (Core.Games[gameId].World.CEOs.TryGetValue(ceoId, out var ceo))
                 return ceo;
             else
                 return null;
