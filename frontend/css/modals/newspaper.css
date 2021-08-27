@@ -10,6 +10,9 @@
     padding: 3rem;
     margin: 0 auto;
 }
+#newspaper img {
+    filter: grayscale(1);
+}
 #newspapermodal{
     width: 100%;
     height: 100%;
