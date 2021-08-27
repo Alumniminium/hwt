@@ -4,7 +4,9 @@ namespace hardware_tycoon_api.Simulation
     {
         public int Id { get; set; }
         public int Difficulty { get; set; }
+        public int GameSpeed {get;set;} = 1;
         public World World { get; set; }
+        public GameTimer GameTimer;
 
         public Game(int difficulty)
         {
@@ -12,7 +14,8 @@ namespace hardware_tycoon_api.Simulation
             Difficulty = difficulty;
 
             World = new World(Id);
-            Core.Games.Add(Id, this);
+            GameTimer = new(this);
+            Core.Games.Add(Id, this);    
         }
 
         internal void SimulationStep()

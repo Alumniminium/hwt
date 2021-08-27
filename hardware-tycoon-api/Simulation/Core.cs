@@ -7,7 +7,6 @@ namespace hardware_tycoon_api.Simulation
     public record CompetitorProduct(DateTime ReleaseDate, string Name, int Price, string Socket, int Fab, int Bits, float Frequency, string Description);
     public static class Core
     {
-        public static readonly GameTimer GameTimer = new();
         public static readonly Dictionary<int, Game> Games = new();
         public static readonly Dictionary<string, Component> Components = new();
         public static readonly Dictionary<string, CompetitorProduct> CompetitorProducts  = new();
