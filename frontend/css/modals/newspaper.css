@@ -9,9 +9,9 @@
     width: 45vw;    
     padding: 3rem;
     margin: 0 auto;
-}
-#newspaper img {
-    filter: grayscale(1);
+    -webkit-filter: sepia(80%) contrast(1) opacity(0.8);
+    filter: sepia(80%) grayscale(1) contrast(1) opacity(0.8);
+    mix-blend-mode: multiply;
 }
 #newspapermodal{
     width: 100%;
@@ -251,9 +251,7 @@ header{
 	font-size: 12px;
 }
 .media {
-    -webkit-filter: sepia(80%) contrast(1) opacity(0.8);
-    filter: sepia(80%) grayscale(1) contrast(1) opacity(0.8);
-    mix-blend-mode: multiply;
+
     width: 100%;
 }
 /*________________________________________________________________________________________________________________________________*/
