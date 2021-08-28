@@ -6,7 +6,7 @@ function OpenNewspaper(productName, company, price, description, date) {
     var priceElement = productColumn.getElementsByClassName("headline hl4")[0]
     var datetime = document.getElementById("datetime")
     var image = document.getElementById("product-image")
-    image.src = "/images/"+company+"/"+productName+".jpeg";
+    image.src = "/images/"+company+"/"+productName+".webp";
 
     date = new Date(date)
     datetime.innerHTML = date.getDay() + ". " + date.toLocaleString('default', { month: 'long' }) + ", " +date.getFullYear()

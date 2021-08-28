@@ -4,7 +4,7 @@ using hardware_tycoon_api.Simulation.Components;
 
 namespace hardware_tycoon_api.Simulation
 {
-    public record CompetitorProduct(DateTime ReleaseDate, string Name, int Price, string Socket, int Fab, int Bits, float Frequency, string ImageUrl, string Description);
+    public record CompetitorProduct(DateTime ReleaseDate, string Name, int Price, string Socket, int Fab, int Bits, float Frequency, string Description);
     public static class Core
     {
         public static readonly Dictionary<int, Game> Games = new();
