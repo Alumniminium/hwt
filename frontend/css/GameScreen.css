@@ -26,7 +26,19 @@ body{
     stroke-width: 2.5;
     fill: transparent;
 }
-
+#gamespeed{
+    margin-left: auto;
+    margin-right: 0;
+}
+.gamespeedbutton{
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+    width: 2rem;
+    height: 2rem;
+}
+.gamespeedbutton:hover{
+    background-color: crimson;
+}
 .pop-message{
     position: absolute;
     animation: popmessage 5s;

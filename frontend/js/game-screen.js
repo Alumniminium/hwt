@@ -91,7 +91,7 @@ function UpdateProgress() {
         clearTimeout(progressicontimer)
     }
 }
-function ShowMessage(message, x, y, style = "still-message") {
+function ShowMessage(message, x, y, style) {
     if (document.getElementsByClassName(style).length > 5) {
         document.getElementsByClassName(style)[0].remove()
     }
@@ -111,4 +111,7 @@ function ClearLocalStorage() {
     localStorage.clear()
     clearTimeout(timer)
     window.location.replace("index.html");
+}
+function ChangeGameSpeed(speed){
+    console.log(speed.id);
 }

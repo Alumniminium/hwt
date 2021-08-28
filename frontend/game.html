@@ -40,54 +40,62 @@
                 <circle cx="20" cy="27" r="11" class="progress-ring__circle">
             </svg>
             <p id="product-progress"></p>
+            <div id="gamespeed">
+                <img class="gamespeedbutton" id="play" src="https://img.icons8.com/ios-glyphs/30/000000/play--v1.png" onclick="ChangeGameSpeed(this)">
+                <img class="gamespeedbutton" id="pause" src="https://img.icons8.com/ios-filled/50/000000/pause--v1.png"onclick="ChangeGameSpeed(this)">
+                <img class="gamespeedbutton" id="fastforward" src="https://img.icons8.com/ios-filled/50/000000/fast-forward.png"onclick="ChangeGameSpeed(this)">
+            </div>
         </div>
     </div>
     <div id="research" class="modal">
-        <div class="container">
-            <span class="close-span" onclick="CloseAllModals()"></span>
-            <h3>Research</h3>
-        </div>
-        <div class="container" id="researchable">
-            <table id="researchable-table" cellspacing="0" cellpadding="0">
-                <tr id="tale-header">
-                    <th>Name</th>
-                    <th>Price</th>
-                    <th>ResearchPoints</th>
-                </tr>
-            </table>
-            <h3>Researched</h3>
-        </div>
-        <div class="container" id="researched">
+        <div class="modal-content">
+            <div class="container">
+                <span class="close-span" onclick="CloseAllModals()"></span>
+                <h3>Research</h3>
+            </div>
+            <div class="container" id="researchable">
+                <table id="researchable-table" cellspacing="0" cellpadding="0">
+                    <tr id="tale-header">
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>ResearchPoints</th>
+                    </tr>
+                </table>
+                <h3>Researched</h3>
+            </div>
+            <div class="container" id="researched"></div>
         </div>
     </div>
     <div id="develop-product" class="modal">
-        <div class="container">
-            <span class="close-span" onclick="CloseAllModals()"></span>
-            <h3>Development</h3>
-        </div>
-        <div id="development-content" class="modai-content">
-            <p>development content WIP</p>
+        <div class="modal-content">
+            <div class="container">
+                <span class="close-span" onclick="CloseAllModals()"></span>
+                <h3>Development</h3>
+            </div>
+                <p>development content WIP</p>
         </div>
     </div>
 
     <div id="market-analysis" class="modal">
-        <div class="container">
-            <span class="close-span" onclick="CloseAllModals()"></span>
-            <h3>Market</h3>
+        <div class="modal-content">
+            <div class="container">
+                <span class="close-span" onclick="CloseAllModals()"></span>
+                <h3>Market</h3>
+            </div>
+                <p>market content WIP</p>
         </div>
-        <div id="market-content" class="modai-content">
-            <p>market content WIP</p>
-        </div>
+        
     </div>
 
     <div id="advertising-campaign" class="modal">
-        <div class="container">
-            <span class="close-span" onclick="CloseAllModals()"></span>
-            <h3>Advertising</h3>
-            <div id="market-content" class="modai-content">
-                <p>advertising content WIP</p>
+        <div class="modal-content">
+            <div class="container">
+                <span class="close-span" onclick="CloseAllModals()"></span>
+                <h3>Advertising</h3>
             </div>
+            <p>advertising content WIP</p>
         </div>
+        
     </div>
 
 
