@@ -1,4 +1,4 @@
-function OpenNewspaper(productName, company, price, description, date, imageUrl = "https://cdn.sstatic.net/Img/teams/teams-illo-free-sidebar-promo.svg?v=47faa659a05e") {
+function OpenNewspaper(productName, company, price, description, date) {
     var productColumn = document.getElementById("product-column")
     
     var headline = productColumn.getElementsByClassName("headline hl3")[0];
@@ -6,7 +6,7 @@ function OpenNewspaper(productName, company, price, description, date, imageUrl 
     var priceElement = productColumn.getElementsByClassName("headline hl4")[0]
     var datetime = document.getElementById("datetime")
     var image = document.getElementById("product-image")
-    image.src = imageUrl;
+    image.src = "/images/"+company+"/"+productName+".jpeg";
 
     date = new Date(date)
     datetime.innerHTML = date.getDay() + ". " + date.toLocaleString('default', { month: 'long' }) + ", " +date.getFullYear()

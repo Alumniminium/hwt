@@ -82,8 +82,9 @@ namespace hardware_tycoon_api.Simulation
                 var fab = int.Parse(parts[4]);
                 var bits = int.Parse(parts[5]);
                 var frequency = float.Parse(parts[6]);
-                var description = string.Join(" ", parts[7..]);
-                FutureProducts.TryAdd(productName, new CompetitorProduct(releaseDate, productName, price, socket, fab, bits, frequency, description));
+                var img = parts[7];
+                var description = string.Join(" ", parts[8..]);
+                FutureProducts.TryAdd(productName, new CompetitorProduct(releaseDate, productName, price, socket, fab, bits, frequency, img, description));
             }
         }
     }
