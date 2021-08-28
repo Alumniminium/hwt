@@ -7,9 +7,11 @@ namespace hardware_tycoon_api.Simulation
     public class GameTimer
     {
         private readonly Thread gameThread;
+        private readonly Game Game;
 
-        public GameTimer()
+        public GameTimer(Game game)
         {
+            Game = game;
             gameThread = new Thread(Tick) { IsBackground = true };
             gameThread.Start();
         }
@@ -21,11 +23,16 @@ namespace hardware_tycoon_api.Simulation
             {
                 sw.Restart();
 
-                foreach (var kvp in Core.Games)
-                    kvp.Value.SimulationStep();
-
+                if(Game.GameSpeed > 0)
+                    Game.SimulationStep();
+                
                 var iterationDuration = sw.Elapsed.TotalMilliseconds;
-                Thread.Sleep((int)(Math.Max(1, 100 - iterationDuration)));
+
+                var gameSpeed = Math.Max(1, Game.GameSpeed);
+                var sleepTime = 1000 / gameSpeed;
+                sleepTime = (int)Math.Max(1, sleepTime - iterationDuration);
+
+                Thread.Sleep(sleepTime);
             }
         }
     }

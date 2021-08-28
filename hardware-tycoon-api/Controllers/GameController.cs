@@ -45,6 +45,20 @@ namespace hardware_tycoon_api.Controllers
             return new SimulationUpdateDto(ceo.Game.World.Date, ceo.Company.Money, npcProducts);
         }
 
+        [HttpPost]
+        [Route("/api/update")]
+        public void Update(UpdateDto updateDto)
+        {
+            if(updateDto == null)
+                return;
+
+            var ceo = GameService.GetCeoById(updateDto.GameId, updateDto.CeoId);
+            if (ceo == null)
+                return;
+            
+            ceo.Game.GameSpeed = updateDto.GameSpeed;
+        }
+
         [HttpGet]
         [Route("/api/research")]
         public IEnumerable<ResearchProjectDto> Research(int gameId, int ceoId)

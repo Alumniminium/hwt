@@ -11,9 +11,9 @@ namespace hardware_tycoon_api.Services
         public static (int gameId, int ceoId) CreateNewGame(LoginRequestDto requestDto)
         {
             if (string.IsNullOrEmpty(requestDto.CeoName))
-                return (-1,-1);
+                return (-1, -1);
             if (string.IsNullOrEmpty(requestDto.CompanyName))
-                return (-1,-1);
+                return (-1, -1);
 
             var ceoName = requestDto.CeoName.Trim();
             var companyName = requestDto.CompanyName.Trim();
@@ -24,18 +24,18 @@ namespace hardware_tycoon_api.Services
 
             game.World.AddCompany(ceo.Id, companyName);
 
-            var intelCeo = new Ceo(game.Id,"Idk");
-            game.World.AddCompany(intelCeo.Id,"Intel", "Database/Competitors/Intel.tsv");
+            var intelCeo = new Ceo(game.Id, "Idk");
+            game.World.AddCompany(intelCeo.Id, "Intel", "Database/Competitors/Intel.tsv");
 
-            return (game.Id,ceo.Id);
+            return (game.Id, ceo.Id);
         }
 
         public static Ceo GetCeoById(int gameId, int ceoId)
         {
-            if (Core.Games[gameId].World.CEOs.TryGetValue(ceoId, out var ceo))
-                return ceo;
-            else
-                return null;
+            if (Core.Games.TryGetValue(gameId, out var game))
+                if (game.World.CEOs.TryGetValue(ceoId, out var ceo))
+                    return ceo;
+            return null;
         }
 
         internal static RndProject GetResearchProjectByName(string researchProject)
