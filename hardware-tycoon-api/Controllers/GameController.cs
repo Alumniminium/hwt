@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using hardware_tycoon_api.DTOs;
 using hardware_tycoon_api.Services;
@@ -42,7 +43,7 @@ namespace hardware_tycoon_api.Controllers
                 npcProducts.Add(new NpcProductDto(kvp.Key, kvp.Value.Company, kvp.Value.Price, kvp.Value.Description));
             }
 
-            return new SimulationUpdateDto(ceo.Game.World.Date, ceo.Company.Money, npcProducts);
+            return new SimulationUpdateDto(ceo.Game.World.Date, 1000 / Math.Max(1,ceo.Game.GameSpeed), ceo.Company.Money, npcProducts);
         }
 
         [HttpPost]

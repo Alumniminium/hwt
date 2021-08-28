@@ -10,6 +10,7 @@ namespace hardware_tycoon_api.DTOs
     public record SimulationUpdateDto
     (
         DateTime Date,
+        int MillisecondsPerDay,
         long Money,
         List<NpcProductDto> MarketProducts
     );
