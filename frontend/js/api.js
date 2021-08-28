@@ -2,7 +2,7 @@ let gameId = localStorage.getItem("gameId")
 let ceoId = localStorage.getItem("ceoId")
 
 let loginUrl = "http://localhost/api/login"
-let updateUrl = "http://localhost/api/update/?gameId=" + gameId + "&ceoId=" + ceoId
+let updateUrl = "http://localhost/api/update/"
 let GETresearchUrl = "http://localhost/api/research/?gameId=" + gameId + "&ceoId=" + ceoId
 let PUTresearchUrl = "http://localhost/api/research/"
 
@@ -47,6 +47,21 @@ function SubmitNewGame() {
 }
 
 
+function ApiUpdate_Post(gamespeed) {
+  update = new FormData()
+  update.append("gameId", gameId)
+  update.append("ceoId", ceoId)
+  update.append("gameSpeed", gamespeed)
+  console.log(JSON.stringify(Object.fromEntries(update)))
+  fetch("http://localhost/api/update/", {
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    method: 'POST',
+    body: JSON.stringify(Object.fromEntries(update))
+  }).then(function(res){ console.log(res) })
+
+}
 function ApiUpdate() {
   fetch(updateUrl)
     .then(res => {

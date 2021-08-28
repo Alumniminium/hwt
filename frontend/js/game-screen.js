@@ -95,23 +95,26 @@ function ShowMessage(message, x, y, style) {
     if (document.getElementsByClassName(style).length > 5) {
         document.getElementsByClassName(style)[0].remove()
     }
-    messageElement = document.createElement("div");
+    messageElement = document.createElement("div")
     messageElement.classList.add(style);
     messageElement.innerHTML = message
-    messageElement.style.top = "" + y + "px";
-    messageElement.style.left = "" + x + "px";
+    messageElement.style.top = "" + y + "px"
+    messageElement.style.left = "" + x + "px"
     document.body.appendChild(messageElement)
 }
 
 
 function CloseAllModals() {
-    [...document.getElementsByClassName("modal")].forEach(element => element.style.display = "none");
+    [...document.getElementsByClassName("modal")].forEach(element => element.style.display = "none")
 }
 function ClearLocalStorage() {
     localStorage.clear()
     clearTimeout(timer)
-    window.location.replace("index.html");
+    window.location.replace("index.html")
 }
 function ChangeGameSpeed(speed){
+    [...document.getElementsByClassName("gamespeedbutton")].forEach(element => element.style.backgroundColor = "")
     console.log(speed.id);
+    speed.style.backgroundColor = "crimson"
+    ApiUpdate_Post(parseInt(speed.id[0]))
 }
