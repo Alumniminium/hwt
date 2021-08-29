@@ -1,34 +1,48 @@
 <html>
 
-<body>
+<body style="width: 100vw; height: 100vh">
     <h1 id="dies">asd</h1>
-    <span>Wafer Diameter: </span>
-    <input id="waferDiameter" value="500">
-    <span>dieWidth: </span>
-    <input id="dieWidthInput" value="12">
-    <span>dieHeight: </span>
-    <input id="dieHeightInput" value="12">
-    <span>dieGap: </span>
-    <input id="dieGap" value="1">
-    <button onclick="draw()">Render</button>
-    <canvas id="canvas" width="2000px" height="2000px">
+    <p>
+        <span>Wafer Diameter: </span>
+        <input id="waferDiameter" value="300">
+    </p>
+    <p>
+        <span>dieWidth: </span>
+        <input id="dieWidthInput" value="12">
+    </p>
+    <p>
+        <span>dieHeight: </span>
+        <input id="dieHeightInput" value="12">
+    </p>
+    <p>
+        <span>dieGap: </span>
+        <input id="dieGap" value="1">
+    </p>
+    <p>
+        <span>defects per mm: </span>
+        <input id="defectsPerMM" value="0.1">
+    </p>
+    <p>
+        <button onclick="draw()">Render</button>
+    </p>
+    <canvas id="canvas" width="10000px" height="10000px">
     </canvas>
 </body>
 <footer>
     <script>
-        function getRandomInt(max) {
-                return Math.floor(Math.random() * max);
-            }
+        function getRandomFloat(max) {
+            return Math.random() * max;
+        }
         function draw() {
-            var working =0
+            var working = 0
             var defect = 0
-            var outside = 0
             var total = 0
 
             var gap = parseInt(document.getElementById('dieGap').value)
             var dieWidth = parseInt(document.getElementById('dieWidthInput').value)
             var dieHeight = parseInt(document.getElementById('dieHeightInput').value)
             var waferDiameter = parseFloat(document.getElementById('waferDiameter').value)
+            var defectsPerMM = parseFloat(document.getElementById('defectsPerMM').value)
             var cX = waferDiameter / 2
             var cY = waferDiameter / 2
             var cR = waferDiameter / 2
@@ -37,44 +51,72 @@
             var canvas = document.getElementById('canvas');
             if (canvas.getContext) {
                 var ctx = canvas.getContext('2d');
+                ctx.save()
+                ctx.scale(4, 4);
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 ctx.beginPath();
                 ctx.arc(cX, cY, cR, Math.PI * 2, false)
-                
-                for (x = 0; x < cR*2; x += dieWidth+ gap)
-                    for (y = 0; y < cR*2; y += dieHeight+ gap) {
-                        var rTL = x
-                        var rTR = x + dieWidth
-                        var rBL = y
-                        var rBR = y + dieHeight
 
-                        dx = Math.max(cX - rTL, rTR - cX);
-                        dy = Math.max(cY - rBL, rBR - cY);
-                        if (cR * cR >= dx * dx + dy * dy) 
-                        {
-                            if (getRandomInt(100) > 75) {
-                                ctx.fillStyle = 'gray';
-                                defect++
-                                total++
-                            }
-                            else{
-                                ctx.fillStyle = 'green'
-                                working++
-                                total++
-                            }
+                for (x = 0; x < cR * 2; x += dieWidth + gap)
+                    for (y = 0; y < cR * 2; y += dieHeight + gap) {
+                        var sX = x
+                        var eX = x + dieWidth
+                        var sY = y
+                        var eY = y + dieHeight
+
+                        dx = Math.max(cX - sX, eX - cX);
+                        dy = Math.max(cY - sY, eY - cY);
+                        if (cR * cR >= dx * dx + dy * dy) {
+                            ctx.fillStyle = 'green'
+                            working++
+                            total++
                         }
                         else
-                            {
-                                ctx.fillStyle = 'transparent';
-                                outside++
-                            }
+                            ctx.fillStyle = 'transparent';
 
                         ctx.fillRect(x, y, dieWidth, dieHeight)
                     }
+
+                var curDefectsX = []
+                var curDefectsY = []
+
+                for (x = 0; x < waferDiameter; x += dieWidth + gap)
+                    for (y = 0; y < waferDiameter; y += dieHeight + gap) {
+                        x2e = x + dieWidth;
+                        y2e = y + dieHeight;
+
+                        for (x2 = x; x2 < x2e; x2++)
+                            for (y2 = y; y2 < y2e; y2++) {
+
+                                var sX = x
+                                var eX = x + dieWidth
+                                var sY = y
+                                var eY = y + dieHeight
+
+                                dx = Math.max(cX - sX, eX - cX);
+                                dy = Math.max(cY - sY, eY - cY);
+
+                                if (cR * cR >= dx * dx + dy * dy) {
+                                    if (getRandomFloat(100) < defectsPerMM) {
+                                        working--
+                                        defect++
+                                        curDefectsX.push(x2)
+                                        curDefectsY.push(y2)
+                                        ctx.fillStyle = 'red';
+                                        ctx.fillRect(x, y, dieWidth, dieHeight)
+                                    }
+                                }
+                            }
+                    }
+                for (i = 0; i < curDefectsX.length; i++) {
+                    ctx.fillStyle = 'black';
+                    ctx.fillRect(curDefectsX[i], curDefectsY[i], 1, 1)
+                }
                 ctx.stroke();
+                ctx.restore()
             }
             var h1 = document.getElementById("dies");
-            h1.innerText = "Total Dies: "+total+", Working: "+working+", Defects: "+defect;
+            h1.innerText = "Total Dies: " + total + ", Working: " + working + ", Defects: " + defect;
         }
         draw()
     </script>
