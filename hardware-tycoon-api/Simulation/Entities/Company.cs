@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
 using hardware_tycoon_api.Simulation.Components;
+using hardware_tycoon_api.Simulation.Enums;
 
 namespace hardware_tycoon_api.Simulation
 {
