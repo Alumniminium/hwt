@@ -6,7 +6,7 @@ using hardware_tycoon_api.Simulation.Components;
 
 namespace hardware_tycoon_api.Simulation
 {
-    public class Market
+    public class GlobalMarket
     {
         public Random Random = new();
         public Dictionary<string, Product> Products = new();

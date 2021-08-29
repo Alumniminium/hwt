@@ -22,7 +22,7 @@ namespace hardware_tycoon_api.Simulation
         public RndProject CurrentDevelopment { get; set; }
 
         public World World => Core.Games[GameId].World;
-        public Market Market => World.Market;
+        public GlobalMarket Market => World.Market;
 
         public Company(int gameId, int ceoId, string name)
         {
