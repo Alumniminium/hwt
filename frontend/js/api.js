@@ -59,6 +59,7 @@ function ApiUpdate_Post(gamespeed) {
     method: 'POST',
     body: JSON.stringify(Object.fromEntries(update))
   })
+  .then(function() {ApiUpdate()})
 }
 function ApiUpdate() {
   fetch(updateUrl)
@@ -69,10 +70,13 @@ function ApiUpdate() {
         ClearLocalStorage()
     })
     .then(json => {
+      millisecondsperday= json.millisecondsPerDay
+      console.log(millisecondsperday)
       document.getElementById("date").innerHTML = new Date(json.date).toLocaleDateString("en-US")
       document.getElementById("money").innerHTML = "$ " + new Intl.NumberFormat('en-US').format(json.money)
       CheckMarket(json.marketProducts, json.date)
-    });
+    })
+    .then(function(){ChangeGameClock()})
 }
 
 function Researches() {
