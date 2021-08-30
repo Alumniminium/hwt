@@ -84,7 +84,7 @@ function UpdateProgress() {
     dayspassed = localStorage.getItem('research_days_passed')
     research_days = parseInt(localStorage.getItem('research_days'))
     dayspassed = parseFloat(dayspassed.replace(",", "."));
-    dayspassed = dayspassed + 0.033;
+    dayspassed = dayspassed + parseInt(localStorage.getItem("gamespeed"))/30;
     localStorage.setItem('research_days_passed', "" + dayspassed)
     progress = (dayspassed / research_days) * 100
     if (progress <= 100) {
@@ -131,9 +131,14 @@ function ChangeGameSpeed(speed){
         speed = Math.round(1000/speed)
         clearInterval(gamespeedtimer)
         gamespeedtimer = setInterval(AddDay, speed)
+        if(localStorage.hasOwnProperty("researchname"))
+            progressicontimer = setInterval(UpdateProgress())
     }
     else{
         clearInterval(gamespeedtimer)
+        if(localStorage.hasOwnProperty("researchname"))
+            clearInterval(progressicontimer)
+        
     }
 }
 function AddDay(){
