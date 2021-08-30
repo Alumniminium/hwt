@@ -52,15 +52,13 @@ function ApiUpdate_Post(gamespeed) {
   update.append("gameId", gameId)
   update.append("ceoId", ceoId)
   update.append("gameSpeed", gamespeed)
-  console.log(JSON.stringify(Object.fromEntries(update)))
   fetch("http://localhost/api/update/", {
     headers: {
       'Content-Type': 'application/json'
     },
     method: 'POST',
     body: JSON.stringify(Object.fromEntries(update))
-  }).then(function(res){ console.log(res) })
-
+  })
 }
 function ApiUpdate() {
   fetch(updateUrl)

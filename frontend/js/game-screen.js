@@ -1,6 +1,7 @@
 let contextMenu = null
 let timer = null
 let progressicontimer = null
+let gamespeedtimer = null
 
 //progress bar stuff
 var circle = null
@@ -10,6 +11,13 @@ var circumference = null;
 window.addEventListener("load", function () {
     console.log("game-screen.js loading...")
     if (checkId()) {
+        if(localStorage.hasOwnProperty("gamespeed"))
+        {
+            ChangeGameSpeed(document.getElementById(localStorage.getItem("gamespeed") + "x"))
+        }
+        else{
+            ChangeGameSpeed(document.getElementById("1x"))
+        }
         setupProgressRing()
         contextMenu = document.getElementById("context-menu");
 
@@ -76,7 +84,7 @@ function UpdateProgress() {
     dayspassed = localStorage.getItem('research_days_passed')
     research_days = parseInt(localStorage.getItem('research_days'))
     dayspassed = parseFloat(dayspassed.replace(",", "."));
-    dayspassed = dayspassed + 0.033;
+    dayspassed = dayspassed + parseInt(localStorage.getItem("gamespeed"))/30;
     localStorage.setItem('research_days_passed', "" + dayspassed)
     progress = (dayspassed / research_days) * 100
     if (progress <= 100) {
@@ -114,7 +122,27 @@ function ClearLocalStorage() {
 }
 function ChangeGameSpeed(speed){
     [...document.getElementsByClassName("gamespeedbutton")].forEach(element => element.style.backgroundColor = "")
-    console.log(speed.id);
     speed.style.backgroundColor = "crimson"
-    ApiUpdate_Post(parseInt(speed.id[0]))
+    speed = parseInt(speed.id[0])
+    localStorage.setItem("gamespeed", speed)
+    ApiUpdate_Post(speed)
+    if(speed!=0)
+    {
+        speed = Math.round(1000/speed)
+        clearInterval(gamespeedtimer)
+        gamespeedtimer = setInterval(AddDay, speed)
+        if(localStorage.hasOwnProperty("researchname"))
+            progressicontimer = setInterval(UpdateProgress())
+    }
+    else{
+        clearInterval(gamespeedtimer)
+        if(localStorage.hasOwnProperty("researchname"))
+            clearInterval(progressicontimer)
+        
+    }
+}
+function AddDay(){
+    date = new Date(document.getElementById("date").innerHTML)
+    date.setDate(date.getDate() + 1)
+    document.getElementById("date").innerHTML = date.toLocaleDateString("en-US")
 }
