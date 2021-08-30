@@ -1,0 +1,110 @@
+<html>
+
+<body style="width: 100vw; height: 100vh">
+    <h1 id="dies">asd</h1>
+    <p>
+        <span>Wafer Diameter: </span>
+        <input id="waferDiameter" value="300">
+    </p>
+    <p>
+        <span>dieWidth: </span>
+        <input id="dieWidthInput" value="12">
+    </p>
+    <p>
+        <span>dieHeight: </span>
+        <input id="dieHeightInput" value="12">
+    </p>
+    <p>
+        <span>dieGap: </span>
+        <input id="dieGap" value="1">
+    </p>
+    <p>
+        <span>defects per mm: </span>
+        <input id="defectsPerMM" value="0.1">
+    </p>
+    <p>
+        <button onclick="draw()">Render</button>
+    </p>
+    <canvas id="canvas" width="10000px" height="10000px">
+    </canvas>
+</body>
+<footer>
+    <script>
+        var working = 0
+        var defect = 0
+        var total = 0
+        
+        let canvas = document.getElementById('canvas')
+        let ctx = canvas.getContext('2d')
+        
+        function getRandomFloat(max) {
+            return Math.random() * max;
+        }
+        function insideCircle(cR, cX, cY, sX, eX, sY, eY) {
+            dx = Math.max(cX - sX, eX - cX);
+            dy = Math.max(cY - sY, eY - cY);
+            return (cR * cR >= dx * dx + dy * dy)
+        }
+        function draw() {
+
+            var gap = parseInt(document.getElementById('dieGap').value)
+            var dieWidth = parseInt(document.getElementById('dieWidthInput').value)
+            var dieHeight = parseInt(document.getElementById('dieHeightInput').value)
+            var waferDiameter = parseFloat(document.getElementById('waferDiameter').value)
+            var defectsPerMM = parseFloat(document.getElementById('defectsPerMM').value)
+            var cX = waferDiameter / 2
+            var cY = waferDiameter / 2
+            var cR = waferDiameter / 2
+
+            ctx.save()
+            ctx.scale(4, 4);
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.beginPath();
+            ctx.arc(cX, cY, cR, Math.PI * 2, false)
+
+            for (x = 0; x < cR * 2; x += dieWidth + gap)
+                for (y = 0; y < cR * 2; y += dieHeight + gap) {
+                    var eX = x + dieWidth
+                    var eY = y + dieHeight
+                    if (insideCircle(cR, cX, cY, x, eX, y, eY)) {
+                        ctx.fillStyle = 'green'
+                        working++
+                        total++
+                    }
+                    else
+                        ctx.fillStyle = 'transparent';
+
+                    ctx.fillRect(x, y, dieWidth, dieHeight)
+                }
+
+            var allDefects = []
+            for (x = 0; x < waferDiameter; x += dieWidth + gap)
+                for (y = 0; y < waferDiameter; y += dieHeight + gap) {
+                    x2e = x + dieWidth;
+                    y2e = y + dieHeight;
+
+                    for (x2 = x; x2 < x2e; x2++)
+                        for (y2 = y; y2 < y2e; y2++) {
+                            if (insideCircle(cR, cX, cY, x, x2e, y, y2e)) {
+                                if (getRandomFloat(100) < defectsPerMM) {
+                                    working--
+                                    defect++
+                                    allDefects.push({ x: x2, y: y2 })
+                                    ctx.fillStyle = 'red';
+                                    ctx.fillRect(x, y, dieWidth, dieHeight)
+                                }
+                            }
+                        }
+                }
+            ctx.fillStyle = 'black';
+            allDefects.forEach(d => ctx.fillRect(d.x, d.y, 1, 1))
+            ctx.stroke();
+            ctx.restore()
+        }
+        var h1 = document.getElementById("dies");
+        h1.innerText = "Total Dies: " + total + ", Working: " + working + ", Defects: " + defect;
+        draw()
+    </script>
+</footer>
+
+</html>

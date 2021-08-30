@@ -19,7 +19,6 @@ namespace hardware_tycoon_api.Services
             var companyName = requestDto.CompanyName.Trim();
 
             var game = new Game(requestDto.Difficulty);
-
             var ceo = new Ceo(game.Id, ceoName);
 
             game.World.AddCompany(ceo.Id, companyName);

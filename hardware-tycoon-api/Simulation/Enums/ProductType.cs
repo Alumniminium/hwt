@@ -1,6 +1,6 @@
 using System;
 
-namespace hardware_tycoon_api.Simulation.Components
+namespace hardware_tycoon_api.Simulation.Enums
 {
     [Flags]
     public enum ProductType

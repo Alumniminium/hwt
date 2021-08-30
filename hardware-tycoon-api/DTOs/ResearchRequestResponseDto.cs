@@ -1,4 +1,4 @@
-
+using hardware_tycoon_api.Simulation.Enums;
 using hardware_tycoon_api.Simulation.Components;
 
 namespace hardware_tycoon_api.DTOs

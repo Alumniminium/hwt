@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
 using hardware_tycoon_api.Simulation.Components;
+using hardware_tycoon_api.Simulation.Enums;
 
 namespace hardware_tycoon_api.Simulation
 {
@@ -22,7 +23,7 @@ namespace hardware_tycoon_api.Simulation
         public RndProject CurrentDevelopment { get; set; }
 
         public World World => Core.Games[GameId].World;
-        public Market Market => World.Market;
+        public GlobalMarket Market => World.Market;
 
         public Company(int gameId, int ceoId, string name)
         {

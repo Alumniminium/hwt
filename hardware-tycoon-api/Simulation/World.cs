@@ -8,7 +8,7 @@ namespace hardware_tycoon_api.Simulation
         public int GameId;
         public Dictionary<int, Ceo> CEOs = new();
         public Dictionary<int, Company> Companies = new();
-        public Market Market = new();
+        public GlobalMarket Market = new();
         public DateTime Date { get; set; }
 
         public World(int gameId)

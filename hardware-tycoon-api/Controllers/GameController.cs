@@ -43,7 +43,7 @@ namespace hardware_tycoon_api.Controllers
                 npcProducts.Add(new NpcProductDto(kvp.Key, kvp.Value.Company, kvp.Value.Price, kvp.Value.Description));
             }
 
-            return new SimulationUpdateDto(ceo.Game.World.Date, 1000 / Math.Max(1,ceo.Game.GameSpeed), ceo.Company.Money, npcProducts);
+            return new SimulationUpdateDto(ceo.Game.World.Date, ceo.Game.GameSpeed == 0 ? 0 : 1000 / Math.Max(1,ceo.Game.GameSpeed), ceo.Company.Money, npcProducts);
         }
 
         [HttpPost]
