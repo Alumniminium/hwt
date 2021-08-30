@@ -71,6 +71,8 @@ function ApiUpdate() {
         ClearLocalStorage()
     })
     .then(json => {
+      if(json.millisecondsPerDay != 1000 / parseInt(localStorage.getItem("gamespeed")) )
+        console.log("gamespeed and millisecondsPerDay are not equal: "+json.millisecondsPerDay)
       document.getElementById("date").innerHTML = new Date(json.date).toLocaleDateString("en-US")
       document.getElementById("money").innerHTML = "$ " + new Intl.NumberFormat('en-US').format(json.money)
       CheckMarket(json.marketProducts, json.date)

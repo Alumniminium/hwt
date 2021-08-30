@@ -10,6 +10,7 @@ var circumference = null;
 window.addEventListener("load", function () {
     console.log("game-screen.js loading...")
     if (checkId()) {
+        localStorage.setItem("gamespeed", 1)
         setupProgressRing()
         contextMenu = document.getElementById("context-menu");
 
@@ -116,5 +117,6 @@ function ChangeGameSpeed(speed){
     [...document.getElementsByClassName("gamespeedbutton")].forEach(element => element.style.backgroundColor = "")
     console.log(speed.id);
     speed.style.backgroundColor = "crimson"
+    localStorage.setItem("gamespeed", parseInt(speed.id[0]))
     ApiUpdate_Post(parseInt(speed.id[0]))
 }
