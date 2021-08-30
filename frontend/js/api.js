@@ -52,15 +52,13 @@ function ApiUpdate_Post(gamespeed) {
   update.append("gameId", gameId)
   update.append("ceoId", ceoId)
   update.append("gameSpeed", gamespeed)
-  console.log(JSON.stringify(Object.fromEntries(update)))
   fetch("http://localhost/api/update/", {
     headers: {
       'Content-Type': 'application/json'
     },
     method: 'POST',
     body: JSON.stringify(Object.fromEntries(update))
-  }).then(function(res){ console.log(res) })
-
+  })
 }
 function ApiUpdate() {
   fetch(updateUrl)
@@ -71,8 +69,6 @@ function ApiUpdate() {
         ClearLocalStorage()
     })
     .then(json => {
-      if(json.millisecondsPerDay != 1000 / parseInt(localStorage.getItem("gamespeed")) )
-        console.log("gamespeed and millisecondsPerDay are not equal: "+json.millisecondsPerDay)
       document.getElementById("date").innerHTML = new Date(json.date).toLocaleDateString("en-US")
       document.getElementById("money").innerHTML = "$ " + new Intl.NumberFormat('en-US').format(json.money)
       CheckMarket(json.marketProducts, json.date)
