@@ -2,7 +2,7 @@ let contextMenu = null
 let timer = null
 let progressicontimer = null
 let gamespeedtimer = null
-
+let millisecondsperday = null
 //progress bar stuff
 var circle = null
 var radius = null
@@ -13,7 +13,7 @@ window.addEventListener("load", function () {
     if (checkId()) {
         if(localStorage.hasOwnProperty("gamespeed"))
         {
-            ChangeGameSpeed(document.getElementById(localStorage.getItem("gamespeed") + "x"))
+            ChangeGameSpeed(document.getElementById("" + millisecondsperday/1000 + "x"))
         }
         else{
             ChangeGameSpeed(document.getElementById("1x"))
@@ -84,7 +84,7 @@ function UpdateProgress() {
     dayspassed = localStorage.getItem('research_days_passed')
     research_days = parseInt(localStorage.getItem('research_days'))
     dayspassed = parseFloat(dayspassed.replace(",", "."));
-    dayspassed = dayspassed + parseInt(localStorage.getItem("gamespeed"))/30;
+    dayspassed = dayspassed + millisecondsperday/30000;
     localStorage.setItem('research_days_passed', "" + dayspassed)
     progress = (dayspassed / research_days) * 100
     if (progress <= 100) {
@@ -124,13 +124,14 @@ function ChangeGameSpeed(speed){
     [...document.getElementsByClassName("gamespeedbutton")].forEach(element => element.style.backgroundColor = "")
     speed.style.backgroundColor = "crimson"
     speed = parseInt(speed.id[0])
-    localStorage.setItem("gamespeed", speed)
     ApiUpdate_Post(speed)
-    if(speed!=0)
+}
+function ChangeGameClock(){
+    if(millisecondsperday!=0)
     {
-        speed = Math.round(1000/speed)
         clearInterval(gamespeedtimer)
-        gamespeedtimer = setInterval(AddDay, speed)
+        //alert(millisecondsperday)
+        gamespeedtimer = setInterval(AddDay, millisecondsperday)
         if(localStorage.hasOwnProperty("researchname"))
             progressicontimer = setInterval(UpdateProgress())
     }
