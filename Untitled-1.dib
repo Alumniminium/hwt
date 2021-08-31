@@ -1,3 +1,7 @@
+#!markdown
+
+# Testing Fab Pricing
+
 #!csharp
 
 using System.Numerics;
@@ -6,21 +10,7 @@ public static int FabSizeNanoMeters = 1000;
 public static int EdgeLoss = 5;
 public static int Diameter = 300;
 
-public static Vector2[] FabToPrice = new Vector2[]
-{
-    new Vector2(1000,107),
-    new Vector2(100,1077),
-    new Vector2(90,1650),
-    new Vector2(65,1937),
-    new Vector2(40,2274),
-    new Vector2(28,2891),
-    new Vector2(20,3677),
-    new Vector2(16,3984),
-    new Vector2(10,5992),
-    new Vector2(7,9346),
-    new Vector2(5,17000),
-    new Vector2(1,100000),
-};
+public static Vector2[] FabToPrice = new Vector2[] { new Vector2(1000,107), new Vector2(100,1077), new Vector2(90,1650), new Vector2(65,1937),new Vector2(40,2274),new Vector2(28,2891),new Vector2(20,3677),new Vector2(16,3984),new Vector2(10,5992),new Vector2(7,9346),new Vector2(5,17000),new Vector2(1,100000),};
 
 public static double GetWaferPrice(int size)
 {
@@ -70,3 +60,7 @@ for(int i = 100; i > 1;)
     FabSizeNanoMeters = i;
     Console.WriteLine($"Wafer Fab: {FabSizeNanoMeters}nm\t\tPrice: { Math.Round(GetWaferPrice(FabSizeNanoMeters),1)}$\t\tPrice per Die = { Math.Round(BestPricePerDie(FabSizeNanoMeters,12,6),2)}$\t({MaxYield(12,6)} dies)");
 }
+
+#!markdown
+
+Price should scale with FabSize and take the known indicies into account (Official TSMC Data in FabToPrice)
