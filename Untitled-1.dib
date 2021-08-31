@@ -1,0 +1,84 @@
+#!markdown
+
+# Testing Fab Pricing
+
+#!csharp
+
+using System.Numerics;
+
+public static int FabSizeNanoMeters = 1000;
+public static int EdgeLoss = 5;
+public static int Diameter = 300;
+
+public static Vector2[] FabToPrice = new Vector2[] { new Vector2(1000,107), new Vector2(100,1077), new Vector2(90,1650), new Vector2(65,1937),new Vector2(40,2274),new Vector2(28,2891),new Vector2(20,3677),new Vector2(16,3984),new Vector2(10,5992),new Vector2(7,9346),new Vector2(5,17000),new Vector2(1,100000),};
+
+#!csharp
+
+public static double GetWaferPrice(int size)
+{
+    var start = Vector2.One;
+    var end = Vector2.One;
+    for (int i = 0; i < FabToPrice.Length; i++)
+    {
+        var cur = FabToPrice[i];
+        if (size > cur.X)
+        {
+            start = FabToPrice[i - 1];
+            end = FabToPrice[i];
+            break;
+        }
+        if(size == cur.X)
+            return (long)cur.Y;
+    }
+    return start.Y + (size - start.X) * (end.Y - start.Y) / (end.X - start.X);
+}
+
+#!markdown
+
+# Calculate Maximum Die Yield by fitting the rectangle into the wafer circle as many times as possible while leaving a gap of 1mm for cutting
+
+#!csharp
+
+public static double MaxYield(int ChipSizeW, int ChipSizeH) 
+{
+    long count = 0;
+    static bool insideCircle(int cX, int cY, int x, int y, int w, int h) {
+            int dx = Math.Max(cX - x, (x + w) - cX);
+            int dy = Math.Max(cY - y, (y + h) - cY);
+            return (Math.Pow(Diameter/2, 2) >= dx * dx + dy * dy);
+        }
+    for (var x = 0; x < Diameter; x += ChipSizeW + 1)
+        for (var y = 0; y < Diameter; y += ChipSizeH + 1) 
+        {
+            if (!insideCircle(Diameter/2, Diameter/2, x, y, ChipSizeW, ChipSizeH))
+                    continue;
+            count++;
+        }
+    return count;
+}
+
+#!markdown
+
+# assuming zero defects, what is the price per die?
+
+#!csharp
+
+public static double BestPricePerDie(int fabSize, int dieSizeW, int dieSizeH) =>GetWaferPrice(fabSize) / MaxYield(dieSizeW, dieSizeH);
+
+#!markdown
+
+# display cost of FAB 10nm and less
+
+#!csharp
+
+for(int i = 10; i > 1;)
+{
+    if(i <= 10)
+        i--;
+    FabSizeNanoMeters = i;
+    Console.WriteLine($"Wafer Fab: {FabSizeNanoMeters}nm\t\tPrice: { Math.Round(GetWaferPrice(FabSizeNanoMeters),1)}$\t\tPrice per Die = { Math.Round(BestPricePerDie(FabSizeNanoMeters,12,6),2)}$\t({MaxYield(12,6)} dies)");
+}
+
+#!markdown
+
+Price should scale with FabSize and take the known indicies into account (Official TSMC Data in FabToPrice)

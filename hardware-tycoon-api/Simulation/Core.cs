@@ -8,7 +8,7 @@ namespace hardware_tycoon_api.Simulation
     public static class Core
     {
         public static readonly Dictionary<int, Game> Games = new();
-        public static readonly Dictionary<string, Component> Components = new();
+        public static readonly Dictionary<string, Part> Components = new();
         public static readonly Dictionary<string, CompetitorProduct> CompetitorProducts  = new();
         public static readonly Dictionary<string, RndProject> ResearchProjects = new()
         {

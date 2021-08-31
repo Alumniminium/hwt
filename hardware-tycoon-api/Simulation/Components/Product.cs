@@ -6,30 +6,32 @@ namespace hardware_tycoon_api.Simulation.Components
 {
     public class Product
     {
-        public string Company;
         public string Name;
-        public List<Component> Components = new ();
-        public int Price;
-        public int Sales;
-        public ProductType ProductType;
-        
-        public int ProductionCost => Components.Sum(c=>c.Cost);
-        public int Performance => Components.Sum(c => c.PerformanceAdd);
-        public int PowerUsage => Components.Sum(c => c.PowerUsage);
-
+        public string Company;
+        public int Price; 
         public string Description { get; internal set; }
+        public ProductType ProductType;
+        public List<Part> Parts = new();
+        
+        public int ProductionCost => Parts.Sum(c=>c.Cost);
+        public int Performance => Parts.Sum(c => c.Performance);
+        public int PowerUsage => Parts.Sum(c => c.PowerUsage);
 
-        public int Score;
 
-        public Product(string ownerCompany, string name, int price, IEnumerable<Component> components, ProductType productType, string description)
+        public Product(string ownerCompany, string name, int price, IEnumerable<Part> components, ProductType productType, string description)
         {
             Company =ownerCompany;
             Name=name;
             Price=price;
             if(components != null)
-                Components.AddRange(components);
+                Parts.AddRange(components);
             ProductType=productType;
             Description=description;
+        }
+
+        public Part ToPart()
+        {
+            return new Part(Name, Parts.Sum(c=> c.Transistors.Count));
         }
     }
 }
