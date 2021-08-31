@@ -12,6 +12,8 @@ public static int Diameter = 300;
 
 public static Vector2[] FabToPrice = new Vector2[] { new Vector2(1000,107), new Vector2(100,1077), new Vector2(90,1650), new Vector2(65,1937),new Vector2(40,2274),new Vector2(28,2891),new Vector2(20,3677),new Vector2(16,3984),new Vector2(10,5992),new Vector2(7,9346),new Vector2(5,17000),new Vector2(1,100000),};
 
+#!csharp
+
 public static double GetWaferPrice(int size)
 {
     var start = Vector2.One;
@@ -28,9 +30,15 @@ public static double GetWaferPrice(int size)
         if(size == cur.X)
             return (long)cur.Y;
     }
-    var price = start.Y + (size - start.X) * (end.Y - start.Y) / (end.X - start.X);
-    return price;
+    return start.Y + (size - start.X) * (end.Y - start.Y) / (end.X - start.X);
 }
+
+#!markdown
+
+# Calculate Maximum Die Yield by fitting the rectangle into the wafer circle as many times as possible while leaving a gap of 1mm for cutting
+
+#!csharp
+
 public static double MaxYield(int ChipSizeW, int ChipSizeH) 
 {
     long count = 0;
@@ -48,15 +56,25 @@ public static double MaxYield(int ChipSizeW, int ChipSizeH)
         }
     return count;
 }
+
+#!markdown
+
+# assuming zero defects, what is the price per die?
+
+#!csharp
+
 public static double BestPricePerDie(int fabSize, int dieSizeW, int dieSizeH) =>GetWaferPrice(fabSize) / MaxYield(dieSizeW, dieSizeH);
 
-for(int i = 100; i > 1;)
+#!markdown
+
+# display cost of FAB 10nm and less
+
+#!csharp
+
+for(int i = 10; i > 1;)
 {
     if(i <= 10)
         i--;
-    if(i > 10)
-        i-=10;
-
     FabSizeNanoMeters = i;
     Console.WriteLine($"Wafer Fab: {FabSizeNanoMeters}nm\t\tPrice: { Math.Round(GetWaferPrice(FabSizeNanoMeters),1)}$\t\tPrice per Die = { Math.Round(BestPricePerDie(FabSizeNanoMeters,12,6),2)}$\t({MaxYield(12,6)} dies)");
 }
