@@ -46,9 +46,9 @@ namespace hardware_tycoon_api.Services
             return null;
         }
 
-        internal static Component[] GetComponentsByNames(string[] components)
+        internal static Part[] GetComponentsByNames(string[] components)
         {
-            List<Component> realComponents = new();
+            List<Part> realComponents = new();
             foreach (var name in components)
             {
                 if (Core.Components.TryGetValue(name, out var component))

@@ -52,7 +52,7 @@ function ApiUpdate_Post(gamespeed) {
   update.append("gameId", gameId)
   update.append("ceoId", ceoId)
   update.append("gameSpeed", gamespeed)
-  fetch("http://localhost/api/update/", {
+  fetch(updateUrl, {
     headers: {
       'Content-Type': 'application/json'
     },
