@@ -71,8 +71,8 @@ function ApiUpdate() {
     })
     .then(json => {
       millisecondsperday= json.millisecondsPerDay
-      console.log(millisecondsperday)
       document.getElementById("date").innerHTML = new Date(json.date).toLocaleDateString("en-US")
+      date = new Date(json.date).toLocaleDateString("en-US")
       document.getElementById("money").innerHTML = "$ " + new Intl.NumberFormat('en-US').format(json.money)
       CheckMarket(json.marketProducts, json.date)
     })
@@ -132,6 +132,7 @@ function StartResearch(researchName) {
     .then(data => {
       if (data.success) {
         localStorage.setItem("research_days", data.secondsUntilDone)
+        localStorage.setItem("research_date", new Date)
         localStorage.setItem("research_days_passed", 0)
         localStorage.setItem("research_name", researchName)
         ShowMessage("Starting" + researchName, 270, 300, "pop-message")
