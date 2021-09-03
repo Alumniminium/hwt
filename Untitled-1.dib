@@ -30,9 +30,19 @@ public static Vector2[] FabToPrice = new Vector2[]
     new Vector2(1,100000)
 };
 
+#!markdown
+
+# Inflation
+
+a subtle 14% per year :D
+
 #!csharp
 
-public static double GetWaferPrice(int size)
+public static float InflationFactor(int year) => (2020 - year) * 14;
+
+#!csharp
+
+public static double GetWaferPrice(int size,int year = 1972)
 {
     var start = Vector2.One;
     var end = Vector2.One;
@@ -48,7 +58,9 @@ public static double GetWaferPrice(int size)
         if(size == cur.X)
             return (long)cur.Y;
     }
-    return start.Y + (size - start.X) * (end.Y - start.Y) / (end.X - start.X);
+    var price = start.Y + (size - start.X) * (end.Y - start.Y) / (end.X - start.X);
+    price = price + price * InflationFactor(year);
+    return price;
 }
 
 #!markdown
@@ -81,7 +93,7 @@ public static double MaxYield(int ChipSizeW, int ChipSizeH)
 
 #!csharp
 
-public static double BestPricePerDie(int fabSize, int dieSizeW, int dieSizeH) =>GetWaferPrice(fabSize) / MaxYield(dieSizeW, dieSizeH);
+public static double BestPricePerDie(int fabSize, int dieSizeW, int dieSizeH,int year) => GetWaferPrice(fabSize,year) / MaxYield(dieSizeW, dieSizeH);
 
 #!markdown
 
@@ -93,29 +105,11 @@ var FabSizeNanoMeters = 10_000; //10 micron
 Console.WriteLine($"Wafer Fab: {FabSizeNanoMeters/1000}um\t\tPrice: { Math.Round(GetWaferPrice(FabSizeNanoMeters),1)}$\t\tPrice per Die = { Math.Round(BestPricePerDie(FabSizeNanoMeters,12,6),2)}$");
 FabSizeNanoMeters = 1000; //1 micron
 Console.WriteLine($"Wafer Fab: {FabSizeNanoMeters/1000}um\t\tPrice: { Math.Round(GetWaferPrice(FabSizeNanoMeters),1)}$\t\tPrice per Die = { Math.Round(BestPricePerDie(FabSizeNanoMeters,12,6),2)}$");
-FabSizeNanoMeters = 800; 
-Console.WriteLine($"Wafer Fab: {FabSizeNanoMeters}nm\tPrice: { Math.Round(GetWaferPrice(FabSizeNanoMeters),1)}$\t\tPrice per Die = { Math.Round(BestPricePerDie(FabSizeNanoMeters,12,6),2)}$");
-FabSizeNanoMeters = 600; 
-Console.WriteLine($"Wafer Fab: {FabSizeNanoMeters}nm\tPrice: { Math.Round(GetWaferPrice(FabSizeNanoMeters),1)}$\t\tPrice per Die = { Math.Round(BestPricePerDie(FabSizeNanoMeters,12,6),2)}$");
-FabSizeNanoMeters = 350; 
-Console.WriteLine($"Wafer Fab: {FabSizeNanoMeters}nm\tPrice: { Math.Round(GetWaferPrice(FabSizeNanoMeters),1)}$\t\tPrice per Die = { Math.Round(BestPricePerDie(FabSizeNanoMeters,12,6),2)}$");
 FabSizeNanoMeters = 250; 
-Console.WriteLine($"Wafer Fab: {FabSizeNanoMeters}nm\tPrice: { Math.Round(GetWaferPrice(FabSizeNanoMeters),1)}$\t\tPrice per Die = { Math.Round(BestPricePerDie(FabSizeNanoMeters,12,6),2)}$");
-FabSizeNanoMeters = 180; 
-Console.WriteLine($"Wafer Fab: {FabSizeNanoMeters}nm\tPrice: { Math.Round(GetWaferPrice(FabSizeNanoMeters),1)}$\t\tPrice per Die = { Math.Round(BestPricePerDie(FabSizeNanoMeters,12,6),2)}$");
-FabSizeNanoMeters = 130; 
 Console.WriteLine($"Wafer Fab: {FabSizeNanoMeters}nm\tPrice: { Math.Round(GetWaferPrice(FabSizeNanoMeters),1)}$\t\tPrice per Die = { Math.Round(BestPricePerDie(FabSizeNanoMeters,12,6),2)}$");
 FabSizeNanoMeters = 90; 
 Console.WriteLine($"Wafer Fab: {FabSizeNanoMeters}nm\t\tPrice: { Math.Round(GetWaferPrice(FabSizeNanoMeters),1)}$\t\tPrice per Die = { Math.Round(BestPricePerDie(FabSizeNanoMeters,12,6),2)}$");
-FabSizeNanoMeters = 65; 
-Console.WriteLine($"Wafer Fab: {FabSizeNanoMeters}nm\t\tPrice: { Math.Round(GetWaferPrice(FabSizeNanoMeters),1)}$\t\tPrice per Die = { Math.Round(BestPricePerDie(FabSizeNanoMeters,12,6),2)}$");
-FabSizeNanoMeters = 40; 
-Console.WriteLine($"Wafer Fab: {FabSizeNanoMeters}nm\t\tPrice: { Math.Round(GetWaferPrice(FabSizeNanoMeters),1)}$\t\tPrice per Die = { Math.Round(BestPricePerDie(FabSizeNanoMeters,12,6),2)}$");
 FabSizeNanoMeters = 28; 
-Console.WriteLine($"Wafer Fab: {FabSizeNanoMeters}nm\t\tPrice: { Math.Round(GetWaferPrice(FabSizeNanoMeters),1)}$\t\tPrice per Die = { Math.Round(BestPricePerDie(FabSizeNanoMeters,12,6),2)}$");
-FabSizeNanoMeters = 12; 
-Console.WriteLine($"Wafer Fab: {FabSizeNanoMeters}nm\t\tPrice: { Math.Round(GetWaferPrice(FabSizeNanoMeters),1)}$\t\tPrice per Die = { Math.Round(BestPricePerDie(FabSizeNanoMeters,12,6),2)}$");
-FabSizeNanoMeters = 10; 
 Console.WriteLine($"Wafer Fab: {FabSizeNanoMeters}nm\t\tPrice: { Math.Round(GetWaferPrice(FabSizeNanoMeters),1)}$\t\tPrice per Die = { Math.Round(BestPricePerDie(FabSizeNanoMeters,12,6),2)}$");
 FabSizeNanoMeters = 7; 
 Console.WriteLine($"Wafer Fab: {FabSizeNanoMeters}nm\t\tPrice: { Math.Round(GetWaferPrice(FabSizeNanoMeters),1)}$\t\tPrice per Die = { Math.Round(BestPricePerDie(FabSizeNanoMeters,12,6),2)}$");

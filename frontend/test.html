@@ -1,7 +1,10 @@
 <html>
 
 <body>
-    <h1 id="dies">asd</h1>
+    <h1 id="dies">asd</h1><p>
+        <span>Year: </span>
+        <input id="year" value="1972">
+    </p>
     <p>
         <span>Wafer Diameter: </span>
         <input id="waferDiameter" value="300">
@@ -67,7 +70,7 @@
                 new Vector2(5, 17000),
                 new Vector2(1, 100000)
             ]
-            function GetWaferPrice(size) {
+            function GetWaferPrice(size, year) {
                 var start = new Vector2(1, 1);
                 var end = new Vector2(1, 1);
                 for (let i = 0; i < FabToPrice.length; i++) {
@@ -78,9 +81,17 @@
                         break;
                     }
                     if (size == cur.X)
-                        return cur.Y;
+                        {
+                            start =cur
+                            end = cur
+                            break;
+                        }
+                        // return cur.Y;
                 }
-                return start.Y + (size - start.X) * (end.Y - start.Y) / (end.X - start.X);
+                var price = start != end ? start.Y + (size - start.X) * (end.Y - start.Y) / (end.X - start.X) : cur.Y;
+                var inflation = (2020 - year) * 14;
+                price = price + (price / 100 * inflation);
+                return price
             }
         let dies = []
         let dieWidth = 0
@@ -109,6 +120,7 @@
             let defectDies = 0
             let totalDies = 0
             var allDefects = []
+            var year = parseInt(document.getElementById('year').value)
             var gap = parseInt(document.getElementById('dieGap').value)
             var defectsPerMM = parseFloat(document.getElementById('defectsPerMM').value)
 
@@ -119,7 +131,7 @@
             waferX = waferRadius
             waferY = waferRadius
             var fabSize = parseInt(document.getElementById('waferFabSize').value)
-            waferPrice = GetWaferPrice(fabSize)
+            waferPrice = GetWaferPrice(fabSize,year)
             ctx.save()
             ctx.scale(4, 4);
             ctx.clearRect(0, 0, canvas.width, canvas.height);
