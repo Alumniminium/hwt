@@ -8,6 +8,8 @@ var circle = null
 var radius = null
 var circumference = null;
 
+var pickedmodal = null
+
 window.addEventListener("load", function () {
     console.log("game-screen.js loading...")
     if (checkId()) {
@@ -147,3 +149,28 @@ function AddDay(){
     date.setDate(date.getDate() + 1)
     document.getElementById("date").innerHTML = date.toLocaleDateString("en-US")
 }
+function DragStart(ev, elemn) {
+    ev.preventDefault();
+    if(ev.target.className != "close-span")
+    {
+        pickedmodal = elemn
+        x = ev.clientX;
+        y = ev.clientY +pickedmodal.offsetHeight/2 ;
+        pickedmodal.style.top = y + "px" 
+        pickedmodal.style.left = x + "px"
+        document.onmouseup = DragEnd;
+        document.onmousemove = Drag;
+    }
+  }
+  function Drag(ev) {
+    ev.preventDefault();
+    x = ev.clientX;
+    y = ev.clientY;
+    pickedmodal.style.top = y + pickedmodal.offsetHeight/2 + "px" 
+    pickedmodal.style.left = x + "px"
+  }
+  function DragEnd() {
+    document.onmouseup = null;
+    document.onmousemove = null;
+    pickedmodal = null
+  }
