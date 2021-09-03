@@ -45,7 +45,20 @@
                 this.Defects = []
             }
         }
-
+        let waferPrices = [
+            [1000, 107],
+            [100, 1077],
+            [90, 1650],
+            [65, 1937],
+            [40, 2274],
+            [28, 2891],
+            [20, 3677],
+            [16, 3984],
+            [10, 5992],
+            [7, 9346],
+            [5, 17000],
+            [1, 10000]
+        ]
         let dies = []
         let dieWidth = 0
         let dieHeight = 0
@@ -65,7 +78,23 @@
             dx = Math.max(cX - x, (x + w) - cX);
             dy = Math.max(cY - y, (y + h) - cY);
             return (Math.pow(waferRadius, 2) >= dx * dx + dy * dy)
-        }
+        } 
+        
+        function getFabPrice(size) {
+                var startx,starty = (1,1)
+                var endx,endy = (1, 1)
+                for (i = 0; i < waferPrices.length; i++) {
+                    var curx,cury = waferPrices[i];
+                    if (size > curx) {
+                        start = waferPrices[i - 1];
+                        end = waferPrices[i];
+                        break;
+                    }
+                    if (size == curx)
+                        return cury;
+                }
+                return starty + (size - startx) * (endy - starty) / (endx - startx);
+            }
         function draw() {
             dies = []
             let workingDies = 0
@@ -82,7 +111,7 @@
             waferX = waferRadius
             waferY = waferRadius
             var fabSize = parseInt(document.getElementById('waferFabSize').value)
-            var waferFabPrice =  350 + (fabSize - 1000) * (90000 - 350) / (1 - 1000);
+            waferPrice = getFabPrice(fabSize)
             ctx.save()
             ctx.scale(4, 4);
             ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -131,7 +160,7 @@
             ctx.stroke();
             ctx.restore()
             var h1 = document.getElementById("dies");
-            h1.innerText = "Wafer Price: "+ waferFabPrice+" - Total Dies: " + totalDies + ", Working: " + workingDies + ", Defects: " + defectDies;
+            h1.innerText = "Wafer Price: "+ waferPrice+" - Total Dies: " + totalDies + ", Working: " + workingDies + ", Defects: " + defectDies;
         }
         draw()
     </script>
