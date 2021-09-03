@@ -7,7 +7,22 @@ class Vector2{
     Y = 0
     
 }
-let FabToPrice = [new Vector2(1000,107) , new Vector2(100, 1077)]
+let FabToPrice = [
+    new Vector2(1000,107) ,
+    new Vector2(100, 1077) ,
+    new Vector2(1000, 107),
+    new Vector2(100, 1077),
+    new Vector2(90, 1650),
+    new Vector2(65, 1937),
+    new Vector2(40, 2274),
+    new Vector2(28, 2891),
+    new Vector2(20, 3677),
+    new Vector2(16, 3984),
+    new Vector2(10, 5992),
+    new Vector2(7, 9346),
+    new Vector2(5, 17000),
+    new Vector2(1, 10000)
+]
 function GetWaferPrice(size)
 {
     var start = new Vector2(1,1);
