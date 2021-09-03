@@ -45,20 +45,43 @@
                 this.Defects = []
             }
         }
-        let waferPrices = [
-            [1000, 107],
-            [100, 1077],
-            [90, 1650],
-            [65, 1937],
-            [40, 2274],
-            [28, 2891],
-            [20, 3677],
-            [16, 3984],
-            [10, 5992],
-            [7, 9346],
-            [5, 17000],
-            [1, 10000]
-        ]
+        class Vector2 {
+                constructor(x, y) {
+                    this.X = x
+                    this.Y = y
+                }
+                X = 0
+                Y = 0
+
+            }
+            let FabToPrice = [
+                new Vector2(10000, 1007),
+                new Vector2(90, 1650),
+                new Vector2(65, 1937),
+                new Vector2(40, 2274),
+                new Vector2(28, 2891),
+                new Vector2(20, 3677),
+                new Vector2(16, 3984),
+                new Vector2(10, 5992),
+                new Vector2(7, 9346),
+                new Vector2(5, 17000),
+                new Vector2(1, 10000)
+            ]
+            function GetWaferPrice(size) {
+                var start = new Vector2(1, 1);
+                var end = new Vector2(1, 1);
+                for (let i = 0; i < FabToPrice.length; i++) {
+                    var cur = FabToPrice[i];
+                    if (size > cur.X) {
+                        start = FabToPrice[i == 0 ? FabToPrice.length - 1 : i - 1];
+                        end = FabToPrice[i];
+                        break;
+                    }
+                    if (size == cur.X)
+                        return cur.Y;
+                }
+                return start.Y + (size - start.X) * (end.Y - start.Y) / (end.X - start.X);
+            }
         let dies = []
         let dieWidth = 0
         let dieHeight = 0
@@ -80,21 +103,6 @@
             return (Math.pow(waferRadius, 2) >= dx * dx + dy * dy)
         } 
         
-        function getFabPrice(size) {
-                var startx,starty = (1,1)
-                var endx,endy = (1, 1)
-                for (i = 0; i < waferPrices.length; i++) {
-                    var curx,cury = waferPrices[i];
-                    if (size > curx) {
-                        start = waferPrices[i - 1];
-                        end = waferPrices[i];
-                        break;
-                    }
-                    if (size == curx)
-                        return cury;
-                }
-                return starty + (size - startx) * (endy - starty) / (endx - startx);
-            }
         function draw() {
             dies = []
             let workingDies = 0
@@ -111,7 +119,7 @@
             waferX = waferRadius
             waferY = waferRadius
             var fabSize = parseInt(document.getElementById('waferFabSize').value)
-            waferPrice = getFabPrice(fabSize)
+            waferPrice = GetWaferPrice(fabSize)
             ctx.save()
             ctx.scale(4, 4);
             ctx.clearRect(0, 0, canvas.width, canvas.height);
