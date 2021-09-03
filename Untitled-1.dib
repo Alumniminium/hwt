@@ -4,6 +4,11 @@
 
 #!csharp
 
+using System;
+Console.WriteLine("s"+"a");
+
+#!csharp
+
 using System.Numerics;
 
 public static int FabSizeNanoMeters = 1000;
