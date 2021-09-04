@@ -64,23 +64,9 @@ namespace hardware_tycoon_api.Simulation.Components
                 }
             }
             var price = start.Y + (size - start.X) * (end.Y - start.Y) / (end.X - start.X);
-<<<<<<< HEAD
-            price = ReturnInflation(price, year);
-            return (int)price;
-        }
-        public static int MaxYield(int ChipSizeW, int ChipSizeH) => (int)Math.Floor(Math.PI * Math.Pow((Diameter / 2) - (Math.Pow(EdgeLoss, 2) / Diameter * 100), 2) / (ChipSizeH * ChipSizeW));
-        public static int BestPricePerDie(int fabSize, int dieSizeW, int dieSizeH) => GetWaferPrice(fabSize) / MaxYield(dieSizeW, dieSizeH);
-        public static int ReturnInflation(float price, int year)
-        {
-            var inflation = Math.Abs(2020 - year) * 4;
-            price = price + (price / 100 * inflation);
-            return (int)price;
-        }
-=======
             return ReturnInflation(price);
         }
         public static int MaxYield(int ChipSizeW, int ChipSizeH) => (int)Math.Floor(Math.PI * Math.Pow((Diameter / 2) - (Math.Pow(EdgeLoss, 2) / Diameter * 100), 2) / (ChipSizeH * ChipSizeW));
         public static double BestPricePerDie(int fabSize, int transistors, int dieSizeW, int dieSizeH) => (GetWaferPrice(fabSize) + GetTransistorPrice(transistors)) / MaxYield(dieSizeW, dieSizeH);
->>>>>>> c13da07b9b84a51ff070ea18993f31fbebc30c71
     }
 }

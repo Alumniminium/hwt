@@ -94,7 +94,7 @@ public static class Wafer
     public static int MaxYield(int ChipSizeW, int ChipSizeH) => (int)Math.Floor(Math.PI * Math.Pow((Diameter / 2) - (Math.Pow(EdgeLoss, 2) / Diameter * 100), 2) / (ChipSizeH * ChipSizeW));
     public static double BestPricePerDie(int year,int fabSize, int transistors, int dieSizeW, int dieSizeH)
     {
-        var waferPrice = GetWaferPrice(year,fabSize);
+        var waferPrice = GetWaferPrice(year, fabSize);
         var transistorPrice = GetTransistorPrice(year,transistors,fabSize);
         var maxYield = MaxYield(dieSizeW, dieSizeH);
 
