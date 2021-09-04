@@ -8,6 +8,7 @@ namespace hardware_tycoon_api.Simulation.Components
 {
     public static class Wafer
     {
+        public static double TransistorPrice = 0.00000029;
         public static int FabSizeNanoMeters = 1000;
         public static int EdgeLoss = 5;
         public static int Diameter = 300;
@@ -27,7 +28,28 @@ namespace hardware_tycoon_api.Simulation.Components
             new Vector2(5,17000),
             new Vector2(1,100000),
         };
-        public static int GetWaferPrice(int size, int year=1972)
+        // calculates how many transistors at a given size <fab> fit inside a die of size dieW x dieH
+        public static long GetMaxTransistors(int dieW, int dieH, int fab)
+        {
+            var sqnm = dieW * dieH * 1_000_000_000_000;
+            var maxTransistors = sqnm / fab;
+            return maxTransistors;
+        }
+        // calculates the total cost of the requested transistor count including inflation
+        public static double GetTransistorPrice(int transistorCount)
+        {
+            // if(transistorCount>GetMaxTransistors(w,h,fab))
+            // return float.PositiveInfinity;
+
+            return ReturnInflation(TransistorPrice * transistorCount);
+        }
+        public static double ReturnInflation(double price, int year = 1972)
+        {
+            var inflation = Math.Abs(2020 - year) * 4;
+            price = price + (price / 100 * inflation);
+            return Math.Round(price, 2);
+        }
+        public static double GetWaferPrice(int size)
         {
             var start = Vector2.One;
             var end = Vector2.One;
@@ -42,11 +64,9 @@ namespace hardware_tycoon_api.Simulation.Components
                 }
             }
             var price = start.Y + (size - start.X) * (end.Y - start.Y) / (end.X - start.X);
-            var inflation = Math.Abs(2020 - year) * 4;
-            price = price + (price / 100 * inflation);
-            return (int)price;
+            return ReturnInflation(price);
         }
         public static int MaxYield(int ChipSizeW, int ChipSizeH) => (int)Math.Floor(Math.PI * Math.Pow((Diameter / 2) - (Math.Pow(EdgeLoss, 2) / Diameter * 100), 2) / (ChipSizeH * ChipSizeW));
-        public static int BestPricePerDie(int fabSize, int dieSizeW, int dieSizeH) => GetWaferPrice(fabSize) / MaxYield(dieSizeW, dieSizeH);
+        public static double BestPricePerDie(int fabSize, int transistors, int dieSizeW, int dieSizeH) => (GetWaferPrice(fabSize) + GetTransistorPrice(transistors)) / MaxYield(dieSizeW, dieSizeH);
     }
 }
