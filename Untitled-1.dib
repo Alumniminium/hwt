@@ -1,125 +1,111 @@
-#!markdown
-
-# Testing Fab Pricing
-
-#!csharp
-
-using System;
-Console.WriteLine("s"+"a");
-
 #!csharp
 
 using System.Numerics;
+public static class Wafer
+{ 
+    public static int EdgeLoss = 5;
+    public static int Diameter = 300;
 
-public static int FabSizeNanoMeters = 1000;
-public static int EdgeLoss = 5;
-public static int Diameter = 300;
-
-public static Vector2[] FabToPrice = new Vector2[] 
-{
-    new Vector2(10000,1000),
-    new Vector2(90,1650),
-    new Vector2(65,1937),
-    new Vector2(40,2274),
-    new Vector2(28,2891),
-    new Vector2(20,3677),
-    new Vector2(16,3984),
-    new Vector2(10,5992),
-    new Vector2(7,9346),
-    new Vector2(5,17000),
-    new Vector2(1,100000)
-};
-
-#!markdown
-
-# Inflation
-
-a subtle 14% per year :D
-
-#!csharp
-
-public static float InflationFactor(int year) => (2020 - year) * 14;
-
-#!csharp
-
-public static double GetWaferPrice(int size,int year = 1972)
-{
-    var start = Vector2.One;
-    var end = Vector2.One;
-    for (int i = 0; i < FabToPrice.Length; i++)
+    public static Vector2[] TransistorPrice = new Vector2[]
     {
-        var cur = FabToPrice[i];
-        if (size > cur.X)
-        {
-            start = FabToPrice[i - 1];
-            end = FabToPrice[i];
-            break;
-        }
-        if(size == cur.X)
-            return (long)cur.Y;
+        new Vector2(2000, 0.0014f),
+        new Vector2(1000, 0.001f),
+        new Vector2(0300, 0.00032f),
+        new Vector2(0180, 0.000016f),
+        new Vector2(0090, 0.00000008f),
+        new Vector2(0065, 0.00000006f),
+        new Vector2(0040, 0.00000005f),
+        new Vector2(0028, 0.00000003f),
+        new Vector2(0020, 0.000000031f),
+        new Vector2(0016, 0.00000004f),
+        new Vector2(0010, 0.000000045f),
+        new Vector2(0007, 0.00000006f),
+        new Vector2(0005, 0.00000007f),
+        new Vector2(0001, 0.00000009f),
+    };
+
+    public static Vector2[] FabToPrice = new Vector2[]
+    {
+        new Vector2(10000,107),
+        new Vector2(1000,107),
+        new Vector2(100,1077),
+        new Vector2(90,1650),
+        new Vector2(65,1937),
+        new Vector2(40,2274),
+        new Vector2(28,2891),
+        new Vector2(20,3677),
+        new Vector2(16,3984),
+        new Vector2(10,5992),
+        new Vector2(7,9346),
+        new Vector2(5,17000),
+        new Vector2(1,100000),
+    };
+    // calculates how many transistors at a given size <fab> fit inside a die of size dieW x dieH
+    public static long GetMaxTransistors(int dieW, int dieH, int fab)
+    {
+        var sqnm = (dieW * dieH) * 1000000000000;
+        var maxTransistors = sqnm / fab;
+        return maxTransistors;
     }
-    var price = start.Y + (size - start.X) * (end.Y - start.Y) / (end.X - start.X);
-    price = price + price * InflationFactor(year);
-    return price;
-}
-
-#!markdown
-
-# Calculate Maximum Die Yield by fitting the rectangle into the wafer circle as many times as possible while leaving a gap of 1mm for cutting
-
-#!csharp
-
-public static double MaxYield(int ChipSizeW, int ChipSizeH) 
-{
-    long count = 0;
-    static bool insideCircle(int cX, int cY, int x, int y, int w, int h) {
-            int dx = Math.Max(cX - x, (x + w) - cX);
-            int dy = Math.Max(cY - y, (y + h) - cY);
-            return (Math.Pow(Diameter/2, 2) >= dx * dx + dy * dy);
-        }
-    for (var x = 0; x < Diameter; x += ChipSizeW + 1)
-        for (var y = 0; y < Diameter; y += ChipSizeH + 1) 
+    // calculates the total cost of the requested transistor count including inflation
+    public static double GetTransistorPrice(int year, int transistorCount, int fab)
+    {        
+        var start = Vector2.One;
+        var end = Vector2.One;
+        for (int i = 0; i < TransistorPrice.Length; i++)
         {
-            if (!insideCircle(Diameter/2, Diameter/2, x, y, ChipSizeW, ChipSizeH))
-                    continue;
-            count++;
+            var cur = TransistorPrice[i];
+            if (fab >= cur.X)
+            {
+                start = TransistorPrice[i - 1];
+                end = TransistorPrice[i];
+                break;
+            }
         }
-    return count;
+        double price = start.Y + (fab - start.X) * (end.Y - start.Y) / (end.X - start.X);
+        price = price * transistorCount;
+        price = ReturnInflation(price,year);
+        return price;
+    }
+    public static double ReturnInflation(double price, int year = 2017)
+    {
+        var inflation = (2020 - year) * 14;
+        price = price + ((price / 100) * inflation);
+        return Math.Round(price, 2);
+    }
+    public static double GetWaferPrice(int year, int size)
+    {
+        var start = Vector2.One;
+        var end = Vector2.One;
+        for (int i = 0; i < FabToPrice.Length; i++)
+        {
+            var cur = FabToPrice[i];
+            if (size >= cur.X)
+            {
+                start = FabToPrice[i - 1];
+                end = FabToPrice[i];
+                break;
+            }
+        }
+        double price = start.Y + (size - start.X) * (end.Y - start.Y) / (end.X - start.X);
+        price = ReturnInflation(price,year);
+        return price;
+    }
+    public static int MaxYield(int ChipSizeW, int ChipSizeH) => (int)Math.Floor(Math.PI * Math.Pow((Diameter / 2) - (Math.Pow(EdgeLoss, 2) / Diameter * 100), 2) / (ChipSizeH * ChipSizeW));
+    public static double BestPricePerDie(int year,int fabSize, int transistors, int dieSizeW, int dieSizeH)
+    {
+        var waferPrice = GetWaferPrice(year,fabSize);
+        var transistorPrice = GetTransistorPrice(year,transistors,fabSize);
+        var maxYield = MaxYield(dieSizeW, dieSizeH);
+
+        var price = waferPrice + (transistorPrice*maxYield);
+        var perDiePrice = price / maxYield;
+        return Math.Round(perDiePrice,2);
+    }
 }
-
-#!markdown
-
-# assuming zero defects, what is the price per die?
-
-#!csharp
-
-public static double BestPricePerDie(int fabSize, int dieSizeW, int dieSizeH,int year) => GetWaferPrice(fabSize,year) / MaxYield(dieSizeW, dieSizeH);
-
-#!markdown
-
-# display cost of FAB 10nm and less
-
-#!csharp
-
-var FabSizeNanoMeters = 10_000; //10 micron
-Console.WriteLine($"Wafer Fab: {FabSizeNanoMeters/1000}um\t\tPrice: { Math.Round(GetWaferPrice(FabSizeNanoMeters),1)}$\t\tPrice per Die = { Math.Round(BestPricePerDie(FabSizeNanoMeters,12,6),2)}$");
-FabSizeNanoMeters = 1000; //1 micron
-Console.WriteLine($"Wafer Fab: {FabSizeNanoMeters/1000}um\t\tPrice: { Math.Round(GetWaferPrice(FabSizeNanoMeters),1)}$\t\tPrice per Die = { Math.Round(BestPricePerDie(FabSizeNanoMeters,12,6),2)}$");
-FabSizeNanoMeters = 250; 
-Console.WriteLine($"Wafer Fab: {FabSizeNanoMeters}nm\tPrice: { Math.Round(GetWaferPrice(FabSizeNanoMeters),1)}$\t\tPrice per Die = { Math.Round(BestPricePerDie(FabSizeNanoMeters,12,6),2)}$");
-FabSizeNanoMeters = 90; 
-Console.WriteLine($"Wafer Fab: {FabSizeNanoMeters}nm\t\tPrice: { Math.Round(GetWaferPrice(FabSizeNanoMeters),1)}$\t\tPrice per Die = { Math.Round(BestPricePerDie(FabSizeNanoMeters,12,6),2)}$");
-FabSizeNanoMeters = 28; 
-Console.WriteLine($"Wafer Fab: {FabSizeNanoMeters}nm\t\tPrice: { Math.Round(GetWaferPrice(FabSizeNanoMeters),1)}$\t\tPrice per Die = { Math.Round(BestPricePerDie(FabSizeNanoMeters,12,6),2)}$");
-FabSizeNanoMeters = 7; 
-Console.WriteLine($"Wafer Fab: {FabSizeNanoMeters}nm\t\tPrice: { Math.Round(GetWaferPrice(FabSizeNanoMeters),1)}$\t\tPrice per Die = { Math.Round(BestPricePerDie(FabSizeNanoMeters,12,6),2)}$");
-FabSizeNanoMeters = 5; 
-Console.WriteLine($"Wafer Fab: {FabSizeNanoMeters}nm\t\tPrice: { Math.Round(GetWaferPrice(FabSizeNanoMeters),1)}$\t\tPrice per Die = { Math.Round(BestPricePerDie(FabSizeNanoMeters,12,6),2)}$");
-FabSizeNanoMeters = 3; 
-Console.WriteLine($"Wafer Fab: {FabSizeNanoMeters}nm\t\tPrice: { Math.Round(GetWaferPrice(FabSizeNanoMeters),1)}$\t\tPrice per Die = { Math.Round(BestPricePerDie(FabSizeNanoMeters,12,6),2)}$");
-FabSizeNanoMeters = 1; 
-Console.WriteLine($"Wafer Fab: {FabSizeNanoMeters}nm\t\tPrice: { Math.Round(GetWaferPrice(FabSizeNanoMeters),1)}$\t\tPrice per Die = { Math.Round(BestPricePerDie(FabSizeNanoMeters,12,6),2)}$");
-
-#!markdown
-
-Price should scale with FabSize and take the known indicies into account (Official TSMC Data in FabToPrice)
+Console.WriteLine("Transistor Price 2250 @ 10um "+Wafer.GetTransistorPrice(1972,2250,1000));
+Console.WriteLine("Transistor Price 125M @ 90nm "+Wafer.GetTransistorPrice(2004,125000000,90));
+Console.WriteLine("Intel 4004   10um   2250T    1972: ???$      | Production Cost: "+Wafer.BestPricePerDie(1972,1000,2250,2,2));
+Console.WriteLine("Pentium 4    130nm  55mT     2002: 400-600$  | Production Cost: "+Wafer.BestPricePerDie(2002,90,125_000_000,12,12));
+Console.WriteLine("Pentium 4    90nm   125mT    2004: ???$      | Production Cost: "+Wafer.BestPricePerDie(2004,90,125_000_000,12,12));
+Console.WriteLine("i7 7700k     14nm   1750mT   2017: 339$      | Production Cost: "+Wafer.BestPricePerDie(2017,14,1750000000,38,38)); // price on release 339$
