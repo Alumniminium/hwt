@@ -9,7 +9,7 @@ var radius = null
 var circumference = null;
 
 var pickedmodal = null
-
+var x0,y0
 window.addEventListener("load", function () {
 
     [...document.getElementsByClassName("modal")].forEach(e => {
@@ -153,6 +153,7 @@ function AddDay(){
     date.setDate(date.getDate() + 1)
     document.getElementById("date").innerHTML = date.toLocaleDateString("en-US")
 }
+<<<<<<< HEAD
 
 
 function dragElement(elmnt) {
@@ -189,3 +190,31 @@ function dragElement(elmnt) {
         document.onmousemove = null;
     }
 }
+=======
+function DragStart(ev, elemn) {
+    ev.preventDefault();
+        pickedmodal = elemn
+        x0 = ev.clientX;
+        y0 = ev.clientY;
+        pickedmodal.style.border = "solid"
+        pickedmodal.style.borderColor = "red"
+        document.onmouseup = DragEnd;
+        document.onmousemove = Drag;
+  }
+  function Drag(ev) {
+    ev.preventDefault();
+    x = x0 - ev.clientX ;
+    y = y0 - ev.clientY ;
+    x0 = ev.clientX
+    y0 = ev.clientY
+    pickedmodal.style.left = pickedmodal.offsetLeft - x + "px"
+    pickedmodal.style.top = pickedmodal.offsetTop - y  + "px" 
+  }
+  function DragEnd() {
+    pickedmodal.style.border = "none"
+    pickedmodal.style.borderColor = "none"
+    document.onmouseup = null;
+    document.onmousemove = null;
+    pickedmodal = null
+  }
+>>>>>>> 1fbeeee37e81fa888c8e81c66b36293ec2a2d742

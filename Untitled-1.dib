@@ -1,5 +1,6 @@
 #!csharp
 
+using System.Numerics;
 public static class Wafer
 { 
     public static int EdgeLoss = 5;
@@ -74,7 +75,7 @@ public static class Wafer
         price = price + ((price / 100) * inflation);
         return Math.Round(price, 2);
     }
-    public static double GetWaferPricei(int year, int size)
+    public static double GetWaferPrice(int year, int size)
     {
         var start = Vector2.One;
         var end = Vector2.One;
@@ -95,7 +96,7 @@ public static class Wafer
     public static int MaxYield(int ChipSizeW, int ChipSizeH) => (int)Math.Floor(Math.PI * Math.Pow((Diameter / 2) - (Math.Pow(EdgeLoss, 2) / Diameter * 100), 2) / (ChipSizeH * ChipSizeW));
     public static double BestPricePerDie(int year,int fabSize, int transistors, int dieSizeW, int dieSizeH)
     {
-        var waferPrice = GetWaferPrice(fabSize);
+        var waferPrice = GetWaferPrice(year, fabSize);
         var transistorPrice = GetTransistorPrice(year,transistors,fabSize);
         var maxYield = MaxYield(dieSizeW, dieSizeH);
 
