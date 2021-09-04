@@ -9,7 +9,7 @@ var radius = null
 var circumference = null;
 
 var pickedmodal = null
-
+var x0,y0
 window.addEventListener("load", function () {
     console.log("game-screen.js loading...")
     if (checkId()) {
@@ -151,25 +151,26 @@ function AddDay(){
 }
 function DragStart(ev, elemn) {
     ev.preventDefault();
-    if(ev.target.className != "close-span")
-    {
         pickedmodal = elemn
-        x = ev.clientX;
-        y = ev.clientY +pickedmodal.offsetHeight/2 ;
-        pickedmodal.style.top = y + "px" 
-        pickedmodal.style.left = x + "px"
+        x0 = ev.clientX;
+        y0 = ev.clientY;
+        pickedmodal.style.border = "solid"
+        pickedmodal.style.borderColor = "red"
         document.onmouseup = DragEnd;
         document.onmousemove = Drag;
-    }
   }
   function Drag(ev) {
     ev.preventDefault();
-    x = ev.clientX;
-    y = ev.clientY;
-    pickedmodal.style.top = y + pickedmodal.offsetHeight/2 + "px" 
-    pickedmodal.style.left = x + "px"
+    x = x0 - ev.clientX ;
+    y = y0 - ev.clientY ;
+    x0 = ev.clientX
+    y0 = ev.clientY
+    pickedmodal.style.left = pickedmodal.offsetLeft - x + "px"
+    pickedmodal.style.top = pickedmodal.offsetTop - y  + "px" 
   }
   function DragEnd() {
+    pickedmodal.style.border = "none"
+    pickedmodal.style.borderColor = "none"
     document.onmouseup = null;
     document.onmousemove = null;
     pickedmodal = null

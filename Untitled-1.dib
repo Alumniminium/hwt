@@ -8,7 +8,8 @@ public static class Wafer
 
     public static Vector2[] TransistorPrice = new Vector2[]
     {
-        new Vector2(2000, 0.0014f),
+        new Vector2(20000, 0.0014f),
+        new Vector2(10000, 0.0014f),
         new Vector2(1000, 0.001f),
         new Vector2(0300, 0.00032f),
         new Vector2(0180, 0.000016f),
@@ -26,6 +27,7 @@ public static class Wafer
 
     public static Vector2[] FabToPrice = new Vector2[]
     {
+        new Vector2(20000,107),
         new Vector2(10000,107),
         new Vector2(1000,107),
         new Vector2(100,1077),
@@ -103,13 +105,13 @@ public static class Wafer
         return Math.Round(perDiePrice,2);
     }
 }
-Console.WriteLine("Transistor Price 2250 @ 10um 1972: "+Wafer.GetTransistorPrice(1972,2_250,1000));
-Console.WriteLine("Transistor Price 2250 @ 10um 2004: "+Wafer.GetTransistorPrice(2004,2_250,1000));
+Console.WriteLine("Transistor Price 2250 @ 10um 1972: "+Wafer.GetTransistorPrice(1972,2_250,10000));
+Console.WriteLine("Transistor Price 2250 @ 10um 2004: "+Wafer.GetTransistorPrice(2004,2_250,10000));
 Console.WriteLine("Transistor Price 125M @ 90nm 1972: "+Wafer.GetTransistorPrice(1972,125_000_000,90));
 Console.WriteLine("Transistor Price 125M @ 90nm 2004: "+Wafer.GetTransistorPrice(2004,125_000_000,90));
 Console.WriteLine("Transistor Price 1750M @ 14nm 1972: "+Wafer.GetTransistorPrice(1972,1_750_000_000,14));
 Console.WriteLine("Transistor Price 1750M @ 14nm 2017: "+Wafer.GetTransistorPrice(2017,1_750_000_000,14));
-Console.WriteLine("Intel 4004   10um   2250T    1972: ???$      | Production Cost: "+Wafer.BestPricePerDie(1972,1000,2_250,2,2));
+Console.WriteLine("Intel 4004   10um   2250T    1972: ???$      | Production Cost: "+Wafer.BestPricePerDie(1972,10000,2_250,2,2));
 Console.WriteLine("Pentium 4    130nm  55mT     2002: 400-600$  | Production Cost: "+Wafer.BestPricePerDie(2002,90,125_000_000,12,12));
 Console.WriteLine("Pentium 4    90nm   125mT    2004: ???$      | Production Cost: "+Wafer.BestPricePerDie(2004,90,125_000_000,12,12));
 Console.WriteLine("i7 7700k     14nm   1750mT   2017: 339$      | Production Cost: "+Wafer.BestPricePerDie(2017,14,1_750_000_000,11,11)); 
