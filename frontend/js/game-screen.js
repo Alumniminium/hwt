@@ -11,6 +11,10 @@ var circumference = null;
 var pickedmodal = null
 
 window.addEventListener("load", function () {
+
+    [...document.getElementsByClassName("modal")].forEach(e => {
+        dragElement(e);
+    });
     console.log("game-screen.js loading...")
     if (checkId()) {
         if(localStorage.hasOwnProperty("gamespeed"))
@@ -56,7 +60,7 @@ function setupProgressRing() {
 }
 
 function OpenModal(modalname) {
-    CloseAllModals()
+    // CloseAllModals()
     modal = document.getElementById(modalname)
     modal.style.display = "flow-root"
     switch (modalname) {
@@ -149,28 +153,39 @@ function AddDay(){
     date.setDate(date.getDate() + 1)
     document.getElementById("date").innerHTML = date.toLocaleDateString("en-US")
 }
-function DragStart(ev, elemn) {
-    ev.preventDefault();
-    if(ev.target.className != "close-span")
-    {
-        pickedmodal = elemn
-        x = ev.clientX;
-        y = ev.clientY +pickedmodal.offsetHeight/2 ;
-        pickedmodal.style.top = y + "px" 
-        pickedmodal.style.left = x + "px"
-        document.onmouseup = DragEnd;
-        document.onmousemove = Drag;
+
+
+function dragElement(elmnt) {
+    var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+    elmnt.onmousedown = dragMouseDown;
+
+    function dragMouseDown(e) {
+        e = e || window.event;
+        e.preventDefault();
+        // get the mouse cursor position at startup:
+        pos3 = e.clientX;
+        pos4 = e.clientY;
+        document.onmouseup = closeDragElement;
+        // call a function whenever the cursor moves:
+        document.onmousemove = elementDrag;
     }
-  }
-  function Drag(ev) {
-    ev.preventDefault();
-    x = ev.clientX;
-    y = ev.clientY;
-    pickedmodal.style.top = y + pickedmodal.offsetHeight/2 + "px" 
-    pickedmodal.style.left = x + "px"
-  }
-  function DragEnd() {
-    document.onmouseup = null;
-    document.onmousemove = null;
-    pickedmodal = null
-  }
+
+    function elementDrag(e) {
+        e = e || window.event;
+        e.preventDefault();
+        // calculate the new cursor position:
+        pos1 = pos3 - e.clientX;
+        pos2 = pos4 - e.clientY;
+        pos3 = e.clientX;
+        pos4 = e.clientY;
+        // set the element's new position:
+        elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+        elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+    }
+
+    function closeDragElement() {
+        /* stop moving when mouse button is released:*/
+        document.onmouseup = null;
+        document.onmousemove = null;
+    }
+}
