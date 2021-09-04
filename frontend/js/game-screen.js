@@ -10,6 +10,8 @@ var circumference = null;
 
 var pickedmodal = null
 var x0,y0
+
+var research_date = null
 window.addEventListener("load", function () {
     console.log("game-screen.js loading...")
     if (checkId()) {
@@ -161,12 +163,12 @@ function DragStart(ev, elemn) {
   }
   function Drag(ev) {
     ev.preventDefault();
-    x = x0 - ev.clientX ;
-    y = y0 - ev.clientY ;
+    x = pickedmodal.offsetLeft - (x0 - ev.clientX) + "px";
+    y = pickedmodal.offsetTop - (y0 - ev.clientY) + "px";
     x0 = ev.clientX
     y0 = ev.clientY
-    pickedmodal.style.left = pickedmodal.offsetLeft - x + "px"
-    pickedmodal.style.top = pickedmodal.offsetTop - y  + "px" 
+    pickedmodal.style.left = x
+    pickedmodal.style.top =  y
   }
   function DragEnd() {
     pickedmodal.style.border = "none"
