@@ -10,6 +10,8 @@ var circumference = null;
 
 var pickedmodal = null
 var x0,y0
+
+var research_date = null
 window.addEventListener("load", function () {
 
     [...document.getElementsByClassName("modal")].forEach(e => {
@@ -62,7 +64,7 @@ function setupProgressRing() {
 function OpenModal(modalname) {
     // CloseAllModals()
     modal = document.getElementById(modalname)
-    modal.style.display = "flow-root"
+    modal.style.display = "grid"
     switch (modalname) {
         case "research":
             Researches()
@@ -120,6 +122,9 @@ function ShowMessage(message, x, y, style) {
 
 function CloseAllModals() {
     [...document.getElementsByClassName("modal")].forEach(element => element.style.display = "none")
+}
+function CloseModal(modal){
+    modal.parentNode.parentNode.parentNode.style.display = "none"
 }
 function ClearLocalStorage() {
     localStorage.clear()

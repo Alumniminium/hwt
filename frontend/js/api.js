@@ -132,7 +132,7 @@ function StartResearch(researchName) {
     .then(data => {
       if (data.success) {
         localStorage.setItem("research_days", data.secondsUntilDone)
-        localStorage.setItem("research_date", new Date)
+        
         localStorage.setItem("research_days_passed", 0)
         localStorage.setItem("research_name", researchName)
         ShowMessage("Starting" + researchName, 270, 300, "pop-message")
