@@ -13,6 +13,10 @@ var x0,y0
 
 var research_date = null
 window.addEventListener("load", function () {
+
+    [...document.getElementsByClassName("modal")].forEach(e => {
+        dragElement(e);
+    });
     console.log("game-screen.js loading...")
     if (checkId()) {
         if(localStorage.hasOwnProperty("gamespeed"))
@@ -58,9 +62,9 @@ function setupProgressRing() {
 }
 
 function OpenModal(modalname) {
-    CloseAllModals()
+    // CloseAllModals()
     modal = document.getElementById(modalname)
-    modal.style.display = "flow-root"
+    modal.style.display = "grid"
     switch (modalname) {
         case "research":
             Researches()
@@ -119,6 +123,9 @@ function ShowMessage(message, x, y, style) {
 function CloseAllModals() {
     [...document.getElementsByClassName("modal")].forEach(element => element.style.display = "none")
 }
+function CloseModal(modal){
+    modal.parentNode.parentNode.parentNode.style.display = "none"
+}
 function ClearLocalStorage() {
     localStorage.clear()
     clearTimeout(timer)
@@ -151,29 +158,39 @@ function AddDay(){
     date.setDate(date.getDate() + 1)
     document.getElementById("date").innerHTML = date.toLocaleDateString("en-US")
 }
-function DragStart(ev, elemn) {
-    ev.preventDefault();
-        pickedmodal = elemn
-        x0 = ev.clientX;
-        y0 = ev.clientY;
-        pickedmodal.style.border = "solid"
-        pickedmodal.style.borderColor = "red"
-        document.onmouseup = DragEnd;
-        document.onmousemove = Drag;
-  }
-  function Drag(ev) {
-    ev.preventDefault();
-    x = pickedmodal.offsetLeft - (x0 - ev.clientX) + "px";
-    y = pickedmodal.offsetTop - (y0 - ev.clientY) + "px";
-    x0 = ev.clientX
-    y0 = ev.clientY
-    pickedmodal.style.left = x
-    pickedmodal.style.top =  y
-  }
-  function DragEnd() {
-    pickedmodal.style.border = "none"
-    pickedmodal.style.borderColor = "none"
-    document.onmouseup = null;
-    document.onmousemove = null;
-    pickedmodal = null
-  }
+
+
+function dragElement(elmnt) {
+    var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+    elmnt.onmousedown = dragMouseDown;
+
+    function dragMouseDown(e) {
+        e = e || window.event;
+        e.preventDefault();
+        // get the mouse cursor position at startup:
+        pos3 = e.clientX;
+        pos4 = e.clientY;
+        document.onmouseup = closeDragElement;
+        // call a function whenever the cursor moves:
+        document.onmousemove = elementDrag;
+    }
+
+    function elementDrag(e) {
+        e = e || window.event;
+        e.preventDefault();
+        // calculate the new cursor position:
+        pos1 = pos3 - e.clientX;
+        pos2 = pos4 - e.clientY;
+        pos3 = e.clientX;
+        pos4 = e.clientY;
+        // set the element's new position:
+        elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+        elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+    }
+
+    function closeDragElement() {
+        /* stop moving when mouse button is released:*/
+        document.onmouseup = null;
+        document.onmousemove = null;
+    }
+}

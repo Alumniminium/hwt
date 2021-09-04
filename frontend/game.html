@@ -20,7 +20,6 @@
     <script type="text/javascript" src="js/context-menu.js"></script>
     <script type="text/javascript" src="js/game-screen.js"></script>
     <script type="text/javascript" src="js/api.js"></script>
-    <script type="text/javascript" src="js/ported.js"></script>
 </head>
 
 <body>
@@ -52,10 +51,10 @@
         </div>
     </div>
     <div id="research" class="modal">
-        <div class="modal-content" onmousedown=" DragStart(event, this)">
+        <div class="modal-content">
             <div class="container">
-                <span class="close-span" onclick="CloseAllModals()"></span>
-                <h3>Research</h3>
+                <span class="close-span" onclick="CloseModal(this)"></span>
+                <h3 id="researchheader">Research</h3>
             </div>
             <div class="container" id="researchable">
                 <table id="researchable-table" cellspacing="0" cellpadding="0">
@@ -71,20 +70,20 @@
         </div>
     </div>
     <div id="develop-product" class="modal">
-        <div class="modal-content" onmousedown="DragStart(event, this)">
+        <div class="modal-content">
             <div class="container">
                 <span class="close-span" onclick="CloseAllModals()"></span>
-                <h3>Development</h3>
+                <h3 id="develop-productheader">Development</h3>
             </div>
                 <p>development content WIP</p>
         </div>
     </div>
 
     <div id="market-analysis" class="modal">
-        <div class="modal-content" onmousedown=" DragStart(event, this)">
+        <div class="modal-content">
             <div class="container">
                 <span class="close-span" onclick="CloseAllModals()"></span>
-                <h3>Market</h3>
+                <h3 id="market-analysisheader">Market</h3>
             </div>
                 <p>market content WIP</p>
         </div>
@@ -93,7 +92,7 @@
 
     <div id="advertising-campaign" class="modal">
         <div class="modal-content">
-            <div class="container" onmousedown=" DragStart(event, this)">
+            <div class="container">
                 <span class="close-span" onclick="CloseAllModals()"></span>
                 <h3>Advertising</h3>
             </div>
@@ -104,7 +103,7 @@
 
 
     <div id="newspapermodal" class="modal">
-        <div id="newspaper" onmousedown=" DragStart(event, this)">
+        <div id="newspaper">
             <div class="head">
                 <div class="headerobjectswrapper">
                     <div class="weatherforcastbox"><span style="font-style: italic;">Weatherforcast for the next 24 hours:
