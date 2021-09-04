@@ -141,7 +141,7 @@ function ChangeGameClock(){
     if(millisecondsperday!=0)
     {
         clearInterval(gamespeedtimer)
-        //alert(millisecondsperday)
+        console.log(millisecondsperday)
         gamespeedtimer = setInterval(AddDay, millisecondsperday)
         if(localStorage.hasOwnProperty("researchname"))
             progressicontimer = setInterval(UpdateProgress())
