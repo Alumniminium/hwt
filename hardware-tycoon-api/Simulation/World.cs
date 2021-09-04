@@ -18,13 +18,19 @@ namespace hardware_tycoon_api.Simulation
         }
         internal void AddCompany(int ceoId, string name, string path = "")
         {
-            var company = new Company(GameId, ceoId, name)
-            {
-                Money = 100_000
-            };
             if (path != "")
-                company.LoadProducts(path);
-            Companies.Add(company.Id, company);
+            {
+                var company = new NpcCompany(path, GameId, ceoId, name);
+                Companies.Add(company.Id, company);
+            }
+            else
+            {
+                var company = new PlayerCompany(GameId, ceoId, name)
+                {
+                    Money = 100_000
+                };
+                Companies.Add(company.Id, company);
+            }
         }
 
         public int GenerateCeoId()

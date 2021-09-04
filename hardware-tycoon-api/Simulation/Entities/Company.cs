@@ -7,56 +7,14 @@ using hardware_tycoon_api.Simulation.Enums;
 
 namespace hardware_tycoon_api.Simulation
 {
-    public class Company
+    public class NpcCompany : Company
     {
-        public int GameId;
-        public int Id;
-        public int CeoId;
-
-        public string Name { get; set; }
-        public long Money { get; set; }
-
-        public Dictionary<string, Product> Products = new();
         public Dictionary<string, CompetitorProduct> FutureProducts = new();
-        public Dictionary<string, RndProject> UnlockedResearch { get; set; } = new();
-        public RndProject CurrentResearch { get; set; }
-        public RndProject CurrentDevelopment { get; set; }
 
-        public World World => Core.Games[GameId].World;
-        public GlobalMarket Market => World.Market;
+        public NpcCompany(string path, int gameId, int ceoId, string name) : base(gameId, ceoId, name) => LoadProducts(path);
 
-        public Company(int gameId, int ceoId, string name)
+        public override void Tick()
         {
-            GameId=gameId;
-            CeoId=ceoId;
-            Name = name;
-            Id = World.GenerateCompanyId();
-        }
-
-        internal void Tick()
-        {
-            if(CurrentResearch != null)
-            {
-                if (CurrentResearch.Progress >= 100)
-                {
-                    UnlockedResearch.Add(CurrentResearch.Name, CurrentResearch);
-                    CurrentResearch = null;
-                }
-                else
-                    CurrentResearch.CurrentPoints++;
-            }
-
-            if(CurrentDevelopment != null)
-            {
-                if (CurrentDevelopment.Progress >= 100)
-                {
-                    World.Market.AddProduct(Products[CurrentDevelopment.Name]);
-                    CurrentDevelopment = null;
-                }
-                else
-                    CurrentDevelopment.CurrentPoints++;
-            }
-
             foreach (var kvp in FutureProducts)
             {
                 var product = kvp.Value;
@@ -66,6 +24,7 @@ namespace hardware_tycoon_api.Simulation
                     World.Market.AddProduct(new Product(Name, product.Name, product.Price, null, ProductType.CPU, product.Description));
                 }
             }
+            base.Tick();
         }
 
         public void LoadProducts(string path)
@@ -86,6 +45,67 @@ namespace hardware_tycoon_api.Simulation
                 var description = string.Join(" ", parts[7..]);
                 FutureProducts.TryAdd(productName, new CompetitorProduct(releaseDate, productName, price, socket, fab, bits, frequency, description));
             }
+        }
+    }
+    public class PlayerCompany : Company
+    {
+        public Dictionary<string, RndProject> UnlockedResearch { get; set; } = new();
+        public RndProject CurrentResearch { get; set; }
+        public RndProject CurrentDevelopment { get; set; }
+
+        public PlayerCompany(int gameId, int ceoId, string name) : base(gameId, ceoId, name) { }
+
+        public override void Tick()
+        {
+            if (CurrentResearch != null)
+            {
+                if (CurrentResearch.Progress >= 100)
+                {
+                    UnlockedResearch.Add(CurrentResearch.Name, CurrentResearch);
+                    CurrentResearch = null;
+                }
+                else
+                    CurrentResearch.CurrentPoints++;
+            }
+
+            if (CurrentDevelopment != null)
+            {
+                if (CurrentDevelopment.Progress >= 100)
+                {
+                    World.Market.AddProduct(Products[CurrentDevelopment.Name]);
+                    CurrentDevelopment = null;
+                }
+                else
+                    CurrentDevelopment.CurrentPoints++;
+            }
+            base.Tick();
+        }
+    }
+    public abstract class Company
+    {
+        public int GameId;
+        public int Id;
+        public int CeoId;
+
+        public string Name { get; set; }
+        public long Money { get; set; }
+
+        public Dictionary<string, Product> Products = new();
+
+        public World World => Core.Games[GameId].World;
+        public GlobalMarket Market => World.Market;
+
+        public Company(int gameId, int ceoId, string name)
+        {
+            GameId = gameId;
+            CeoId = ceoId;
+            Name = name;
+            Id = World.GenerateCompanyId();
+        }
+
+        public virtual void Tick()
+        {
+
         }
     }
 }
