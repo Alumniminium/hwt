@@ -11,25 +11,24 @@
     <link rel="stylesheet" type="text/css" href="css/modals/adcampain.css">
     <link rel="stylesheet" type="text/css" href="css/modals/developmnet.css">
     <link rel="stylesheet" type="text/css" href="css/modals/newspaper.css">
-    <link rel="stylesheet" type="text/css" href="css/modals/newspaper.css">
     <link rel="stylesheet" type="text/css" href="css/context-menu.css">
-    
+
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3861708796825852"
         crossorigin="anonymous"></script>
-    <script type="text/javascript" src="js/newspaper.js"></script>
-    <script type="text/javascript" src="js/context-menu.js"></script>
-    <script type="text/javascript" src="js/game-screen.js"></script>
-    <script type="text/javascript" src="js/api.js"></script>
+    <script type="module" src="js/newspaper.js"></script>
+    <!-- <script type="module" src="js/context-menu.js"></script> -->
+    <!-- <script type="module" src="js/api.js"></script> -->
+    <script type="module" src="js/game-screen.js"></script>
 </head>
 
 <body>
     <div id="game-container">
         <div id="context-menu">
-            <div class="item" onclick="OpenModal('develop-product')">Develop Product</div>
-            <div class="item" onclick="OpenModal('research')">Do Research</div>
-            <div class="item" onclick="OpenModal('market-analysis')">Check Market</div>
-            <div class="item" onclick="OpenModal('advertising-campaign')">Advertising</div>
-            <div class="item" onclick="ClearLocalStorage()">DEBUG: Clear LocalStorage</div>
+            <div id="develop-product-contextmenu-item" class="item" >Develop Product</div>
+            <div id="research-contextmenu-item" class="item">Do Research</div>
+            <div id="market-analysis-contextmenu-item" class="item" >Check Market</div>
+            <div id="advertising-campaign-contextmenu-item" class="item">Advertising</div>
+            <div id="debug-clearlocalstorage-contextmenu-item" class="item">DEBUG: Clear LocalStorage</div>
         </div>
 
         <div id="game-ribbon">
@@ -41,27 +40,27 @@
             </svg>
             <p id="product-progress"></p>
             <div id="gamespeed">
-                <img class="gamespeedbutton" id="0x" src="https://img.icons8.com/ios-filled/50/000000/pause--v1.png"onclick="ChangeGameSpeed(this)">
-                <img class="gamespeedbutton" id="1x" src="https://img.icons8.com/ios-glyphs/30/000000/play--v1.png" onclick="ChangeGameSpeed(this)">
-                <img class="gamespeedbutton" id="2x" src="https://img.icons8.com/ios-filled/50/000000/fast-forward.png"onclick="ChangeGameSpeed(this)">
-                <img class="gamespeedbutton" id="6x" src="https://image.flaticon.com/icons/png/512/26/26309.png" onclick="ChangeGameSpeed(this)">
-
-                
+                <img class="gamespeedbutton" id="0x" src="images/pause--v1.png">
+                <img class="gamespeedbutton" id="1x" src="images/play--v1.png" >
+                <img class="gamespeedbutton" id="2x" src="images/fast-forward.png">
+                <img class="gamespeedbutton" id="6x" src="images/26309.png">
             </div>
         </div>
     </div>
     <div id="research" class="modal">
+        <div class="modalheader">
+            <span id="research-close-btn" class="close-span"></span>
+            <h3 id="researchheader">Research</h3>
+        </div>
         <div class="modal-content">
-            <div class="container">
-                <span class="close-span" onclick="CloseModal(this)"></span>
-                <h3 id="researchheader">Research</h3>
-            </div>
             <div class="container" id="researchable">
                 <table id="researchable-table" cellspacing="0" cellpadding="0">
                     <tr id="tale-header">
+                        <th>Icon</th>
                         <th>Name</th>
                         <th>Price</th>
                         <th>ResearchPoints</th>
+                        <th>Description</th>
                     </tr>
                 </table>
                 <h3>Researched</h3>
@@ -69,91 +68,120 @@
             <div class="container" id="researched"></div>
         </div>
     </div>
+
     <div id="develop-product" class="modal">
+        <div class="modalheader">
+            <span id="develop-product-close-btn" class="close-span"></span>
+            <h3 id="develop-productheader">Development</h3>
+        </div>
         <div class="modal-content">
-            <div class="container">
-                <span class="close-span" onclick="CloseAllModals()"></span>
-                <h3 id="develop-productheader">Development</h3>
+            <div class="container" id="develop-product">
+                <p>
+                    <label for="familyname">Family Name:</label>
+                    <input name="familyname">
+                </p>
+                <p>
+                    <label for="name">Name:</label>
+                    <input type="text" name="name" id="">
+                </p>
+                <p>
+                    <label for="socket">Socket</label>
+                    <select name="socket">
+                        <option>One</option>
+                        <option>Two</option>
+                        <option>Three</option>
+                    </select>
+                </p>
             </div>
-                <p>development content WIP</p>
         </div>
     </div>
 
     <div id="market-analysis" class="modal">
-        <div class="modal-content">
-            <div class="container">
-                <span class="close-span" onclick="CloseAllModals()"></span>
-                <h3 id="market-analysisheader">Market</h3>
-            </div>
-                <p>market content WIP</p>
+        <div class="modalheader">
+            <span id="market-analysis-close-btn" class="close-span"></span>
+            <h3 id="market-analysisheader">Market</h3>
         </div>
-        
+        <div class="modal-content">
+            <p>market content WIP</p>
+        </div>
+
     </div>
 
     <div id="advertising-campaign" class="modal">
+        <div class="modalheader">
+            <span id="advertising-campaign-close-btn" class="close-span"></span>
+            <h3>Advertising</h3>
+        </div>
         <div class="modal-content">
-            <div class="container">
-                <span class="close-span" onclick="CloseAllModals()"></span>
-                <h3>Advertising</h3>
-            </div>
             <p>advertising content WIP</p>
         </div>
-        
+
     </div>
 
 
     <div id="newspapermodal" class="modal">
-        <div id="newspaper">
-            <div class="head">
-                <div class="headerobjectswrapper">
-                    <div class="weatherforcastbox"><span style="font-style: italic;">Weatherforcast for the next 24 hours:
-                            Plenty of Sunshine</span><br><span>Wind: 7km/h SSE; Ther: 21°C; Hum: 82%</span></div>
-                    <header>Newpost York</header>
+        <div class="modalheader">
+            <span id="newspaper-close-btn" class="close-span"></span>
+            <h3>newspaper</h3>
+        </div>
+        <div class="modal-content">
+            <div id="newspaper">
+                <div class="head">
+                    <div class="headerobjectswrapper">
+                        <div class="weatherforcastbox"><span style="font-style: italic;">Weatherforcast for the next 24
+                                hours:
+                                Plenty of Sunshine</span><br><span>Wind: 7km/h SSE; Ther: 21°C; Hum: 82%</span></div>
+                        <header>Newpost York</header>
+                    </div>
+
+                    <div id="datetime" class="subhead">York, MA - Thursday August 30, 1978 - Seven Pages</div>
                 </div>
-    
-                <div id="datetime" class="subhead">York, MA - Thursday August 30, 1978 - Seven Pages</div>
-            </div>
-            <div class="content">
-                <div class="collumns">
-                    <div id="product-column" class="collumn">
-                        <div class="head">
-                            <img id="product-image" src="/images/cpu-factory.jpeg">
-                            <span class="headline hl3">Product/Research finished by Company</span>
-                            <p>
-                                <span class="headline hl4">by JOHANN WOLFGANG VON GOETHE</span>
-                            </p>
-                            <span id="article">
-                                on [date] [prodcut/research] was finished. an excellent achievement for company and new
-                                achievement in tech world.on [date] [prodcut/research] was finished. an excellent
-                                achievement for company and new achievement in tech world.on [date] [prodcut/research] was
-                                finished. an excellent achievement for company and new achievement in tech world.
-                            </span>
+                <div class="content">
+                    <div class="collumns">
+                        <div id="product-column" class="collumn">
+                            <div class="head">
+                                <img id="product-image" src="/images/cpu-factory.jpeg">
+                                <span class="headline hl3">Product/Research finished by Company</span>
+                                <p>
+                                    <span class="headline hl4">by JOHANN WOLFGANG VON GOETHE</span>
+                                </p>
+                                <span id="article">
+                                    on [date] [prodcut/research] was finished. an excellent achievement for company and
+                                    new
+                                    achievement in tech world.on [date] [prodcut/research] was finished. an excellent
+                                    achievement for company and new achievement in tech world.on [date]
+                                    [prodcut/research] was
+                                    finished. an excellent achievement for company and new achievement in tech world.
+                                </span>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="collumns">
-                    <div id="ad-column" class="collumn">
-                        <div class="head">
-                            <span class="headline hl3">Raid Shadow Legends</span>
-                            <p><span class="headline hl4">by JOHANN WOLFGANG VON GOETHE</span></p>
+                    <div class="collumns">
+                        <div id="ad-column" class="collumn">
+                            <div class="head">
+                                <span class="headline hl3">Raid Shadow Legends</span>
+                                <p><span class="headline hl4">by JOHANN WOLFGANG VON GOETHE</span></p>
+                            </div>
+                            Raid shadow legends. the gayest ad in town</p>
                         </div>
-                        Raid shadow legends. the gayest ad in town</p>
-                    </div>
-                    <div id="news-column" class="collumn">
-                        <div class="head">
-                            <span class="headline hl3">When darkness overspreads my eyes</span>
-                            <p><span class="headline hl4">by JOHANN WOLFGANG VON GOETHE</span></p>
+                        <div id="news-column" class="collumn">
+                            <div class="head">
+                                <span class="headline hl3">When darkness overspreads my eyes</span>
+                                <p><span class="headline hl4">by JOHANN WOLFGANG VON GOETHE</span></p>
+                            </div>
+                            When, while the lovely valley teems with vapour around me, and the meridian sun strikes the
+                            upper
+                            surface of the impenetrable foliage of my trees, and but a few stray gleams steal into the
+                            inner
+                            sanctuary, I throw myself down among the tall grass by the trickling stream;<p>and, as I lie
+                                close
+                                to the earth, a thousand unknown plants </p>
                         </div>
-                        When, while the lovely valley teems with vapour around me, and the meridian sun strikes the upper
-                        surface of the impenetrable foliage of my trees, and but a few stray gleams steal into the inner
-                        sanctuary, I throw myself down among the tall grass by the trickling stream;<p>and, as I lie close
-                            to the earth, a thousand unknown plants </p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
     </div>
     </div>
 </body>

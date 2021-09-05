@@ -1,25 +1,22 @@
 .modal
 {
+    user-select: none;
+    background-color: white;
     position: absolute;
-    /* width: 100%; */
-    /* height: 100%; */
-    /* max-width: 500px; */
+    width: fit-content;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
     display: grid;
-    /* background-color: rgba(41, 41, 41, 0.603); */
 }
-.modal-content {
-    background-color: aliceblue;
+.modalheader {
+    background-color: purple;
     position: relative;
-    width: max-content;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
+    width: 100%;
+    min-width: 100%;
 }
-.modal .close-span
-{
+.modalheader > span{
+
     cursor: pointer;
     background: red;
     color: red;
@@ -28,17 +25,23 @@
     padding-right: 32px;
     padding-top: 32px;
 }
+.modalheader > h3 {
+    background-color: transparent;
+    color: #17ffc4 ;    
+    margin: unset;
+    padding: 1rem;
+}
+.modal-content {
+    position: relative;
+    width: 100%;
+    min-width: 100%;
+}
 .modal .close-span:hover{
     background-color: #17ffc4 ;
 }
 
 .container {
     display: flow-root !important;
-}
-.container h3  {
-    color: #17ffc4 ;    
-    margin: unset;
-    padding: 1rem;
 }
 .container div {
     display: flow-root !important;
@@ -56,5 +59,8 @@
 }
 #advertising-campaign {
     display: none;    
+}
+#newspapermodal {
+    display: none;
 }
 

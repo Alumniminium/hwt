@@ -6,7 +6,8 @@ namespace hardware_tycoon_api.Simulation.Components
     public class Part
     {
         public string Name;
-        public int Cost => Transistors.Sum(t => t.Price);
+        public int Price;
+        public int ProductionCost => Transistors.Sum(t => t.Price);
         public int PowerUsage => Transistors.Sum(t => t.PowerUsage);
         public int Performance => Transistors.Sum(t => t.Performance);
         public List<Transistor> Transistors = new();

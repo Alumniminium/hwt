@@ -44,7 +44,10 @@ tr {
     text-align: right;
     border: none;
 }
-
+img {
+    width: 16px;
+    height: 16px;
+}
 #table-header
 {
     height: fit-content;

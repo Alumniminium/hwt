@@ -3,15 +3,14 @@
 
 <head>
     <link rel="stylesheet" type="text/css" href="css/Menu.css">
-    <script type="text/javascript" src="js/main-menu.js"></script>
-    <script type="text/javascript" src="js/api.js"></script>
+    <script type="module" src="js/main-menu.js"></script>
 </head>
 
 <body>
     <div id="main-menu-title">Hardware Tycoon</div>
     <div id="main-menu">
-        <button id="new-game-button" onclick="CreateCompanyMenu()">Make new company</button>
-        <button id="settings-button" onclick="CreateSettingsMenu()">Settings</button>
+        <button id="new-game-button">Make new company</button>
+        <button id="settings-button">Settings</button>
     </div>
     <div id="create-company" class="modal">
         <div class="modal-content">
@@ -28,8 +27,8 @@
                 <input class="difficulty" type="radio" name="difficulty">hard</input>
             </div>
             <div style="padding: 0.5rem;">
-                <button class="back-button" onclick="CloseCreateCompanyMenu()">Back</button>
-                <button class="done-button" onclick="SubmitNewGame()">Done</button>
+                <button id="back-button">Back</button>
+                <button id="done-button">Done</button>
             </div>
         </div>
     </div>
@@ -38,7 +37,7 @@
             <p class="modal-title">Settings</p>
             <div class="modal-content">
                 <div>
-                    <button class="done-button" onclick="CloseSettingsMenu()">Done</button>
+                    <button id="settings-done-button">Done</button>
                 </div>
             </div>
         </div>

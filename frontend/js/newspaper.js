@@ -1,4 +1,4 @@
-function OpenNewspaper(productName, company, price, description, date) {
+export function OpenNewspaper(productName, company, price, description, date) {
     var productColumn = document.getElementById("product-column")
     
     var headline = productColumn.getElementsByClassName("headline hl3")[0];
@@ -8,7 +8,6 @@ function OpenNewspaper(productName, company, price, description, date) {
     var image = document.getElementById("product-image")
     image.src = "/images/"+company+"/"+productName+".webp";
 
-    date = new Date(date)
     datetime.innerHTML = date.getDay() + ". " + date.toLocaleString('default', { month: 'long' }) + ", " +date.getFullYear()
     headline.innerHTML = company.toUpperCase() + " RELEASED THE " + productName.toUpperCase()
     article.innerHTML = description

@@ -13,7 +13,7 @@ namespace hardware_tycoon_api.Simulation.Components
         public ProductType ProductType;
         public List<Part> Parts = new();
         
-        public int ProductionCost => Parts.Sum(c=>c.Cost);
+        public int ProductionCost => Parts.Sum(c=>c.ProductionCost);
         public int Performance => Parts.Sum(c => c.Performance);
         public int PowerUsage => Parts.Sum(c => c.PowerUsage);
 

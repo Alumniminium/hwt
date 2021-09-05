@@ -18,8 +18,8 @@ body{
     padding-right: 1rem;
 }
 .progress-ring{
-    width: 5vw;
-    height: 5vh;
+    width: 2rem;
+    height: 2rem;
 }
 .progress-ring__circle{
     stroke : #ff1791;

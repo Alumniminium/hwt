@@ -149,7 +149,7 @@ namespace hardware_tycoon_api.Controllers
             {
                 var company = ceo.Company as PlayerCompany;
                 var components = GameService.GetComponentsByNames(product.Components);
-                var developmentPrice = components.Sum(c => c.Cost) * 100;
+                var developmentPrice = components.Sum(c => c.ProductionCost) * 100;
 
                 if (developmentPrice > ceo.Company.Money)
                     return new ResearchOrDevelopRequestResponseDto(false, -1, $"You can't afford to research {product.Name}. It costs {developmentPrice} but { ceo.Company.Name} only has { ceo.Company.Money}$");

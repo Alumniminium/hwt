@@ -1,30 +1,42 @@
-let gameId = localStorage.getItem("gameId")
-let ceoId = localStorage.getItem("ceoId")
+import { CloseModal } from "./modal.js";
+import { ResearchProject, UpdateProgress } from "./research.js";
+import { OpenNewspaper } from "./newspaper.js";
+import { ShowMessage } from "./modal.js";
 
-let loginUrl = "http://localhost/api/login"
-let updateUrl = "http://localhost/api/update/"
-let GETresearchUrl = "http://localhost/api/research/?gameId=" + gameId + "&ceoId=" + ceoId
-let PUTresearchUrl = "http://localhost/api/research/"
+export let gameId = localStorage.getItem("gameId");
+export let ceoId = localStorage.getItem("ceoId");
+export let companyName = "";
+export let founderName = "";
+export let difficulty = 0;
+export let researchProject = new ResearchProject();
+export let currentDate = null;
+export let millisecondsperday = 0;
+export var progressicontimer = null
+
+let loginUrl = "http://localhost/api/login";
+let updateUrl = "http://localhost/api/update/";
+let GETresearchUrl = "http://localhost/api/research/?gameId=" + gameId + "&ceoId=" + ceoId;
+let PUTresearchUrl = "http://localhost/api/research/";
 
 let marketNames = [];
 
-function SubmitNewGame() {
+export function SubmitNewGame() {
 
-  company_name = document.getElementById("text-input").children[0].value
-  founder_name = document.getElementById("text-input").children[1].value
-  difficulty = 0
-  difficulty_radios = document.getElementById("difficulties")
+  companyName = document.getElementById("text-input").children[0].value;
+  founderName = document.getElementById("text-input").children[1].value;
+  difficulty = 0;
+  var difficulty_radios = document.getElementById("difficulties");
   for (let index = 0; index < difficulty_radios.childElementCount; index++) {
     if (difficulty_radios.children[index].checked) {
-      difficulty = index
+      difficulty = index;
       break;
     }
   }
-  console.log(company_name, founder_name, difficulty)
-  let company = new FormData()
-  company.append("ceoName", founder_name)
-  company.append("companyName", company_name)
-  company.append("difficulty", difficulty)
+  console.log(companyName, founderName, difficulty)
+  let company = new FormData();
+  company.append("ceoName", founderName);
+  company.append("companyName", companyName);
+  company.append("difficulty", difficulty);
   fetch(loginUrl, {
     headers: {
       'Content-Type': 'application/json'
@@ -34,34 +46,33 @@ function SubmitNewGame() {
   })
     .then(res => res.json())
     .then(data => {
-      gameId = data.gameId
-      ceoId = data.ceoId
+      gameId = data.gameId;
+      ceoId = data.ceoId;
       if (gameId != -1) {
-        localStorage.setItem("gameId", gameId)
-        localStorage.setItem("ceoId", ceoId)
-        localStorage.setItem("ceoName", founder_name)
-        localStorage.setItem("companyName", company_name)
+        localStorage.setItem("gameId", gameId);
+        localStorage.setItem("ceoId", ceoId);
+        localStorage.setItem("ceoName", founderName);
+        localStorage.setItem("companyName", companyName);
         window.location.replace("game.html");
       }
     })
 }
 
 
-function ApiUpdate_Post(gamespeed) {
-  update = new FormData()
-  update.append("gameId", gameId)
-  update.append("ceoId", ceoId)
-  update.append("gameSpeed", gamespeed)
+export function UpdateRemote(gamespeed) {
+  var update = new FormData();
+  update.append("gameId", gameId);
+  update.append("ceoId", ceoId);
+  update.append("gameSpeed", gamespeed);
   fetch(updateUrl, {
     headers: {
       'Content-Type': 'application/json'
     },
     method: 'POST',
     body: JSON.stringify(Object.fromEntries(update))
-  })
-  .then(function() {ApiUpdate()})
+  }).then(Update())
 }
-function ApiUpdate() {
+export function Update() {
   fetch(updateUrl)
     .then(res => {
       if (res.status == 200)
@@ -70,20 +81,22 @@ function ApiUpdate() {
         ClearLocalStorage()
     })
     .then(json => {
-      millisecondsperday= json.millisecondsPerDay
-      document.getElementById("date").innerHTML = new Date(json.date).toLocaleDateString("en-US")
-      date = new Date(json.date).toLocaleDateString("en-US")
-      document.getElementById("money").innerHTML = "$ " + new Intl.NumberFormat('en-US').format(json.money)
-      CheckMarket(json.marketProducts, json.date)
+      if (json.millisecondsPerDay != millisecondsperday) {
+        millisecondsperday = json.millisecondsPerDay;
+      }
+      var date = new Date(json.date);
+      currentDate = date;
+      document.getElementById("date").innerHTML = currentDate.toLocaleDateString("en-US");
+      document.getElementById("money").innerHTML = "$ " + new Intl.NumberFormat('en-US').format(json.money);
+      CheckMarket(json.marketProducts, currentDate);
     })
-    .then(function(){ChangeGameClock()})
 }
 
-function Researches() {
-  researchableList = document.getElementById("researchable-table")
-  researchedList = document.getElementById("researched")
-  removeElementsByClass("researched-modal-item")
-  removeElementsByClass("researchable-modal-item")
+export function Researches() {
+  var researchableList = document.getElementById("researchable-table");
+  var researchedList = document.getElementById("researched");
+  removeElementsByClass("researched-modal-item");
+  removeElementsByClass("researchable-modal-item");
 
   fetch(GETresearchUrl)
     .then(res => res.json())
@@ -91,21 +104,35 @@ function Researches() {
       data.forEach(research => {
         var div = document.createElement('div');
         div.textContent = research.name;
-        div.className = "researched-modal-item"
+        div.className = "researched-modal-item";
 
         if (research.price != 0) {
           var tr = document.createElement('tr');
+
+          var tdIcon = document.createElement('td');
+          var icon = document.createElement("img");
+          icon.src = "images/raid-shadow-legends.jpeg";
+          tdIcon.appendChild(icon);
+
           var tdName = document.createElement('td');
           tdName.appendChild(document.createTextNode(research.name));
+
           var tdPrice = document.createElement('td');
           tdPrice.appendChild(document.createTextNode(research.price));
+
+          var tdResearchPoints = document.createElement('td');
+          tdResearchPoints.appendChild(document.createTextNode(research.price / 10));
+
           var tdDescription = document.createElement('td');
           tdDescription.appendChild(document.createTextNode(research.description));
+
           tr.className = "researchable-modal-item"
+          tr.appendChild(tdIcon);
           tr.appendChild(tdName);
           tr.appendChild(tdPrice);
+          tr.appendChild(tdResearchPoints);
           tr.appendChild(tdDescription);
-          tr.addEventListener("click", function () { StartResearch(research.name) })
+          tr.addEventListener("click", () => StartResearch(research.name))
           researchableList.appendChild(tr);
         }
         else
@@ -115,7 +142,7 @@ function Researches() {
     });
 }
 
-function StartResearch(researchName) {
+export function StartResearch(researchName) {
 
   let researchRequest = new FormData()
   researchRequest.append("gameId", gameId)
@@ -131,26 +158,30 @@ function StartResearch(researchName) {
   }).then(res => res.json())
     .then(data => {
       if (data.success) {
-        localStorage.setItem("research_days", data.secondsUntilDone)
-        
-        localStorage.setItem("research_days_passed", 0)
-        localStorage.setItem("research_name", researchName)
-        ShowMessage("Starting" + researchName, 270, 300, "pop-message")
+        researchProject = new ResearchProject(researchName,currentDate,addDays(currentDate, data.secondsUntilDone))
+        ShowMessage("Starting " + researchName, 270, 300, "pop-message")
         progressicontimer = setInterval(UpdateProgress, 33)
       }
       else
         alert(data.debugInfo)
     });
 
-  CloseAllModals()
+  CloseModal('research')
 }
-function removeElementsByClass(className) {
+
+export function addDays(date, days) {
+  var result = new Date(date);
+  result.setDate(result.getDate() + days);
+  return result;
+}
+
+export function removeElementsByClass(className) {
   const elements = document.getElementsByClassName(className);
   while (elements.length > 0)
     elements[0].parentNode.removeChild(elements[0]);
 }
 
-function CheckMarket(market, date) {
+export function CheckMarket(market, date) {
   market.forEach(p => {
     if (marketNames.includes(p.name))
       return
