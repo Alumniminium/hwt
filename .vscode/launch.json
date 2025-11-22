@@ -3,7 +3,10 @@
     "compounds": [
         {
             "name": "Full Stack (API + SolidJS)",
-            "configurations": ["API", "Frontend (SolidJS)"],
+            "configurations": [
+                "API",
+                "Frontend (SolidJS)"
+            ],
             "stopAll": true
         }
     ],
@@ -13,7 +16,7 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/hardware-tycoon-api/bin/Debug/net9.0/hardware-tycoon-api.dll",
+            "program": "${workspaceFolder}/hardware-tycoon-api/bin/Debug/net10.0/hardware-tycoon-api.dll",
             "args": [],
             "cwd": "${workspaceFolder}/hardware-tycoon-api",
             "stopAtEntry": false,
@@ -22,14 +25,7 @@
             }
         },
         {
-            "type": "pwa-chrome",
-            "runtimeExecutable": "/usr/bin/chromium",
-            "name": "Frontend (Legacy)",
-            "request": "launch",
-            "url": "http://127.0.0.1:3000/frontend/index.html"
-        },
-        {
-            "type": "pwa-chrome",
+            "type": "chrome",
             "runtimeExecutable": "/usr/bin/chromium",
             "name": "Frontend (SolidJS)",
             "request": "launch",
