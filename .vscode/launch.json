@@ -1,5 +1,12 @@
 {
     "version": "0.2.0",
+    "compounds": [
+        {
+            "name": "Full Stack (API + SolidJS)",
+            "configurations": ["API", "Frontend (SolidJS)"],
+            "stopAll": true
+        }
+    ],
     "configurations": [
         {
             "name": "API",
@@ -26,7 +33,14 @@
             "runtimeExecutable": "/usr/bin/chromium",
             "name": "Frontend (SolidJS)",
             "request": "launch",
-            "url": "http://localhost:5173"
+            "url": "http://localhost:5173",
+            "webRoot": "${workspaceFolder}/frontend-solid",
+            "preLaunchTask": "npm: dev (frontend-solid)",
+            "serverReadyAction": {
+                "pattern": "Local:.*http://localhost:([0-9]+)",
+                "uriFormat": "http://localhost:%s",
+                "action": "debugWithChrome"
+            }
         }
     ]
 }

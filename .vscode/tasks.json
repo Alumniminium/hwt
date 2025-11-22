@@ -12,6 +12,25 @@
                 "/consoleloggerparameters:NoSummary"
             ],
             "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "npm: dev (frontend-solid)",
+            "type": "npm",
+            "script": "dev",
+            "path": "frontend-solid/",
+            "isBackground": true,
+            "problemMatcher": {
+                "owner": "custom",
+                "pattern": {
+                    "regexp": "^([^\\s].*)$",
+                    "message": 1
+                },
+                "background": {
+                    "activeOnStart": true,
+                    "beginsPattern": "VITE.*preparing",
+                    "endsPattern": "(Local:|ready in|VITE.*ready)"
+                }
+            }
         }
     ]
 }
