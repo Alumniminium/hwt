@@ -1,4 +1,4 @@
-import { createSignal, onMount, onCleanup, Show } from 'solid-js';
+import { createSignal, onMount, onCleanup, Show, createEffect } from 'solid-js';
 import { useNavigate } from '@solidjs/router';
 import {
   gameState,
@@ -9,6 +9,7 @@ import {
   setCurrentModal,
 } from '../stores/gameStore';
 import { formatMoney, formatDate } from '../utils/formatting';
+import GarageBackground from '../components/GarageBackground';
 import ContextMenu from '../components/ContextMenu';
 import ResearchModal from '../components/modals/ResearchModal';
 import DevelopModal from '../components/modals/DevelopModal';
@@ -20,6 +21,8 @@ import './GameScreen.css';
 export default function GameScreen() {
   const navigate = useNavigate();
   const [activeSpeed, setActiveSpeed] = createSignal(0);
+  const [localDate, setLocalDate] = createSignal<Date | null>(null);
+  let clockTimerId: number | null = null;
 
   onMount(() => {
     // Check if user has game credentials
@@ -32,7 +35,38 @@ export default function GameScreen() {
     const timerId = setInterval(fetchGameState, 1000);
     fetchGameState(); // Initial fetch
 
-    onCleanup(() => clearInterval(timerId));
+    onCleanup(() => {
+      clearInterval(timerId);
+      if (clockTimerId) clearInterval(clockTimerId);
+    });
+  });
+
+  // Effect to sync local date with game state date
+  createEffect(() => {
+    if (gameState.currentDate) {
+      setLocalDate(new Date(gameState.currentDate));
+    }
+  });
+
+  // Effect to manage local clock based on game speed
+  createEffect(() => {
+    // Clear existing clock timer
+    if (clockTimerId) {
+      clearInterval(clockTimerId);
+      clockTimerId = null;
+    }
+
+    // Start new clock timer if game is running
+    if (gameState.millisecondsPerDay > 0) {
+      clockTimerId = window.setInterval(() => {
+        setLocalDate((prev) => {
+          if (!prev) return prev;
+          const newDate = new Date(prev);
+          newDate.setDate(newDate.getDate() + 1);
+          return newDate;
+        });
+      }, gameState.millisecondsPerDay);
+    }
   });
 
   const handleSpeedChange = (speed: number) => {
@@ -50,6 +84,7 @@ export default function GameScreen() {
 
   return (
     <div class="game-container">
+      <GarageBackground />
       <ContextMenu onOpenModal={handleOpenModal} />
 
       <div class="game-header">
@@ -65,11 +100,8 @@ export default function GameScreen() {
           <div class="info-item">
             <span class="label">Date:</span>
             <span class="value" id="date">
-              <Show
-                when={gameState.currentDate}
-                fallback="Loading..."
-              >
-                {formatDate(gameState.currentDate!)}
+              <Show when={localDate()} fallback="Loading...">
+                {formatDate(localDate()!)}
               </Show>
             </span>
           </div>

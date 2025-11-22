@@ -6,6 +6,7 @@ interface ModalProps {
   onClose: () => void;
   title: string;
   children: JSX.Element;
+  width?: string;
 }
 
 export default function Modal(props: ModalProps) {
@@ -75,6 +76,7 @@ export default function Modal(props: ModalProps) {
             left: `${position().x}px`,
             top: `${position().y}px`,
             cursor: isDragging() ? 'grabbing' : 'default',
+            width: props.width || 'auto',
           }}
         >
           <div

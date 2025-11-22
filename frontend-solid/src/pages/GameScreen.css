@@ -3,69 +3,6 @@
   color: white;
   padding: 1rem;
   position: relative;
-  overflow: hidden;
-
-  /* Isometric garage background */
-  background: #1a1a1a;
-}
-
-/* Isometric garage floor */
-.game-container::before {
-  content: '';
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 60vh;
-  background:
-    /* Floor tiles pattern */
-    repeating-linear-gradient(
-      60deg,
-      #2a2a2a 0px,
-      #2a2a2a 40px,
-      transparent 40px,
-      transparent 80px
-    ),
-    repeating-linear-gradient(
-      120deg,
-      #252525 0px,
-      #252525 40px,
-      transparent 40px,
-      transparent 80px
-    ),
-    linear-gradient(180deg, #2d2d2d 0%, #202020 100%);
-  transform: perspective(400px) rotateX(60deg);
-  transform-origin: bottom;
-  z-index: 0;
-  opacity: 0.8;
-}
-
-/* Garage walls */
-.game-container::after {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 40vh;
-  background:
-    linear-gradient(90deg,
-      #1f1f1f 0%,
-      #2a2a2a 20%,
-      #252525 40%,
-      #2a2a2a 60%,
-      #252525 80%,
-      #1f1f1f 100%
-    );
-  z-index: 0;
-  opacity: 0.6;
-  box-shadow: 0 10px 50px rgba(0, 0, 0, 0.5);
-}
-
-/* Ensure content is above background */
-.game-container > * {
-  position: relative;
-  z-index: 1;
 }
 
 .game-header {

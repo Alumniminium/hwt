@@ -1,0 +1,148 @@
+#newspaper {
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 14px;
+  color: #2f2f2f;
+  background-color: #f9f7f1;
+  border-style: ridge;
+  padding: 3rem;
+  -webkit-filter: sepia(80%) contrast(1) opacity(1);
+  filter: sepia(80%) grayscale(1) contrast(1) opacity(1);
+  mix-blend-mode: multiply;
+}
+
+#newspaper div,
+#newspaper p {
+  background-color: #f9f7f1;
+  color: #2f2f2f;
+}
+
+.newspaper-large-header {
+  font-family: 'Times New Roman', Times, serif;
+  font-weight: 900;
+  font-size: 80px;
+  text-transform: uppercase;
+  display: inline-block;
+  text-align: center;
+}
+
+.newspaper-head {
+  text-align: center;
+  position: relative;
+}
+
+.newspaper-subhead {
+  text-transform: uppercase;
+  border-bottom: 2px solid #2f2f2f;
+  border-top: 2px solid #2f2f2f;
+  padding: 12px 0 12px 0;
+}
+
+.weatherforcastbox {
+  position: relative;
+  width: 12%;
+  border: 3px double #2f2f2f;
+  padding: 10px 15px 10px 15px;
+  line-height: 20px;
+  display: inline-block;
+  float: right;
+}
+
+.newspaper-headerobjectswrapper {
+  position: relative;
+}
+
+.newspaper-content {
+  font-size: 0;
+  line-height: 0;
+  word-spacing: -0.31em;
+  display: inline-block;
+  margin: 30px 2% 0 2%;
+}
+
+.newspaper-columns {
+  width: 60%;
+  display: table-cell;
+  border-right: ridge;
+  padding: 1rem;
+}
+
+.newspaper-column {
+  font-size: 16px;
+  line-height: 20px;
+  display: inline-block;
+  padding: 0 1% 0 1%;
+  vertical-align: top;
+  transition: all 0.7s;
+}
+
+.product-image {
+  width: 100%;
+  height: auto;
+  max-height: 300px;
+  object-fit: contain;
+}
+
+.newspaper-column .headline {
+  text-align: center;
+  line-height: normal;
+  font-family: 'Times New Roman', Times, serif;
+  display: block;
+  margin: 0 auto;
+}
+
+.newspaper-column .headline.hl3 {
+  font-weight: 400;
+  font-style: italic;
+  font-size: 36px;
+  box-sizing: border-box;
+  padding: 10px 0 10px 0;
+}
+
+.newspaper-column .headline.hl4 {
+  font-weight: 700;
+  font-size: 12px;
+  box-sizing: border-box;
+  padding: 10px 0 10px 0;
+}
+
+.newspaper-column .headline.hl4:before {
+  border-top: 1px solid #2f2f2f;
+  content: '';
+  width: 100px;
+  height: 7px;
+  display: block;
+  margin: 0 auto;
+}
+
+.newspaper-column .headline.hl4:after {
+  border-bottom: 1px solid #2f2f2f;
+  content: '';
+  width: 100px;
+  height: 10px;
+  display: block;
+  margin: 0 auto;
+}
+
+.newspaper-article {
+  text-align: justify;
+  margin: 15px 0;
+}
+
+@media only all and (max-width: 1300px) {
+  .weatherforcastbox {
+    display: none;
+  }
+}
+
+@media only all and (max-width: 600px) {
+  .newspaper-large-header {
+    max-width: 320px;
+    font-size: 60px;
+    line-height: 54px;
+    overflow: hidden;
+  }
+
+  .newspaper-columns {
+    width: 100%;
+  }
+}
