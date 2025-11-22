@@ -24,7 +24,7 @@ export default function GarageBackground() {
     const height = window.innerHeight;
     const aspect = width / height;
 
-    const frustumSize = 20;
+    const frustumSize = 18;
     camera.left = (frustumSize * aspect) / -2;
     camera.right = (frustumSize * aspect) / 2;
     camera.top = frustumSize / 2;
@@ -41,9 +41,9 @@ export default function GarageBackground() {
     scene = new THREE.Scene();
     scene.background = new THREE.Color(0x1a1a2e);
 
-    // Orthographic camera for isometric view
+    // Orthographic camera for isometric view - adjusted for better view
     const aspect = window.innerWidth / window.innerHeight;
-    const frustumSize = 20;
+    const frustumSize = 18;
     camera = new THREE.OrthographicCamera(
       (frustumSize * aspect) / -2,
       (frustumSize * aspect) / 2,
@@ -52,8 +52,8 @@ export default function GarageBackground() {
       0.1,
       1000
     );
-    camera.position.set(15, 12, 15);
-    camera.lookAt(0, 0, 0);
+    camera.position.set(12, 10, 12); // Better angle
+    camera.lookAt(0, 2, 0);
 
     // Renderer
     renderer = new THREE.WebGLRenderer({
@@ -85,76 +85,59 @@ export default function GarageBackground() {
       }
     }
 
-    // Ceiling
-    const ceilingGeometry = new THREE.PlaneGeometry(20, 20);
-    const ceilingMaterial = createFlatMaterial(0x1a1f3a);
-    const ceiling = new THREE.Mesh(ceilingGeometry, ceilingMaterial);
-    ceiling.rotation.x = Math.PI / 2;
-    ceiling.position.y = 10;
-    scene.add(ceiling);
-
-    // Ceiling lights
-    for (let i = 0; i < 3; i++) {
-      const lightGeometry = new THREE.BoxGeometry(1.5, 0.1, 0.5);
-      const lightMaterial = createFlatMaterial(0xf39c12);
-      const light = new THREE.Mesh(lightGeometry, lightMaterial);
-      light.position.set(-6 + i * 6, 9.9, 0);
-      scene.add(light);
-    }
-
     // Back wall
-    const backWallGeometry = new THREE.PlaneGeometry(20, 10);
+    const backWallGeometry = new THREE.PlaneGeometry(20, 8);
     const backWallMaterial = createFlatMaterial(0x1f2847);
     const backWall = new THREE.Mesh(backWallGeometry, backWallMaterial);
-    backWall.position.set(0, 5, -10);
+    backWall.position.set(0, 4, -10);
     scene.add(backWall);
 
     // Back wall accent stripe
-    const stripeGeometry = new THREE.PlaneGeometry(20, 0.5);
+    const stripeGeometry = new THREE.PlaneGeometry(20, 0.4);
     const stripeMaterial = createFlatMaterial(0xf39c12);
     const stripe = new THREE.Mesh(stripeGeometry, stripeMaterial);
-    stripe.position.set(0, 3, -9.9);
+    stripe.position.set(0, 2.5, -9.9);
     scene.add(stripe);
 
     // Wall posters/decorations
     const posterColors = [0xe74c3c, 0x9b59b6, 0x3498db];
     for (let i = 0; i < 3; i++) {
-      const posterGeometry = new THREE.PlaneGeometry(1.2, 1.6);
+      const posterGeometry = new THREE.PlaneGeometry(1, 1.3);
       const posterMaterial = createFlatMaterial(posterColors[i]);
       const poster = new THREE.Mesh(posterGeometry, posterMaterial);
-      poster.position.set(-6 + i * 5, 7, -9.9);
+      poster.position.set(-6 + i * 5, 6, -9.9);
       scene.add(poster);
     }
 
     // Left wall
-    const leftWallGeometry = new THREE.PlaneGeometry(20, 10);
+    const leftWallGeometry = new THREE.PlaneGeometry(20, 8);
     const leftWallMaterial = createFlatMaterial(0x252d4f);
     const leftWall = new THREE.Mesh(leftWallGeometry, leftWallMaterial);
     leftWall.rotation.y = Math.PI / 2;
-    leftWall.position.set(-10, 5, 0);
+    leftWall.position.set(-10, 4, 0);
     scene.add(leftWall);
 
     // Window on left wall
-    const windowFrame = new THREE.BoxGeometry(0.15, 2.5, 3);
+    const windowFrame = new THREE.BoxGeometry(0.15, 2, 2.5);
     const windowMaterial = createFlatMaterial(0x2c3e50);
     const windowObj = new THREE.Mesh(windowFrame, windowMaterial);
     windowObj.rotation.y = Math.PI / 2;
-    windowObj.position.set(-9.9, 6, 3);
+    windowObj.position.set(-9.9, 5, 3);
     scene.add(windowObj);
 
-    const windowGlass = new THREE.PlaneGeometry(2.3, 2.3);
+    const windowGlass = new THREE.PlaneGeometry(2, 1.8);
     const glassMaterial = createFlatMaterial(0x6dd5ed);
     const glass = new THREE.Mesh(windowGlass, glassMaterial);
     glass.rotation.y = Math.PI / 2;
-    glass.position.set(-9.85, 6, 3);
+    glass.position.set(-9.85, 5, 3);
     scene.add(glass);
 
     // Right wall
-    const rightWallGeometry = new THREE.PlaneGeometry(20, 10);
+    const rightWallGeometry = new THREE.PlaneGeometry(20, 8);
     const rightWallMaterial = createFlatMaterial(0x252d4f);
     const rightWall = new THREE.Mesh(rightWallGeometry, rightWallMaterial);
     rightWall.rotation.y = -Math.PI / 2;
-    rightWall.position.set(10, 5, 0);
+    rightWall.position.set(10, 4, 0);
     scene.add(rightWall);
 
     // Workbench
@@ -253,7 +236,7 @@ export default function GarageBackground() {
       scene.add(shelf);
     }
 
-    // Boxes and items on shelves
+    // Boxes on shelves
     const boxColors = [0xe74c3c, 0x3498db, 0x2ecc71, 0xf39c12, 0x9b59b6];
     const shelfItems = [
       { x: 4, y: 2.5, z: -7.3, size: 0.8 },
@@ -273,21 +256,21 @@ export default function GarageBackground() {
     });
 
     // Tool board on right wall
-    const toolBoardGeometry = new THREE.PlaneGeometry(2, 3);
+    const toolBoardGeometry = new THREE.PlaneGeometry(1.5, 2.5);
     const toolBoardMaterial = createFlatMaterial(0x3a4578);
     const toolBoard = new THREE.Mesh(toolBoardGeometry, toolBoardMaterial);
     toolBoard.rotation.y = -Math.PI / 2;
     toolBoard.position.set(9.9, 4, 5);
     scene.add(toolBoard);
 
-    // Tools on board (simple shapes)
+    // Tools on board
     const toolColors = [0xe67e22, 0xecf0f1, 0x95a5a6];
     for (let i = 0; i < 5; i++) {
-      const toolGeometry = new THREE.BoxGeometry(0.15, 0.6, 0.05);
+      const toolGeometry = new THREE.BoxGeometry(0.12, 0.5, 0.05);
       const toolMaterial = createFlatMaterial(toolColors[i % toolColors.length]);
       const tool = new THREE.Mesh(toolGeometry, toolMaterial);
       tool.rotation.y = -Math.PI / 2;
-      tool.position.set(9.85, 3 + i * 0.5, 4.5 + (i % 2) * 0.5);
+      tool.position.set(9.85, 3 + i * 0.5, 4.5 + (i % 2) * 0.4);
       scene.add(tool);
     }
 
@@ -304,7 +287,7 @@ export default function GarageBackground() {
     chairPost.position.set(-3, 0.7, -4);
     scene.add(chairPost);
 
-    // Small plants for decoration
+    // Small plant
     const plantPotGeometry = new THREE.CylinderGeometry(0.15, 0.1, 0.2, 16);
     const plantPotMaterial = createFlatMaterial(0x95a5a6);
     const plantPot = new THREE.Mesh(plantPotGeometry, plantPotMaterial);
@@ -319,13 +302,13 @@ export default function GarageBackground() {
 
     // Floating ambient particles
     const particlesGeometry = new THREE.BufferGeometry();
-    const particleCount = 100;
+    const particleCount = 80;
     const positions = new Float32Array(particleCount * 3);
 
     for (let i = 0; i < particleCount * 3; i += 3) {
-      positions[i] = (Math.random() - 0.5) * 30;
-      positions[i + 1] = Math.random() * 10;
-      positions[i + 2] = (Math.random() - 0.5) * 30;
+      positions[i] = (Math.random() - 0.5) * 25;
+      positions[i + 1] = Math.random() * 8;
+      positions[i + 2] = (Math.random() - 0.5) * 25;
     }
 
     particlesGeometry.setAttribute(
@@ -337,7 +320,7 @@ export default function GarageBackground() {
       color: 0xf39c12,
       size: 0.05,
       transparent: true,
-      opacity: 0.6,
+      opacity: 0.5,
     });
 
     particles = new THREE.Points(particlesGeometry, particlesMaterial);
@@ -357,10 +340,10 @@ export default function GarageBackground() {
         const positions = particles.geometry.attributes.position.array as Float32Array;
         for (let i = 1; i < positions.length; i += 3) {
           positions[i] += Math.sin(time + i) * 0.002;
-          if (positions[i] > 12) positions[i] = 0;
+          if (positions[i] > 10) positions[i] = 0;
         }
         particles.geometry.attributes.position.needsUpdate = true;
-        particles.rotation.y = time * 0.1;
+        particles.rotation.y = time * 0.05;
       }
 
       renderer.render(scene, camera);

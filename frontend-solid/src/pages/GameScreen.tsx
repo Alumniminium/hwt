@@ -23,7 +23,7 @@ export default function GameScreen() {
   const navigate = useNavigate();
   const [activeSpeed, setActiveSpeed] = createSignal(0);
   const [localDate, setLocalDate] = createSignal<Date | null>(null);
-  let clockTimerId: number | null = null;
+  let clockTimerId: number | undefined;
 
   onMount(() => {
     // Check if user has game credentials
@@ -38,8 +38,15 @@ export default function GameScreen() {
 
     onCleanup(() => {
       clearInterval(timerId);
-      if (clockTimerId) clearInterval(clockTimerId);
+      if (clockTimerId !== undefined) clearInterval(clockTimerId);
     });
+  });
+
+  // Effect to sync activeSpeed with gameState.gameSpeed
+  createEffect(() => {
+    if (gameState.gameSpeed !== undefined) {
+      setActiveSpeed(gameState.gameSpeed);
+    }
   });
 
   // Effect to sync local date with game state date
@@ -52,13 +59,13 @@ export default function GameScreen() {
   // Effect to manage local clock based on game speed
   createEffect(() => {
     // Clear existing clock timer
-    if (clockTimerId) {
+    if (clockTimerId !== undefined) {
       clearInterval(clockTimerId);
-      clockTimerId = null;
+      clockTimerId = undefined;
     }
 
     // Start new clock timer if game is running
-    if (gameState.millisecondsPerDay > 0) {
+    if (gameState.millisecondsPerDay > 0 && gameState.gameSpeed > 0) {
       clockTimerId = window.setInterval(() => {
         setLocalDate((prev) => {
           if (!prev) return prev;
@@ -66,12 +73,12 @@ export default function GameScreen() {
           newDate.setDate(newDate.getDate() + 1);
           return newDate;
         });
-      }, gameState.millisecondsPerDay);
+      }, gameState.millisecondsPerDay) as unknown as number;
     }
   });
 
   const handleSpeedChange = (speed: number) => {
-    setActiveSpeed(speed);
+    console.log('Speed button clicked:', speed);
     updateGameSpeed(speed);
   };
 
