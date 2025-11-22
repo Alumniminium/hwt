@@ -3,197 +3,203 @@ import * as THREE from 'three';
 
 export default function GarageBackground() {
   let canvasRef: HTMLCanvasElement | undefined;
+  let animationFrameId: number;
+  let renderer: THREE.WebGLRenderer;
+  let camera: THREE.OrthographicCamera;
+  let scene: THREE.Scene;
+
+  const createFlatMaterial = (color: number) => {
+    return new THREE.MeshBasicMaterial({
+      color,
+      side: THREE.DoubleSide,
+    });
+  };
+
+  const resizeRenderer = () => {
+    if (!canvasRef || !camera || !renderer) return;
+
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+    const aspect = width / height;
+
+    // Adjust orthographic camera for aspect ratio
+    const frustumSize = 20;
+    camera.left = (frustumSize * aspect) / -2;
+    camera.right = (frustumSize * aspect) / 2;
+    camera.top = frustumSize / 2;
+    camera.bottom = frustumSize / -2;
+    camera.updateProjectionMatrix();
+
+    renderer.setSize(width, height);
+  };
 
   onMount(() => {
     if (!canvasRef) return;
 
     // Scene setup
-    const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x1a1a1a);
-    scene.fog = new THREE.Fog(0x1a1a1a, 10, 50);
+    scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x1a1a2e); // Dark blue-gray background
 
-    // Isometric camera setup
+    // Orthographic camera for isometric view (zoomed out to see entire room)
     const aspect = window.innerWidth / window.innerHeight;
-    const frustumSize = 10;
-    const camera = new THREE.OrthographicCamera(
+    const frustumSize = 20;
+    camera = new THREE.OrthographicCamera(
       (frustumSize * aspect) / -2,
       (frustumSize * aspect) / 2,
       frustumSize / 2,
       frustumSize / -2,
       0.1,
-      100
+      1000
     );
-
-    // Position camera for isometric view (45° horizontal, ~35° vertical)
-    camera.position.set(10, 8, 10);
+    camera.position.set(15, 12, 15); // Positioned to see entire room
     camera.lookAt(0, 0, 0);
 
     // Renderer
-    const renderer = new THREE.WebGLRenderer({
+    renderer = new THREE.WebGLRenderer({
       canvas: canvasRef,
       antialias: true,
-      alpha: false,
     });
     renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    renderer.shadowMap.enabled = true;
-    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    renderer.shadowMap.enabled = false; // Disable shadows for flat look
 
-    // Lighting
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
-    scene.add(ambientLight);
-
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 0.6);
-    directionalLight.position.set(5, 10, 5);
-    directionalLight.castShadow = true;
-    directionalLight.shadow.camera.left = -10;
-    directionalLight.shadow.camera.right = 10;
-    directionalLight.shadow.camera.top = 10;
-    directionalLight.shadow.camera.bottom = -10;
-    scene.add(directionalLight);
-
-    // Floor
+    // Floor (larger to fill more of the room)
     const floorGeometry = new THREE.PlaneGeometry(20, 20);
-    const floorMaterial = new THREE.MeshStandardMaterial({
-      color: 0x2a2a2a,
-      roughness: 0.8,
-      metalness: 0.2,
-    });
+    const floorMaterial = createFlatMaterial(0x2d3561); // Dark blue-purple
     const floor = new THREE.Mesh(floorGeometry, floorMaterial);
     floor.rotation.x = -Math.PI / 2;
-    floor.receiveShadow = true;
+    floor.position.y = 0;
     scene.add(floor);
 
-    // Floor tiles pattern
-    const tileSize = 2;
-    for (let x = -10; x < 10; x += tileSize) {
-      for (let z = -10; z < 10; z += tileSize) {
-        if ((x / tileSize + z / tileSize) % 2 === 0) {
-          const tileGeometry = new THREE.PlaneGeometry(tileSize - 0.1, tileSize - 0.1);
-          const tileMaterial = new THREE.MeshStandardMaterial({
-            color: 0x252525,
-            roughness: 0.9,
-          });
+    // Floor grid pattern (checkerboard)
+    for (let x = -5; x <= 5; x++) {
+      for (let z = -5; z <= 5; z++) {
+        if ((x + z) % 2 === 0) {
+          const tileGeometry = new THREE.PlaneGeometry(1.8, 1.8);
+          const tileMaterial = createFlatMaterial(0x3a4578); // Slightly lighter blue
           const tile = new THREE.Mesh(tileGeometry, tileMaterial);
           tile.rotation.x = -Math.PI / 2;
-          tile.position.set(x + tileSize / 2, 0.01, z + tileSize / 2);
+          tile.position.set(x * 2, 0.01, z * 2);
           scene.add(tile);
         }
       }
     }
 
     // Back wall
-    const wallGeometry = new THREE.PlaneGeometry(20, 8);
-    const wallMaterial = new THREE.MeshStandardMaterial({
-      color: 0x1f1f1f,
-      roughness: 0.9,
-    });
-    const backWall = new THREE.Mesh(wallGeometry, wallMaterial);
-    backWall.position.set(0, 4, -10);
-    backWall.receiveShadow = true;
+    const backWallGeometry = new THREE.PlaneGeometry(20, 10);
+    const backWallMaterial = createFlatMaterial(0x1f2847); // Darker blue
+    const backWall = new THREE.Mesh(backWallGeometry, backWallMaterial);
+    backWall.position.set(0, 5, -10);
     scene.add(backWall);
 
+    // Back wall accent stripe
+    const stripeGeometry = new THREE.PlaneGeometry(20, 0.5);
+    const stripeMaterial = createFlatMaterial(0xf39c12); // Orange accent
+    const stripe = new THREE.Mesh(stripeGeometry, stripeMaterial);
+    stripe.position.set(0, 3, -9.9);
+    scene.add(stripe);
+
     // Left wall
-    const leftWall = new THREE.Mesh(wallGeometry, wallMaterial);
+    const leftWallGeometry = new THREE.PlaneGeometry(20, 10);
+    const leftWallMaterial = createFlatMaterial(0x252d4f); // Medium blue
+    const leftWall = new THREE.Mesh(leftWallGeometry, leftWallMaterial);
     leftWall.rotation.y = Math.PI / 2;
-    leftWall.position.set(-10, 4, 0);
-    leftWall.receiveShadow = true;
+    leftWall.position.set(-10, 5, 0);
     scene.add(leftWall);
 
     // Right wall
-    const rightWall = new THREE.Mesh(wallGeometry, wallMaterial);
+    const rightWallGeometry = new THREE.PlaneGeometry(20, 10);
+    const rightWallMaterial = createFlatMaterial(0x252d4f); // Medium blue
+    const rightWall = new THREE.Mesh(rightWallGeometry, rightWallMaterial);
     rightWall.rotation.y = -Math.PI / 2;
-    rightWall.position.set(10, 4, 0);
-    rightWall.receiveShadow = true;
+    rightWall.position.set(10, 5, 0);
     scene.add(rightWall);
 
-    // Workbench (simple minimalist table)
-    const benchTop = new THREE.Mesh(
-      new THREE.BoxGeometry(4, 0.1, 2),
-      new THREE.MeshStandardMaterial({ color: 0x3a3a3a })
-    );
-    benchTop.position.set(-5, 1.5, -8);
-    benchTop.castShadow = true;
+    // Workbench (simple flat design)
+    const benchTopGeometry = new THREE.BoxGeometry(6, 0.2, 2);
+    const benchTopMaterial = createFlatMaterial(0x95a5a6); // Light gray
+    const benchTop = new THREE.Mesh(benchTopGeometry, benchTopMaterial);
+    benchTop.position.set(-4, 2, -6);
     scene.add(benchTop);
 
     // Bench legs
-    const legGeometry = new THREE.CylinderGeometry(0.1, 0.1, 1.5);
-    const legMaterial = new THREE.MeshStandardMaterial({ color: 0x2a2a2a });
-
-    [-1.8, 1.8].forEach(x => {
-      [-0.8, 0.8].forEach(z => {
-        const leg = new THREE.Mesh(legGeometry, legMaterial);
-        leg.position.set(-5 + x, 0.75, -8 + z);
-        leg.castShadow = true;
-        scene.add(leg);
-      });
+    const legGeometry = new THREE.BoxGeometry(0.3, 2, 0.3);
+    const legMaterial = createFlatMaterial(0x7f8c8d); // Darker gray
+    const positions = [
+      [-6.5, 1, -6.8],
+      [-1.5, 1, -6.8],
+      [-6.5, 1, -5.2],
+      [-1.5, 1, -5.2],
+    ];
+    positions.forEach((pos) => {
+      const leg = new THREE.Mesh(legGeometry, legMaterial);
+      leg.position.set(pos[0], pos[1], pos[2]);
+      scene.add(leg);
     });
 
-    // Shelving unit
-    const shelfMaterial = new THREE.MeshStandardMaterial({ color: 0x2d2d2d });
-    for (let i = 0; i < 3; i++) {
-      const shelf = new THREE.Mesh(
-        new THREE.BoxGeometry(3, 0.08, 0.8),
-        shelfMaterial
-      );
-      shelf.position.set(6, 1 + i * 1.2, -9.5);
-      shelf.castShadow = true;
+    // Shelving unit (simple flat design)
+    const shelfMaterial = createFlatMaterial(0x34495e); // Dark blue-gray
+    const backingGeometry = new THREE.BoxGeometry(4, 6, 0.2);
+    const backing = new THREE.Mesh(backingGeometry, shelfMaterial);
+    backing.position.set(5, 3, -8);
+    scene.add(backing);
+
+    // Shelves
+    for (let i = 0; i < 4; i++) {
+      const shelfGeometry = new THREE.BoxGeometry(4, 0.15, 1);
+      const shelf = new THREE.Mesh(shelfGeometry, createFlatMaterial(0x5d6d7e));
+      shelf.position.set(5, i * 1.5 + 0.5, -7.5);
       scene.add(shelf);
     }
 
-    // Side supports for shelves
-    [-1.4, 1.4].forEach(x => {
-      const support = new THREE.Mesh(
-        new THREE.BoxGeometry(0.1, 4, 0.8),
-        shelfMaterial
+    // Boxes on shelves (colorful accents)
+    const boxColors = [0xe74c3c, 0x3498db, 0x2ecc71, 0xf39c12, 0x9b59b6];
+    for (let i = 0; i < 3; i++) {
+      const boxGeometry = new THREE.BoxGeometry(0.8, 0.6, 0.6);
+      const boxMaterial = createFlatMaterial(
+        boxColors[i % boxColors.length]
       );
-      support.position.set(6 + x, 2, -9.5);
-      scene.add(support);
-    });
-
-    // Small boxes on shelves (clutter)
-    const boxMaterial = new THREE.MeshStandardMaterial({ color: 0x404040 });
-    [
-      { x: 5.5, y: 1.1, z: -9.5 },
-      { x: 6.3, y: 1.1, z: -9.5 },
-      { x: 6.8, y: 2.3, z: -9.5 },
-    ].forEach(pos => {
-      const box = new THREE.Mesh(
-        new THREE.BoxGeometry(0.4, 0.3, 0.4),
-        boxMaterial
-      );
-      box.position.set(pos.x, pos.y, pos.z);
-      box.castShadow = true;
+      const box = new THREE.Mesh(boxGeometry, boxMaterial);
+      box.position.set(4 + i * 1.2, 2.5, -7.3);
       scene.add(box);
-    });
+    }
 
-    // Handle window resize
-    const handleResize = () => {
-      const aspect = window.innerWidth / window.innerHeight;
-      camera.left = (frustumSize * aspect) / -2;
-      camera.right = (frustumSize * aspect) / 2;
-      camera.top = frustumSize / 2;
-      camera.bottom = frustumSize / -2;
-      camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
-    };
+    // Computer monitor on workbench
+    const monitorScreenGeometry = new THREE.BoxGeometry(1.5, 1, 0.1);
+    const monitorScreenMaterial = createFlatMaterial(0x1abc9c); // Teal screen
+    const monitorScreen = new THREE.Mesh(
+      monitorScreenGeometry,
+      monitorScreenMaterial
+    );
+    monitorScreen.position.set(-4, 3, -6);
+    scene.add(monitorScreen);
 
-    window.addEventListener('resize', handleResize);
+    const monitorStandGeometry = new THREE.BoxGeometry(0.2, 0.6, 0.3);
+    const monitorStandMaterial = createFlatMaterial(0x2c3e50);
+    const monitorStand = new THREE.Mesh(
+      monitorStandGeometry,
+      monitorStandMaterial
+    );
+    monitorStand.position.set(-4, 2.4, -6);
+    scene.add(monitorStand);
+
+    // Ambient light (no shadows for flat look)
+    const ambientLight = new THREE.AmbientLight(0xffffff, 1.0);
+    scene.add(ambientLight);
 
     // Animation loop
-    let animationId: number;
     const animate = () => {
-      animationId = requestAnimationFrame(animate);
+      animationFrameId = requestAnimationFrame(animate);
       renderer.render(scene, camera);
     };
     animate();
 
-    // Cleanup
+    // Handle window resize
+    window.addEventListener('resize', resizeRenderer);
+
     onCleanup(() => {
-      window.removeEventListener('resize', handleResize);
-      cancelAnimationFrame(animationId);
+      cancelAnimationFrame(animationFrameId);
+      window.removeEventListener('resize', resizeRenderer);
       renderer.dispose();
-      scene.clear();
     });
   });
 
@@ -202,12 +208,11 @@ export default function GarageBackground() {
       ref={canvasRef}
       style={{
         position: 'fixed',
-        top: 0,
-        left: 0,
+        top: '0',
+        left: '0',
         width: '100%',
         height: '100%',
-        'z-index': 0,
-        'pointer-events': 'none',
+        'z-index': '-1',
       }}
     />
   );

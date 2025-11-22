@@ -10,6 +10,7 @@ import {
 } from '../stores/gameStore';
 import { formatMoney, formatDate } from '../utils/formatting';
 import GarageBackground from '../components/GarageBackground';
+import WaferDesigner from '../components/WaferDesigner';
 import ContextMenu from '../components/ContextMenu';
 import ResearchModal from '../components/modals/ResearchModal';
 import DevelopModal from '../components/modals/DevelopModal';
@@ -150,21 +151,7 @@ export default function GameScreen() {
       </div>
 
       <div class="game-content">
-        <div class="research-progress-container">
-          <svg class="progress-ring" width="120" height="120">
-            <circle
-              class="progress-ring-circle"
-              stroke-width="4"
-              fill="transparent"
-              r="52"
-              cx="60"
-              cy="60"
-            />
-          </svg>
-          <div class="research-progress-text" id="research-progress">
-            {/* Research project name will appear here */}
-          </div>
-        </div>
+        <WaferDesigner />
       </div>
 
       {/* Modals */}
