@@ -21,11 +21,15 @@ namespace hardware_tycoon_api.Simulation
         internal void SimulationStep()
         {
             World.Date = World.Date.AddDays(1);
-            foreach (var kvp in World.Companies)
+
+            // Create a thread-safe snapshot to avoid "Collection was modified" exceptions
+            // when iterating while web requests are adding/removing companies
+            foreach (var kvp in World.Companies.ToList())
             {
                 var company = kvp.Value;
                 company.Tick();
             }
+
             World.Market.Tick();
         }
     }
