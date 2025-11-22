@@ -14,7 +14,27 @@ namespace hardware_tycoon_api
             Configuration = configuration;
         }
 
-        public void ConfigureServices(IServiceCollection services) => services.AddControllers();
+        public void ConfigureServices(IServiceCollection services)
+        {
+            services.AddControllers();
+
+            // Add CORS policy for frontend development
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowFrontend", builder =>
+                {
+                    builder
+                        .WithOrigins(
+                            "http://localhost:5173",  // Vite dev server (SolidJS)
+                            "http://127.0.0.1:5173",
+                            "http://localhost:3000",  // Legacy frontend
+                            "http://127.0.0.1:3000"
+                        )
+                        .AllowAnyMethod()
+                        .AllowAnyHeader();
+                });
+            });
+        }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
@@ -22,7 +42,11 @@ namespace hardware_tycoon_api
             {
                 app.UseDeveloperExceptionPage();
             }
+
             app.UseRouting();
+
+            // Enable CORS
+            app.UseCors("AllowFrontend");
 
             app.UseEndpoints(endpoints =>
             {
