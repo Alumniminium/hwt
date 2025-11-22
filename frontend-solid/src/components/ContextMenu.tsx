@@ -70,6 +70,12 @@ export default function ContextMenu(props: ContextMenuProps) {
         >
           Advertising Campaign
         </div>
+        <div
+          class="context-menu-item"
+          onClick={() => handleMenuItemClick('wafer-designer')}
+        >
+          Wafer Designer
+        </div>
         <div class="context-menu-divider" />
         <div
           class="context-menu-item debug"

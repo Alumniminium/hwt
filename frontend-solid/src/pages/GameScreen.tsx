@@ -10,13 +10,13 @@ import {
 } from '../stores/gameStore';
 import { formatMoney, formatDate } from '../utils/formatting';
 import GarageBackground from '../components/GarageBackground';
-import WaferDesigner from '../components/WaferDesigner';
 import ContextMenu from '../components/ContextMenu';
 import ResearchModal from '../components/modals/ResearchModal';
 import DevelopModal from '../components/modals/DevelopModal';
 import MarketModal from '../components/modals/MarketModal';
 import AdvertisingModal from '../components/modals/AdvertisingModal';
 import NewspaperModal from '../components/modals/NewspaperModal';
+import WaferDesignerModal from '../components/modals/WaferDesignerModal';
 import './GameScreen.css';
 
 export default function GameScreen() {
@@ -150,10 +150,6 @@ export default function GameScreen() {
         </div>
       </div>
 
-      <div class="game-content">
-        <WaferDesigner />
-      </div>
-
       {/* Modals */}
       <ResearchModal
         isOpen={currentModal() === 'research'}
@@ -173,6 +169,10 @@ export default function GameScreen() {
       />
       <NewspaperModal
         isOpen={currentModal() === 'newspaper'}
+        onClose={handleCloseModal}
+      />
+      <WaferDesignerModal
+        isOpen={currentModal() === 'wafer-designer'}
         onClose={handleCloseModal}
       />
     </div>
