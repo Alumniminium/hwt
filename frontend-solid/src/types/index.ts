@@ -7,13 +7,13 @@ export interface LoginRequest {
 }
 
 export interface LoginResponse {
-  gameId: string;
-  ceoId: string;
+  gameId: number;
+  ceoId: number;
 }
 
 export interface UpdateRequest {
-  gameId: string;
-  ceoId: string;
+  gameId: number;
+  ceoId: number;
   gameSpeed: number;
 }
 
@@ -40,8 +40,8 @@ export interface ResearchProject {
 }
 
 export interface ResearchRequest {
-  gameId: string;
-  ceoId: string;
+  gameId: number;
+  ceoId: number;
   researchProject: string;
 }
 
@@ -52,8 +52,8 @@ export interface ResearchResponse {
 }
 
 export interface DevelopRequest {
-  gameId: string;
-  ceoId: string;
+  gameId: number;
+  ceoId: number;
   name: string;
   components: any[];
   type: string;
@@ -69,8 +69,8 @@ export interface DevelopResponse {
 // Game State Types
 
 export interface GameState {
-  gameId: string | null;
-  ceoId: string | null;
+  gameId: number | null;
+  ceoId: number | null;
   ceoName: string | null;
   companyName: string | null;
   currentDate: Date | null;

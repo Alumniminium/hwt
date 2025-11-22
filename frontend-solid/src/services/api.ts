@@ -39,7 +39,7 @@ export class APIService {
   /**
    * Get current game state
    */
-  async getGameState(gameId: string, ceoId: string): Promise<SimulationUpdate> {
+  async getGameState(gameId: number, ceoId: number): Promise<SimulationUpdate> {
     const response = await fetch(
       `${API_BASE_URL}/update?gameId=${gameId}&ceoId=${ceoId}`
     );
@@ -76,8 +76,8 @@ export class APIService {
    * Get list of research projects
    */
   async getResearchList(
-    gameId: string,
-    ceoId: string
+    gameId: number,
+    ceoId: number
   ): Promise<ResearchProject[]> {
     const response = await fetch(
       `${API_BASE_URL}/research?gameId=${gameId}&ceoId=${ceoId}`

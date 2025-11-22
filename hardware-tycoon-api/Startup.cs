@@ -16,7 +16,12 @@ namespace hardware_tycoon_api
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers()
+                .AddJsonOptions(options =>
+                {
+                    // Use camelCase for JSON serialization (JavaScript convention)
+                    options.JsonSerializerOptions.PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.CamelCase;
+                });
 
             // Add CORS policy for frontend development
             services.AddCors(options =>

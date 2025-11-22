@@ -5,9 +5,12 @@ import type { GameState, MarketProduct, NewspaperData } from '../types';
 
 // Initialize state from localStorage
 const initializeState = (): GameState => {
+  const gameIdStr = localStorage.getItem('gameId');
+  const ceoIdStr = localStorage.getItem('ceoId');
+
   return {
-    gameId: localStorage.getItem('gameId'),
-    ceoId: localStorage.getItem('ceoId'),
+    gameId: gameIdStr ? parseInt(gameIdStr, 10) : null,
+    ceoId: ceoIdStr ? parseInt(ceoIdStr, 10) : null,
     ceoName: localStorage.getItem('ceoName'),
     companyName: localStorage.getItem('companyName'),
     currentDate: null,
@@ -30,13 +33,13 @@ const [newspaperData, setNewspaperData] = createSignal<NewspaperData | null>(nul
  * Save game credentials to localStorage
  */
 export function saveGameCredentials(
-  gameId: string,
-  ceoId: string,
+  gameId: number,
+  ceoId: number,
   ceoName: string,
   companyName: string
 ) {
-  localStorage.setItem('gameId', gameId);
-  localStorage.setItem('ceoId', ceoId);
+  localStorage.setItem('gameId', gameId.toString());
+  localStorage.setItem('ceoId', ceoId.toString());
   localStorage.setItem('ceoName', ceoName);
   localStorage.setItem('companyName', companyName);
 
