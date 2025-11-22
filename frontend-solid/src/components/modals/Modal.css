@@ -1,0 +1,200 @@
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 1000;
+}
+
+.modal {
+  position: absolute;
+  background: #2c3e50;
+  border-radius: 10px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+  min-width: 400px;
+  max-width: 800px;
+  max-height: 80vh;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  color: white;
+}
+
+.modalheader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  background: #34495e;
+  border-radius: 10px 10px 0 0;
+  border-bottom: 2px solid #2a5298;
+  user-select: none;
+}
+
+.modalheader h3 {
+  margin: 0;
+  font-size: 1.3rem;
+}
+
+.modal-close-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 2rem;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background 0.3s;
+}
+
+.modal-close-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.modal-content {
+  padding: 1.5rem;
+  overflow-y: auto;
+}
+
+.message {
+  background: #2a5298;
+  padding: 1rem;
+  border-radius: 5px;
+  margin-bottom: 1rem;
+}
+
+.research-modal-content {
+  max-height: 600px;
+}
+
+.research-section {
+  margin-bottom: 2rem;
+}
+
+.research-section h4 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  color: #4caf50;
+}
+
+.research-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.research-table th {
+  background: #34495e;
+  padding: 0.75rem;
+  text-align: left;
+  border-bottom: 2px solid #2a5298;
+}
+
+.research-table td {
+  padding: 0.75rem;
+  border-bottom: 1px solid #444;
+}
+
+.research-table tr.researchable-modal-item {
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.research-table tr.researchable-modal-item:hover {
+  background: rgba(42, 82, 152, 0.3);
+}
+
+.research-table tr.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.research-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+}
+
+.completed-research-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.researched-modal-item {
+  background: #34495e;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  border-left: 3px solid #4caf50;
+}
+
+.develop-modal-content,
+.market-modal-content,
+.advertising-modal-content {
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.newspaper-modal-content {
+  background: #f4f1e8;
+  color: #000;
+  padding: 2rem;
+  font-family: 'Times New Roman', serif;
+}
+
+.newspaper-header {
+  text-align: center;
+  border-bottom: 3px solid #000;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+}
+
+.datetime {
+  font-size: 0.9rem;
+  font-style: italic;
+}
+
+.newspaper-body {
+  columns: 1;
+}
+
+.product-column {
+  text-align: center;
+}
+
+.product-image {
+  max-width: 300px;
+  margin: 1rem auto;
+  display: block;
+  border: 2px solid #000;
+}
+
+.headline {
+  font-weight: bold;
+  margin: 1rem 0;
+}
+
+.headline.hl3 {
+  font-size: 1.5rem;
+}
+
+.headline.hl4 {
+  font-size: 1.2rem;
+  color: #2a5298;
+}
+
+.article {
+  text-align: justify;
+  line-height: 1.6;
+  margin: 1rem 0;
+}

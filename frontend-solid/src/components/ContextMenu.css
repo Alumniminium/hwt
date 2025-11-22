@@ -1,0 +1,31 @@
+.context-menu {
+  position: fixed;
+  background: #2c3e50;
+  border-radius: 5px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  z-index: 2000;
+  min-width: 200px;
+  padding: 0.5rem 0;
+  color: white;
+}
+
+.context-menu-item {
+  padding: 0.75rem 1.5rem;
+  cursor: pointer;
+  transition: background 0.2s;
+  user-select: none;
+}
+
+.context-menu-item:hover {
+  background: #34495e;
+}
+
+.context-menu-item.debug {
+  color: #ff6b6b;
+}
+
+.context-menu-divider {
+  height: 1px;
+  background: #444;
+  margin: 0.5rem 0;
+}

@@ -19,7 +19,8 @@ Last Updated: 2025-11-22
 
 ```
 hwt/
-├── frontend/              # Static HTML/CSS/JS web application
+├── frontend/              # Legacy: Static HTML/CSS/JS web application
+├── frontend-solid/        # NEW: Modern SolidJS + TypeScript frontend
 ├── hardware-tycoon-api/   # ASP.NET Core 5.0 Web API
 ├── .vscode/               # VSCode debug/build configuration
 └── Untitled-1.dib         # C# polyglot notebook for game balance calculations
@@ -35,12 +36,22 @@ hwt/
 - **State Management**: In-memory static dictionaries (no database)
 - **Threading**: Background `GameTimer` thread for real-time simulation
 
-#### Frontend (`frontend/`)
+#### Frontend - Legacy (`frontend/`)
 - **Pure Vanilla JavaScript**: ES6 modules, no frameworks
 - **Zero build tools**: Runs directly in browser
 - **State**: LocalStorage for gameId/ceoId persistence
 - **API Communication**: Native Fetch API
 - **UI Pattern**: Modal-based interface with context menus
+
+#### Frontend - Modern (`frontend-solid/`) **RECOMMENDED**
+- **Framework**: SolidJS 1.x with TypeScript
+- **Build Tool**: Vite 7.x with Hot Module Replacement
+- **Routing**: @solidjs/router for client-side navigation
+- **State Management**: SolidJS stores with reactive signals
+- **Type Safety**: Full TypeScript with strict mode
+- **UI Architecture**: Component-based with reactive updates
+- **API Layer**: Type-safe API service with error handling
+- **Dev Server**: http://localhost:5173 (Vite default)
 
 ## Directory Structure & Key Files
 
@@ -87,7 +98,7 @@ hardware-tycoon-api/
 └── hardware-tycoon-api.csproj     # Project file
 ```
 
-### Frontend Structure
+### Frontend Structure - Legacy (`frontend/`)
 
 ```
 frontend/
@@ -118,6 +129,50 @@ frontend/
 └── test.html                      # Manual testing page
 ```
 
+### Frontend Structure - Modern (`frontend-solid/`) **RECOMMENDED**
+
+```
+frontend-solid/
+├── src/
+│   ├── components/                # Reusable UI components
+│   │   ├── modals/               # Modal dialog components
+│   │   │   ├── Modal.tsx         # Base draggable modal component
+│   │   │   ├── ResearchModal.tsx # R&D interface with project list
+│   │   │   ├── DevelopModal.tsx  # Product development (placeholder)
+│   │   │   ├── MarketModal.tsx   # Market analysis (placeholder)
+│   │   │   ├── AdvertisingModal.tsx  # Ad campaigns (placeholder)
+│   │   │   ├── NewspaperModal.tsx    # Product announcement notifications
+│   │   │   └── Modal.css         # Modal styles
+│   │   ├── ContextMenu.tsx       # Right-click context menu
+│   │   └── ContextMenu.css
+│   ├── pages/                    # Route page components
+│   │   ├── MainMenu.tsx          # Game creation & settings
+│   │   ├── MainMenu.css
+│   │   ├── GameScreen.tsx        # Main game UI with polling & controls
+│   │   └── GameScreen.css
+│   ├── services/                 # External services
+│   │   └── api.ts                # Type-safe API client class
+│   ├── stores/                   # Global state management
+│   │   └── gameStore.ts          # Game state store with signals
+│   ├── types/                    # TypeScript type definitions
+│   │   └── index.ts              # All interfaces & types
+│   ├── utils/                    # Utility functions
+│   │   └── formatting.ts         # Money/date formatters
+│   ├── App.tsx                   # Root component with router
+│   ├── App.css
+│   ├── index.tsx                 # Application entry point
+│   └── index.css                 # Global styles
+├── public/
+│   └── images/                   # Static assets (copied from legacy)
+├── dist/                         # Production build output (gitignored)
+├── node_modules/                 # NPM dependencies (gitignored)
+├── package.json                  # NPM configuration & scripts
+├── package-lock.json
+├── tsconfig.json                 # TypeScript configuration
+├── vite.config.ts                # Vite build configuration
+└── README.md                     # Frontend-specific documentation
+```
+
 ## Development Workflow
 
 ### Building and Running
@@ -138,17 +193,42 @@ dotnet watch run
 # Swagger UI available at: http://localhost:5001/swagger
 ```
 
-#### Frontend
-- Static files, no build required
-- Served from port 3000 (see `.vscode/launch.json`)
-- API calls hardcoded to `http://localhost/api/*` (note: NOT localhost:5000)
-- Open `frontend/index.html` in browser or use F5 debug in VSCode
+#### Frontend - Legacy
+```bash
+# Static files, no build required
+# Served from port 3000 (see .vscode/launch.json)
+# API calls hardcoded to http://localhost/api/* (note: NOT localhost:5000)
+# Open frontend/index.html in browser or use F5 debug in VSCode
+```
+
+#### Frontend - Modern (SolidJS) **RECOMMENDED**
+```bash
+cd frontend-solid
+
+# Install dependencies (first time only)
+npm install
+
+# Development server (http://localhost:5173)
+npm run dev
+
+# Build for production
+npm run build
+
+# Preview production build
+npm run preview
+```
+
+**Important**: Ensure backend is running on port 5001 before starting frontend.
+API base URL is configured in `src/services/api.ts`
 
 ### Debugging
-- **VSCode F5**: Configured for both .NET Core and Chrome debugging
-- **Backend**: Debugger attaches to .NET process on port 5000/5001
-- **Frontend**: Launches Chromium at `/usr/bin/chromium` pointing to port 3000
-- **Pre-launch**: Automatically runs `dotnet build`
+- **VSCode F5**: Multiple launch configurations available
+- **Backend (.NET Core Launch)**: Debugger attaches to .NET process on port 5000/5001
+  - Pre-launch: Automatically runs `dotnet build`
+- **Frontend (Legacy)**: Launches Chromium pointing to port 3000
+- **Frontend (SolidJS)**: Launches Chromium pointing to http://localhost:5173
+  - Requires `npm run dev` to be running separately
+- **Browser DevTools**: Essential for frontend debugging (F12 in Chromium)
 
 ### Git Workflow
 - **Current Branch**: `claude/claude-md-mi9z1jy4rfn61xpv-01EhkpMxsAG7LesbZnjNJEWt`
@@ -201,7 +281,7 @@ Company (abstract)
 - Each tick = 1 game day
 - **Caution**: Potential concurrency issues with static state
 
-### Frontend Patterns
+### Frontend Patterns - Legacy (`frontend/`)
 
 #### 1. ES6 Module Pattern
 - Each JS file exports classes/functions via ES6 modules
@@ -222,6 +302,95 @@ Company (abstract)
 - All major interactions use modals: Research, Development, Market, Advertising
 - Draggable modal windows
 - Context menu for quick actions
+
+### Frontend Patterns - Modern (`frontend-solid/`)
+
+#### 1. Component-Based Architecture
+- **Functional components**: All components are functions returning JSX
+- **Props-based**: Data flows down via typed props interfaces
+- **Composition**: Components compose smaller components
+- **Co-located styles**: Each component has its own CSS file
+
+#### 2. Reactive State Management with SolidJS Stores
+**Location**: `stores/gameStore.ts`
+```typescript
+// Create reactive store
+const [gameState, setGameState] = createStore<GameState>(initialState);
+
+// Create signals for UI state
+const [currentModal, setCurrentModal] = createSignal<string | null>(null);
+
+// Reactive updates automatically propagate to UI
+setGameState('money', newAmount); // UI updates automatically
+```
+
+Key patterns:
+- **Stores** for complex, nested state (game state)
+- **Signals** for simple values (current modal, loading states)
+- **Computed values** with reactive getters
+- **Effects** for side effects (polling, timers)
+
+#### 3. Polling with Effects
+**Location**: `pages/GameScreen.tsx`
+```typescript
+onMount(() => {
+  const timerId = setInterval(fetchGameState, 1000);
+  onCleanup(() => clearInterval(timerId));
+});
+```
+- Uses SolidJS lifecycle for clean polling setup/teardown
+- State updates trigger reactive UI re-renders
+- No manual DOM manipulation required
+
+#### 4. Type-Safe API Layer
+**Location**: `services/api.ts`
+- Single `APIService` class with typed methods
+- All requests/responses use TypeScript interfaces
+- Centralized error handling
+- Singleton pattern: `export const apiService = new APIService()`
+
+#### 5. Client-Side Routing
+**Location**: `App.tsx`
+```typescript
+<Router>
+  <Route path="/" component={MainMenu} />
+  <Route path="/game" component={GameScreen} />
+</Router>
+```
+- Declarative route definitions
+- Type-safe navigation with `useNavigate()`
+- Automatic route-based code splitting (future enhancement)
+
+#### 6. Modal System
+**Pattern**: Reusable base `Modal` component with specific modal implementations
+- **Base Modal** (`Modal.tsx`): Draggable, closeable, keyboard support (Escape key)
+- **Specific Modals**: ResearchModal, DevelopModal, etc. compose the base Modal
+- **State-driven**: Modal visibility controlled by `currentModal` signal
+- **Escape key handling**: Global event listener in Modal component
+
+#### 7. Resource Loading
+**Pattern**: SolidJS `createResource` for async data fetching
+```typescript
+const [researchList, { refetch }] = createResource(
+  () => props.isOpen && gameState.gameId && gameState.ceoId,
+  async () => apiService.getResearchList(gameState.gameId!, gameState.ceoId!)
+);
+```
+- Automatic loading states
+- Re-fetch on dependency changes
+- Suspense-friendly (fallback UI while loading)
+
+#### 8. LocalStorage Integration
+**Location**: `stores/gameStore.ts`
+- Game credentials persisted to localStorage on login
+- State initialized from localStorage on app load
+- Cleared on logout or game-not-found errors
+
+#### 9. TypeScript Patterns
+- **Interface segregation**: Separate interfaces for Props, State, API types
+- **Type imports**: Use `import type` for type-only imports
+- **Strict mode**: Full TypeScript strict mode enabled
+- **No `any` types**: All values properly typed
 
 ## API Reference
 
