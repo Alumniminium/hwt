@@ -1,10 +1,13 @@
+using System.Collections;
+using System.Linq;
+
 namespace hardware_tycoon_api.Simulation
 {
     public class Game
     {
         public int Id { get; set; }
         public int Difficulty { get; set; }
-        public int GameSpeed {get;set;} = 1;
+        public int GameSpeed { get; set; } = 1;
         public World World { get; set; }
         public GameTimer GameTimer;
 
@@ -15,7 +18,7 @@ namespace hardware_tycoon_api.Simulation
 
             World = new World(Id);
             GameTimer = new(this);
-            Core.Games.Add(Id, this);    
+            Core.Games.Add(Id, this);
         }
 
         internal void SimulationStep()
