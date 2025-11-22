@@ -42,8 +42,13 @@ export default function MainMenu() {
         setError('Invalid response from server. Please try again.');
       }
     } catch (err) {
-      setError('Failed to create game. Please try again.');
       console.error('Failed to create game:', err);
+
+      if (err instanceof TypeError && err.message.includes('fetch')) {
+        setError('Cannot connect to game server. Please ensure the backend API is running on http://localhost:5001');
+      } else {
+        setError(`Failed to create game: ${err instanceof Error ? err.message : 'Unknown error'}`);
+      }
     } finally {
       setIsLoading(false);
     }

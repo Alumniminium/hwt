@@ -75,23 +75,13 @@ export function updateGameStateFromServer(data: {
   millisecondsPerDay: number;
   marketProducts: MarketProduct[];
 }) {
-  console.log('API Response:', data);
-
   const newDate = new Date(data.date);
-  console.log('Parsed date:', newDate, 'from:', data.date);
 
   setGameState({
     currentDate: newDate,
     money: data.money,
     millisecondsPerDay: data.millisecondsPerDay,
     marketProducts: data.marketProducts,
-  });
-
-  console.log('Game state updated:', {
-    currentDate: newDate,
-    money: data.money,
-    millisecondsPerDay: data.millisecondsPerDay,
-    marketProductsCount: data.marketProducts.length,
   });
 
   // Check for new products in market
@@ -123,23 +113,12 @@ function checkForNewProducts(products: MarketProduct[], date: Date) {
  * Update game speed
  */
 export async function updateGameSpeed(speed: number) {
-  console.log('updateGameSpeed called with speed:', speed);
-
   if (!gameState.gameId || !gameState.ceoId) {
-    console.error('Cannot update speed: missing gameId or ceoId', {
-      gameId: gameState.gameId,
-      ceoId: gameState.ceoId,
-    });
+    console.error('Cannot update speed: missing game credentials');
     return;
   }
 
   try {
-    console.log('Sending speed update to API:', {
-      gameId: gameState.gameId,
-      ceoId: gameState.ceoId,
-      gameSpeed: speed,
-    });
-
     await apiService.updateGameSpeed({
       gameId: gameState.gameId,
       ceoId: gameState.ceoId,
@@ -147,7 +126,6 @@ export async function updateGameSpeed(speed: number) {
     });
 
     setGameState('gameSpeed', speed);
-    console.log('Game speed updated successfully to:', speed);
   } catch (error) {
     console.error('Failed to update game speed:', error);
   }
@@ -158,15 +136,10 @@ export async function updateGameSpeed(speed: number) {
  */
 export async function fetchGameState() {
   if (!gameState.gameId || !gameState.ceoId) {
-    console.warn('Cannot fetch game state: missing credentials', {
-      gameId: gameState.gameId,
-      ceoId: gameState.ceoId,
-    });
     return;
   }
 
   try {
-    console.log('Fetching game state for gameId:', gameState.gameId, 'ceoId:', gameState.ceoId);
     const data = await apiService.getGameState(gameState.gameId, gameState.ceoId);
     updateGameStateFromServer(data);
   } catch (error) {

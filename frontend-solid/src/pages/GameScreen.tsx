@@ -78,7 +78,6 @@ export default function GameScreen() {
   });
 
   const handleSpeedChange = (speed: number) => {
-    console.log('Speed button clicked:', speed);
     updateGameSpeed(speed);
   };
 
