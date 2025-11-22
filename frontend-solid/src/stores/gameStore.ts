@@ -63,7 +63,7 @@ export function clearGameState() {
  * Check if user has valid game credentials
  */
 export function hasGameCredentials(): boolean {
-  return !!(gameState.gameId && gameState.ceoId);
+  return gameState.gameId != null && gameState.ceoId != null;
 }
 
 /**

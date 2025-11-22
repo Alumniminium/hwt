@@ -34,9 +34,12 @@ export default function MainMenu() {
         difficulty: difficulty(),
       });
 
-      if (response.gameId) {
+      // Check for valid response (gameId can be 0, so use != null)
+      if (response.gameId != null && response.ceoId != null) {
         saveGameCredentials(response.gameId, response.ceoId, ceo, company);
         navigate('/game');
+      } else {
+        setError('Invalid response from server. Please try again.');
       }
     } catch (err) {
       setError('Failed to create game. Please try again.');
